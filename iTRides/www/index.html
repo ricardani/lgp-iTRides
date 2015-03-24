@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- app's js -->
+    <script src="js/app.js"></script>
+    <!-- controllers's js -->
+    <script src="js/controllers/home-controllers.js"></script>
+    <script src="js/controllers/search-controllers.js"></script>
+    <script src="js/controllers/profile-controllers.js"></script>
+</head>
+<body ng-app="iTRides">
+
+<ion-header-bar align-title="center" class="">
+    <h1 class="title">
+        <img class="title-image" src="/img/iTGrow.png" width="123" height="43"/>
+    </h1>
+</ion-header-bar>
+
+<ion-nav-view>
+    <ion-view>
+    </ion-view>
+</ion-nav-view>
+
+<ion-footer-bar align-title="left" class="">
+    <div class="tabs-top tabs-color-light">
+
+        <div class="tabs-striped tabs-color-assertive">
+            <div class="tabs">
+                <a class="tab-item" href="#/home">
+                    <i class="icon ion-home"></i>
+                    Home
+                </a>
+                <a class="tab-item" href="#/profile">
+                    <i class="icon ion-person"></i>
+                    Profile
+                </a>
+                <a class="tab-item" href="#/search">
+                    <i class="icon ion-search"></i>
+                    Search
+                </a>
+            </div>
+        </div>
+    </div>
+</ion-footer-bar>
+
+
+</div>
+
+</body>
+</html>
