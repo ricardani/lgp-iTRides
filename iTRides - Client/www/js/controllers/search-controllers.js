@@ -8,7 +8,7 @@ angular.module('iTRides.searchControllers', [])
 })
 
 .controller('RideTypeCtrl', function($scope) {
-	$scope.collection = ["Casa - Trabalho", "Trabalho - Casa", "Ocasional"];
+	$scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
 
 	$scope.itemClicked = function ($index) {
 		$scope.selectedRideType = $index;

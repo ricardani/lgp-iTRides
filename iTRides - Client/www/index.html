@@ -28,6 +28,7 @@
 <body ng-app="iTRides">
 
 <ion-header-bar align-title="center" class="">
+    <button class="button button-icon icon ion-navicon"></button>
     <h1 class="title">
         <img class="title-image" src="/img/iTGrow.png" width="123" height="43"/>
     </h1>
@@ -38,21 +39,21 @@
     </ion-view>
 </ion-nav-view>
 
-<ion-footer-bar align-title="left" class="">
+<ion-footer-bar align-title="left" class="" ng-controller="TabSelectionCtrl">
     <div class="tabs-top tabs-color-light">
 
         <div class="tabs-striped tabs-color-assertive">
             <div class="tabs">
                 <a class="tab-item" href="#/home">
-                    <i class="icon ion-home"></i>
+                    <i class="icon ion-home orange"></i>
                     Home
                 </a>
                 <a class="tab-item" href="#/profile">
-                    <i class="icon ion-person"></i>
+                    <i class="icon ion-person orange"></i>
                     Profile
                 </a>
                 <a class="tab-item" href="#/search">
-                    <i class="icon ion-search"></i>
+                    <i class="icon ion-search orange"></i>
                     Search
                 </a>
             </div>

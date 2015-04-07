@@ -1,1 +1,42 @@
-/* Empty. Add your own CSS if you like */
+
+/* CSS to color the icons to iTGrow's orange */
+
+.badge.badge-assertive.orange {
+  background-color: rgb(243,121,38);
+}
+
+.orange {
+  color: rgb(243,121,38);
+}
+
+/* Search page */
+
+.card.col.search-ride {
+  padding:0px;
+}
+
+.button-ride-search {
+  border-color:#DDD;
+  display:block;
+  width:100%;
+}
+
+.submit-search {
+  position:center;
+  width:50%;
+  left:25%;
+  background-color: rgb(243,121,38);
+  color:white;
+}
+
+.button-searchType-selected {
+  background-color: rgb(243,121,38);
+  color:white;
+  border-color:#DDD;
+}
+
+.button-searchType-inactive {
+  background-color: #DDD;
+  color:black;
+  border-color:#DDD;
+}
