@@ -34,6 +34,12 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
     controller: 'ProfileCtrl'
   })
 
+  .state('rideDetails', {
+    url: "/detalhesBoleia",
+    templateUrl: "templates/detalhesBoleia.html",
+    controller: 'ProfileCtrl'
+  })
+
   ;
 
   // if none of the above states are matched, use this as the fallback
