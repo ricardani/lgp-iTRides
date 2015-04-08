@@ -41,3 +41,13 @@
   color:black;
   border-color:#DDD;
 }
+
+@media all and (max-width: 600px) {
+  .button-searchType-selected {
+    font-size:3.5vw;
+  }
+
+  .button-searchType-inactive {
+    font-size:3.5vw;
+  }
+}
