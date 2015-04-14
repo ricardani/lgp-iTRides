@@ -39,6 +39,12 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
     templateUrl: "templates/detalhesBoleia.html",
     controller: 'ProfileCtrl'
   })
+  
+  .state('login', {
+    url: "/login",
+    templateUrl: "templates/login.html",
+    controller: ''
+  })
 
   ;
 

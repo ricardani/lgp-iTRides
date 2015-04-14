@@ -42,6 +42,56 @@
   border-color:#DDD;
 }
 
+/* Login page */
+
+.loginBody{
+	background-color: rgb(243,121,38);
+	height:100vh;
+	overflow: auto;
+}
+
+.loginBody .icon{
+	width:123px;
+	height:43px;
+	margin-left:auto;
+	margin-right:auto;
+	background-image:url(../img/iTGrow.png);
+	background-size:contain;
+	background-repeat:no-repeat;
+	margin-top:30px;
+	margin-bottom:60px;
+}
+
+.loginBody form input[placeholder]{
+	padding-left:30px;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+
+.loginBody form input[type="text"],.loginBody form input[type="password"]{
+	margin-left:auto;
+	margin-right:auto;
+	width:30%;
+	height:5%;
+}
+
+.loginBody form input[type="text"]{
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	border-bottom: 1px solid #E0E0E0;
+	border-top:2px solid rgb(203,87,9);
+	border-left:2px solid rgb(203,87,9);
+	border-right:2px solid rgb(203,87,9);
+}
+
+.loginBody form input[type="password"]{
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+	border-bottom:2px solid rgb(203,87,9);
+	border-left:2px solid rgb(203,87,9);
+	border-right:2px solid rgb(203,87,9);
+}
+
 @media all and (max-width: 600px) {
   .button-searchType-selected {
     font-size:3.5vw;
@@ -49,5 +99,13 @@
 
   .button-searchType-inactive {
     font-size:3.5vw;
+  }
+  
+  /* Login page */
+  
+  .loginBody form input[type="text"],.loginBody form input[type="password"]{
+	margin-left:auto;
+	margin-right:auto;
+	width:65%;
   }
 }
