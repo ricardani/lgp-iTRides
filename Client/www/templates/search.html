@@ -1,6 +1,6 @@
 <ion-view view-title="Search">
     <ion-content>
-        <br>
+        <br><br>
         <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="RideTypeCtrl">
             <div class="button-bar">
                 <a ng-repeat="type in collection"
@@ -15,13 +15,12 @@
         <div class="card">
             <label class="item item-input">
                 <span class="input-label" style="padding:0">Data</span>
-                <input type="date" style="margin-left:20%; padding:0" placeholder="dd/mm/aa"></input>
-                <input type="text" placeholder="hh:mm"></input>
+                <input type="date" style="margin-left:20%; padding:0" placeholder="dd/mm/aa">
             </label>
         </div>
 
         <div class="row">
-            <div class="card col search-ride" ng-controller="StartAdressCtrl">
+            <div class="card col search-ride" ng-controller="StartAddressCtrl">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                     <i class="icon ion-home"></i>
                     Partida
@@ -58,6 +57,6 @@
           <i class="ion-android-search"></i>
           Pesquisar
         </button>
-        <br>
+        <br><br>
     </ion-content>
 </ion-view>

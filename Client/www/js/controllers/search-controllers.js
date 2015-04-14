@@ -15,9 +15,7 @@ angular.module('iTRides.searchControllers', [])
 	};
 })
 
-.controller('StartAdressCtrl', function($scope, $ionicSideMenuDelegate) {
-	$scope.toggleLeft = function() {
-    	$ionicSideMenuDelegate.toggleLeft();
-  };
+.controller('StartAddressCtrl', function($scope, $ionicSideMenuDelegate) {
+
 })
 ;

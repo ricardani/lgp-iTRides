@@ -1,44 +1,38 @@
 <ion-view view-title="Home">
     <ion-content>
-
-        <div class="list card">
+        <br><br>
+        <div class="list card" ng-if="notifications.length > 0">
 
             <div class="item item-divider">
-                Notificações
-                <span class="badge badge-assertive orange">5</span>
-            </div>
-
-            <div class="item item-avatar item-text-wrap" href="#">
-                <img src="img/default_profile_photo.png">
-                <h2>Fernanda Melo</h2>
-                <p>
-                  <i class="icon ion-checkmark" style="color:green"> </i>
-                  Aderiu à sua Boleia - 21 Fev - 08:20
-                </p>
-            </div>
-
-            <div class="item item-avatar item-text-wrap" href="#">
-                <img src="img/default_profile_photo.png">
-                <h2>Daniel Pereira</h2>
-                <p>
-                  <i class="icon ion-close" style="color:red"> </i>
-                  Cancelou a Boleia - 21 Fev - 08:20
-                </p>
-            </div>
-
-            <div class="item item-avatar item-text-wrap" href="#">
-                <img src="img/default_profile_photo.png">
-                <h2>Guilherme Rocha</h2>
-                <p>
-                  <i class="icon ion-information-circled" style="color:blue"> </i>
-                  Cancelou a solicitação da sua Boleia - 23 Fev - 17:40
-                </p>
-            </div>
-
-            <a class="item item-icon-left assertive" href="#">
                 <i class="icon ion-email-unread orange"></i>
-                <a1 class="orange"> Ver Restantes Notificações <a1>
-            </a>
+                Notificações
+                <span ng-if="notifications.length > 3" class="badge badge-assertive orange">+{{notifications.length - 3}}</span>
+            </div>
+
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap">
+                    <img ng-src="{{notification.photo}}">
+                    <h2>{{notification.name}}</h2>
+                    <div ng-switch on="notification.msgType" class=" item-text-wrap">
+                        <p ng-switch-when="Enter">
+                            <i class="ion-checkmark" style="color:green"> </i>
+                            Aderiu à sua Boleia - {{notification.rideDate}}
+                        </p>
+                        <p ng-switch-when="Exit">
+                            <i class="ion-information-circled" style="color:blue"> </i>
+                            Desistiu da sua Boleia - {{notification.rideDate}}
+                        </p>
+                        <p ng-switch-when="Cancel">
+                            <i class="ion-close" style="color:red"> </i>
+                            Cancelou a Boleia - {{notification.rideDate}}
+                        </p>
+                    </div>
+
+                    <ion-option-button class="button-assertive" ng-click="removeNotification($index)">
+                        Delete
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
 
         </div>
 
@@ -78,7 +72,7 @@
                 Avenida Lusíadas, Viseu
             </div>
 
-            <a class="item item-icon-left assertive" href="#/detalhesBoleia">
+            <a class="item item-icon-left assertive" href="#/rideDetails">
                 <i class="icon ion-information-circled orange"></i>
                 <a1 class="orange"> Ver detalhes </a1>
             </a>
@@ -108,12 +102,12 @@
                 </div>
             </div>
 
-            <a class="item item-icon-left assertive" href="#/detalhesBoleia">
+            <a class="item item-icon-left assertive" href="#/rideDetails">
                 <i class="icon ion-information-circled orange"></i>
                 <a1 class="orange"> Ver detalhes </a1>
             </a>
 
         </div>
-        <br>
+        <br><br>
     </ion-content>
 </ion-view>

@@ -71,7 +71,7 @@
 .loginBody form input[type="text"],.loginBody form input[type="password"]{
 	margin-left:auto;
 	margin-right:auto;
-	width:30%;
+	width:80%;
 	height:5%;
 }
 
@@ -106,7 +106,7 @@
   .loginBody form input[type="text"],.loginBody form input[type="password"]{
 	margin-left:auto;
 	margin-right:auto;
-	width:65%;
+	width:100%;
   }
 }
 
@@ -163,7 +163,7 @@ body > ion-header-bar {
   border-right:2px solid rgb(203,87,9);
 }
 
-#submit{
+.submitButton{
   color: white;
   background-color: rgb(111, 96, 90);
   margin-top: 5%;

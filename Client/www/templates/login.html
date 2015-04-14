@@ -1,11 +1,17 @@
-<ion-view view-title="Profile">
-	<ion-content>
-		<br>
+<ion-view view-title="Login">
+	<ion-content scroll="false">
 		<div class="loginBody">
 			<div class="icon"></div>
 			<form>
 				<input class="email" type="text" name="email" placeholder="Email">
 				<input class="password" type="password" name="password" placeholder="Password">
+                <button class="button button-block button-stable" ng-click="login()">
+                    Login
+                </button>
+
+                <button class="button button-block button-stable" ui-sref="signup">
+                    SignUp
+                </button>
 			</form>
 		</div>
 	</ion-content>
