@@ -3,13 +3,13 @@ var sha256 = require('sha256');
 
 function register(req, res) {
   var hash, temp;
-  console.log(req.body);
   hash = sha256(req.body.password);
   temp = req.body;
   temp.password = hash;
   var person = new Account(temp);
   person.save(function(error, data) {
     if (error) {
+      console.log(error);
       res.json(error);
     } else {
       res.json(data);

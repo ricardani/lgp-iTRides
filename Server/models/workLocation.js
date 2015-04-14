@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var RideLocation = require('mongoose').model('RideLocation').schema;
-
 var WorkLocation = new Schema({
-  location: [RideLocation],
+  district: String,
+  municipality: String,
+  street: String,
+  info: String,
   name: String
 
 });

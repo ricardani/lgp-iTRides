@@ -2,8 +2,8 @@ var express = require('express');
 var mongoose = require('mongoose');
 var fs = require('fs');
 var bodyParser = require('body-parser');
-
-authenticate = require('./dbops/account');
+var accountRoutes = require('./routes/account');
+var rideRoutes = require('./routes/ride');
 
 var app = express();
 
@@ -23,16 +23,15 @@ db.once('open', function (callback) {
   console.log('connection to mongoDB sucesseful');
 });
 
-
 app.use(express.static('../Client/www'));
 
-app.get('/users', function(req, res) {
-  mongoose.model('Account').find(function(err, users) {
-    res.send(users);
-  });
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/register', authenticate.reg);
+app.use('/', accountRoutes);
+app.use('/', rideRoutes);
 
 app.listen(8080);
 console.log("App listening on port 8080");
+
+module.exports = app;

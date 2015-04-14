@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var RideLocation = require('mongoose').model('RideLocation').schema;
-
 var Passager = new Schema({
   user: {
     type: Schema.ObjectId,

@@ -1,7 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var WorkLocation = mongoose.model('WorkLocation').schema;
+var WorkLocation = new Schema({
+  district: String,
+  municipality: String,
+  street: String,
+  info: String,
+  name: String
+
+});
 
 var DefaultRide = new Schema({
   owner: {
