@@ -109,3 +109,65 @@
 	width:65%;
   }
 }
+
+
+/* Signup Page */
+
+body > ion-header-bar {
+  display: none;
+}
+
+
+
+.signup_body {
+  background-color: rgb(243,121,38);
+  height:100vh;
+  overflow: auto;
+  text-align: center;
+
+}
+
+
+.signup_body .icon{
+  width:123px;
+  height:43px;
+  margin-left:auto;
+  margin-right:auto;
+  background-image:url(../img/iTGrow.png);
+  background-size:contain;
+  background-repeat:no-repeat;
+  margin-top:60px;
+  margin-bottom:60px;
+}
+
+.signup_body form input{
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 1%;
+  width:70%;
+  height: 40px;
+}
+
+.signup_body form input[placeholder]{
+  padding-left:30px;
+  padding-top:15px;
+  padding-bottom:15px;
+}
+
+.loginBody form input[type="text"]{
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  border-bottom: 1px solid #E0E0E0;
+  border-top:2px solid rgb(203,87,9);
+  border-left:2px solid rgb(203,87,9);
+  border-right:2px solid rgb(203,87,9);
+}
+
+#submit{
+  color: white;
+  background-color: rgb(111, 96, 90);
+  margin-top: 5%;
+  width: 70%; 
+  height: 40px; 
+  border: none;
+}
