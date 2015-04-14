@@ -3,8 +3,15 @@ var Schema = mongoose.Schema;
 
 var Notification = new Schema({
   message: String,
-  sender: String,
-  type: String
+  sender: {
+    type: Schema.ObjectId,
+    ref:'accounts'
+  },
+  type: String,
+  customRideId: {
+    type: Schema.ObjectId,
+    ref:'customrides'
+  }
 });
 
 var Account = new Schema({
@@ -17,8 +24,27 @@ var Account = new Schema({
     type: Boolean,
     default: false
   },
-  notifications: [Notification]
+  notifications: [Notification],
+  permission: {
+    type: String,
+    default: 'User'
+  }
 
 });
 
-mongoose.model('Account', Account);
+var AccountFunc = mongoose.model('Account', Account);
+/* Criação de uma conta (hard-coded)
+var small = new AccountFunc({
+    "name" : "Jorge",
+    "email" : "ei11057@fe.up.pt",
+    "password" : "paralgp",
+    "contact" : "918978792",
+    "photo" : "https://fotoQualquer",
+    "activated" : {
+        "type" : true
+    }
+});
+small.save(function (err) {
+  if (err) return handleError(err);
+  // saved!
+})*/

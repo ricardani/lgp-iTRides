@@ -1,13 +1,27 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var RideLocation = require('mongoose').model('RideLocation').schema;
+
 var WorkLocation = new Schema({
-  district: String,
-  municipality: String,
-  street: String,
-  info: String,
+  location: [RideLocation],
   name: String
 
 });
 
-mongoose.model('WorkLocation', WorkLocation);
+var WorkLocationFunc = mongoose.model('WorkLocation', WorkLocation);
+/*
+var small = new WorkLocationFunc({
+  'location': [{
+    'district': 'String',
+    'municipality': 'String',
+    'street': 'String',
+    'info': 'String'}],
+  'name': 'String'
+});
+small.save(function (err) {
+  if (err) {
+    return console.log(err);
+  }
+  // saved!
+})*/
