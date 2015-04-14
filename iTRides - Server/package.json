@@ -1,0 +1,9 @@
+{
+  "name": "iTRidesServer",
+  "version": "1.0.0",
+  "description": "iTRides: Back-end",
+  "dependencies": {
+    "express": "^4.12.3",
+    "mongoose": "^4.0.1"
+  }
+}
