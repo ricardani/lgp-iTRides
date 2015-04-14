@@ -32,7 +32,8 @@ var Account = new Schema({
 
 });
 
-var AccountFunc = mongoose.model('Account', Account);
+module.exports = mongoose.model('Account', Account);
+
 /* Criação de uma conta (hard-coded)
 var small = new AccountFunc({
     "name" : "Jorge",

@@ -1,10 +1,10 @@
 var Account = require('../models/account');
-var sha1 = require('sha1');
+var sha256 = require('sha256');
 
 function register(req, res) {
   var hash, temp;
-  console.log(req);
-  hash = sha1(req.body.password);
+  console.log(req.body);
+  hash = sha256(req.body.password);
   temp = req.body;
   temp.password = hash;
   var person = new Account(temp);

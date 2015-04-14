@@ -1,9 +1,13 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var bodyParser = require('body-parser');
+
 authenticate = require('./dbops/account');
 
 var app = express();
+
+app.use(bodyParser());
 
 mongoose.connect('mongodb://itrides:itridesadmin1@ds037581.mongolab.com:37581/itrides');
 
@@ -20,7 +24,7 @@ db.once('open', function (callback) {
 });
 
 
-app.use(express.static('../iTRides - Client/www'));
+app.use(express.static('../Client/www'));
 
 app.get('/users', function(req, res) {
   mongoose.model('Account').find(function(err, users) {

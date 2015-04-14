@@ -19,7 +19,7 @@ var DefaultRide = new Schema({
 
 });
 
-var DefaultRideFunc = mongoose.model('DefaultRide', DefaultRide);
+module.exports = mongoose.model('DefaultRide', DefaultRide);
 /*
 var small = new DefaultRideFunc({
   'seats': 3,

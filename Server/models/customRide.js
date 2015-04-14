@@ -50,7 +50,7 @@ var CustomRide = new Schema({
 
 });
 
-var CustomRideFunc = mongoose.model('CustomRide', CustomRide);
+module.exports = mongoose.model('CustomRide', CustomRide);
 /*
 var small = new CustomRideFunc({
   'seats': 3,

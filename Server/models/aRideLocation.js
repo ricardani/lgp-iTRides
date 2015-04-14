@@ -9,7 +9,7 @@ var RideLocation = new Schema({
 
 });
 
-var RideLocationFunc = mongoose.model('RideLocation', RideLocation);
+module.exports = mongoose.model('RideLocation', RideLocation);
 /*
 var small = new RideLocationFunc({
   'district': 'String',

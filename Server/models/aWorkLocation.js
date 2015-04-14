@@ -9,7 +9,7 @@ var WorkLocation = new Schema({
 
 });
 
-var WorkLocationFunc = mongoose.model('WorkLocation', WorkLocation);
+module.exports = mongoose.model('WorkLocation', WorkLocation);
 /*
 var small = new WorkLocationFunc({
   'location': [{
