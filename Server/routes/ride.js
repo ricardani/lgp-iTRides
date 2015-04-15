@@ -7,4 +7,6 @@ router.post('/createCR', rides.createCustomRide);
 
 router.post('/createDR', rides.createDefaultRide);
 
+router.post('/deleteRide', rides.deleteRide);
+
 module.exports = router;
