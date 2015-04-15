@@ -59,7 +59,7 @@
 	background-size:contain;
 	background-repeat:no-repeat;
 	margin-top:30px;
-	margin-bottom:60px;
+	margin-bottom:30px;
 }
 
 .loginBody form input[placeholder]{
@@ -68,11 +68,46 @@
 	padding-bottom:15px;
 }
 
-.loginBody form input[type="text"],.loginBody form input[type="password"]{
+.loginBody form input[type="text"],.loginBody form input[type="password"],.loginBody form input[type="submit"]{
 	margin-left:auto;
 	margin-right:auto;
-	width:80%;
+	width:40%;
 	height:5%;
+}
+.loginBody form input[type="submit"]{
+	display: block;
+	margin-top:10px;
+	padding-top:15px;
+	padding-bottom:15px;
+	border:2px solid rgb(203,87,9);
+	border-radius:5px;
+	
+	background: #f2a979; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f2a979 0%, #f37926 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2a979), color-stop(50%,#f37926)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* IE10+ */
+	background: linear-gradient(to bottom,  #f2a979 0%,#f37926 50%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2a979', endColorstr='#f37926',GradientType=0 ); /* IE6-9 */
+	color:#fff;
+	font-size:17px;
+}
+
+.loginBody .signupButtonLink{
+	margin-left:auto;
+	margin-right:auto;
+	width:10%;
+	display: block;
+	margin-top:10px;
+	padding-top:7px;
+	padding-bottom:7px;
+	border:2px solid rgb(203,87,9);
+	border-radius:5px;
+	
+	background: #ffffff; /* Old browsers */
+	color:rgb(243,121,38);
+	font-size:15px;
 }
 
 .loginBody form input[type="text"]{
@@ -92,6 +127,10 @@
 	border-right:2px solid rgb(203,87,9);
 }
 
+.loginBody .loginButton{
+	border-radius:5px;
+}
+
 @media all and (max-width: 600px) {
   .button-searchType-selected {
     font-size:3.5vw;
@@ -106,7 +145,15 @@
   .loginBody form input[type="text"],.loginBody form input[type="password"]{
 	margin-left:auto;
 	margin-right:auto;
-	width:100%;
+	width:90%;
+  }
+  
+  .loginBody form input[type="submit"]{
+	width:90%;
+  }
+  
+  .loginBody .signupButtonLink{
+	width:35%;
   }
 }
 

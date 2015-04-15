@@ -5,14 +5,11 @@
 			<form>
 				<input class="email" type="text" name="email" placeholder="Email">
 				<input class="password" type="password" name="password" placeholder="Password">
-                <button class="button button-block button-stable" ng-click="login()">
-                    Login
-                </button>
-
-                <button class="button button-block button-stable" ui-sref="signup">
-                    SignUp
-                </button>
+                <input class="loginButton" type="submit" value="Entrar" ng-click="login()">
 			</form>
+			<button class="signupButtonLink" ui-sref="signup">
+                    Registar
+            </button>
 		</div>
 	</ion-content>
 </ion-view>
