@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var Passager = new Schema({
+var Passenger = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'accounts'
@@ -39,7 +39,7 @@ var CustomRide = new Schema({
   ride_type: String,
   type_cost: String,
   cost: Number,
-  passagers: [Passager],
+  passengers: [Passenger],
   feedback:[Feedback],
   date: Date,
   state: String,

@@ -6,6 +6,7 @@
     "body-parser": "^1.12.2",
     "express": "^4.12.3",
     "mongoose": "^4.0.1",
+    "node-mandrill": "^1.0.1",
     "sha256": "^0.2.0"
   }
 }

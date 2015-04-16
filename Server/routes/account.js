@@ -11,4 +11,6 @@ router.get('/users', function(req, res) {
 
 router.post('/register', authenticate.reg);
 
+router.get('/confirmAccount', authenticate.confirmAccount);
+
 module.exports = router;
