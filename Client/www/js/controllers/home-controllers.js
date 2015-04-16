@@ -1,6 +1,7 @@
 angular.module('iTRides.homeControllers', [])
 
     .controller('HomeCtrl', function($scope) {
+
         // Some fake testing data
         $scope.notifications = [{
             id: 0,
@@ -51,6 +52,37 @@ angular.module('iTRides.homeControllers', [])
             msgType:'Exit',
             rideDate:'16 Maio 17:00h'
         }];
+
+        $scope.myNextRide = {
+            id:0,
+            startLocation : 'Rua Professor António Gomes, Braga',
+            date: '15 de fevereiro',
+            time_start: '8:00h',
+            passengers: [
+                {
+                    name: 'Tiago Gonçalves',
+                    photo:'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
+                },{
+                    name: 'Fernanda Santos',
+                    photo:'https://lh3.googleusercontent.com/-IYWkoctkgdo/AAAAAAAAAAI/AAAAAAAAAAA/v3okpkLGc_4/s46-c-k-no/photo.jpg'
+                },{
+                    name: 'Leonardo Ribeiro',
+                    photo:'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
+                }],
+            destination: 'Avenida Lusíadas, Viseu'
+        };
+
+        $scope.myNextRequest = {
+            id:0,
+            startLocation : ' Rua Alberto de Oliveira, Coimbra',
+            date: '24 de maio',
+            time_start: '15:30h',
+            owner : {
+                name: 'Celia Bell',
+                photo: 'https://lh3.googleusercontent.com/-IYWkoctkgdo/AAAAAAAAAAI/AAAAAAAAAAA/v3okpkLGc_4/s46-c-k-no/photo.jpg'
+            },
+            destination: 'Rua Artes Bairro de Santa Luzia, Porto'
+        };
 
 
         $scope.removeNotification = function (index) {

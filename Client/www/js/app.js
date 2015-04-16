@@ -109,7 +109,6 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 }
             })
 
-
              .state('createRide', {
                 url: "/createRide",
                  views: {
@@ -131,5 +130,5 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
         ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/login');
     });

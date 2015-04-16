@@ -11,7 +11,7 @@
 
             <ion-list>
                 <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap">
-                    <img ng-src="{{notification.photo}}">
+                    <img ng-src="{{notification.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{notification.name}}</h2>
                     <div ng-switch on="notification.msgType" class=" item-text-wrap">
                         <p ng-switch-when="Enter">
@@ -36,40 +36,30 @@
 
         </div>
 
-        <div class="list card">
+        <div class="list card" ng-if="myNextRide.id != null">
 
             <div class="item item-divider">
                 A minha Próxima Boleia
-                <p>15 de fevereiro às 8h00</p>
+                <p>{{myNextRide.date}} {{myNextRide.time_start}}</p>
             </div>
 
             <div class="item item-text-wrap item-icon-left">
                 <i class="icon ion-home"></i>
-                Rua Professor António Gomes, Braga
+                {{myNextRide.startLocation}}
             </div>
 
             <div class="item">
-                <div class="item item-avatar">
-                    <img src="img/default_profile_photo.png">
-                    <h2>Tiago Gonçalves</h2>
-                </div>
-                <div class="item item-avatar">
-                    <img src="img/default_profile_photo.png">
-                    <h2>Fernanda Santos</h2>
-                </div>
-                <div class="item item-avatar">
-                    <img src="img/default_profile_photo.png">
-                    <h2>Leonardo Ribeiro</h2>
-                </div>
-                <div class="item item-avatar">
-                    <img src="img/default_profile_photo.png">
-                    <h2>Matilde Gomes</h2>
+                <div class="item item-avatar" ng-repeat="p in myNextRide.passengers">
+
+                    <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                    <h2>{{p.name}}</h2>
+
                 </div>
             </div>
 
             <div class="item item-text-wrap item-icon-left">
                 <i class="icon ion-ios-location"></i>
-                Avenida Lusíadas, Viseu
+                {{myNextRide.destination}}
             </div>
 
             <a class="item item-icon-left assertive" href="#/rideDetails">
@@ -79,26 +69,26 @@
 
         </div>
 
-        <div class="list card">
+        <div class="list card" ng-if="myNextRequest.id != null">
 
             <div class="item item-divider">
                 Próxima boleia Solicitada
             </div>
 
             <div class="item item-avatar">
-                <img src="img/default_profile_photo.png">
-                <h2>Boleia de Celia	Bell</h2>
-                <p>15 de fevereiro às 8h00</p>
+                <img ng-src="{{myNextRequest.owner.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                <h2>Boleia de {{myNextRequest.owner.name}}</h2>
+                <p>{{myNextRequest.date}} {{myNextRequest.time_start}}</p>
             </div>
 
             <div class="item">
                 <div class="item item-text-wrap item-icon-left">
                     <i class="icon ion-home"></i>
-                    Rua Alberto de Oliveira, Coimbra
+                    {{myNextRequest.startLocation}}
                 </div>
                 <div class="item item-text-wrap item-icon-left">
                     <i class="icon ion-ios-location"></i>
-                    Rua Artes Bairro de Santa Luzia, Porto
+                    {{myNextRequest.destination}}
                 </div>
             </div>
 
