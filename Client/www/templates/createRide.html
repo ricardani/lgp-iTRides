@@ -1,0 +1,74 @@
+<ion-view view-title="createRide">
+    <ion-content>
+        <br><br>
+
+        <div class="row">
+            <div class="card col search-ride" ng-controller="StartAddressCtrl">
+                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                    <i class="icon ion-home"></i>
+                    Partida
+                </div>
+                <button class="button button-ride-search" ng-click="toggleLeft()">
+                    Distrito
+                </button>
+                <button class="button button-ride-search">
+                    Concelho
+                </button>
+                <button class="button button-ride-search">
+                    Freguesia
+                </button>
+            </div>
+
+            <div class="card col search-ride">
+                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                    <i class="icon ion-ios-location"></i>
+                    Destino
+                </div>
+                <button class="button button-ride-search">
+                    Distrito
+                </button>
+                <button class="button button-ride-search">
+                    Concelho
+                </button>
+                <button class="button button-ride-search">
+                    Freguesia
+                </button>
+            </div>
+        </div>
+
+
+        <div class="list" style="width:93%;margin-left:3.5%">
+			  <label class="item item-input item-stacked-label">
+			    <span class="input-label">Data</span>
+			    <input type="date">
+			  </label>
+			  <label class="item item-input item-stacked-label">
+			    <span class="input-label">Hora</span>
+			    <input type="time" placeholder="hrs:mins">
+			  </label>
+		</div>
+
+
+        <div class="list" style="width:93%;margin-left:3.5%">
+		  <label class="item item-input item-select">
+		    <div class="input-label">
+		      Tipo
+		    </div>
+		    <select>
+		      <option>Casa->Trabalho</option>
+		      <option selected>Trabalho->Casa</option>
+		      <option>Ocasional</option>
+		    </select>
+		  </label>
+		</div>
+
+
+        <button class="button button-large submit-search">
+          <i class=""></i>
+          Criar Boleia
+        </button>
+        <br><br>
+      
+
+    </ion-content>
+</ion-view>

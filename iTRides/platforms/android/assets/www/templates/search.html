@@ -1,0 +1,57 @@
+<ion-view view-title="Search">
+    <ion-content>
+
+        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="RideTypeCtrl">
+            <div class="button-bar" style="min-width:500px">
+                <a ng-repeat="type in collection"
+                   ng-class="{ 'button-balanced': $index == selectedRideType, 'button-energized': $index != selectedRideType }"
+                   ng-click="itemClicked($index)"
+                   class="button button-balanced">
+                    {{type}}
+                </a>
+            </div>
+        </ion-scroll>
+
+        <div class="card">
+            <label class="item item-input">
+                <span class="input-label">Data</span>
+                <input type="date">
+            </label>
+        </div>
+
+        <div class="row">
+            <div class="card col" ng-controller="StartAdressCtrl">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-home"></i>
+                    Partida
+                </div>
+                <button class="button button-block button-calm" ng-click="toggleLeft()">
+                    Distrito
+                </button>
+                <button class="button button-block button-calm">
+                    Concelho
+                </button>
+                <button class="button button-block button-calm">
+                    Freguesia
+                </button>
+            </div>
+
+            <div class="card col">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-ios-location"></i>
+                    Destino
+                </div>
+                <button class="button button-block button-calm">
+                    Distrito
+                </button>
+                <button class="button button-block button-calm">
+                    Concelho
+                </button>
+                <button class="button button-block button-calm">
+                    Freguesia
+                </button>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>
