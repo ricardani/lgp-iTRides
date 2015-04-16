@@ -157,13 +157,17 @@
   }
 }
 
-
-/* Signup Page */
-
-body > ion-header-bar {
-  display: none;
+.loginBody form input[type="text"]{
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  border-bottom: 1px solid #E0E0E0;
+  border-top:2px solid rgb(203,87,9);
+  border-left:2px solid rgb(203,87,9);
+  border-right:2px solid rgb(203,87,9);
 }
 
+
+/* Signup Page */
 
 
 .signup_body {
@@ -187,34 +191,84 @@ body > ion-header-bar {
   margin-bottom:60px;
 }
 
+
+ input.first_name {
+	border-top-left-radius:5px;
+  	border-top-right-radius:5px;
+  	border-top: 2px solid rgb(203,87,9);
+  	
+
+}
+
+input:nth-child(5) {
+	border-bottom-left-radius:5px;
+  	border-bottom-right-radius:5px;
+  	border-bottom: 2px solid rgb(203,87,9);
+}
+
+input.last_name {
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+}
+
+input.password {
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+}
+
 .signup_body form input{
+  border-left: 2px solid rgb(203,87,9);
+  border-right: 2px solid rgb(203,87,9);
   margin-left:auto;
   margin-right:auto;
-  margin-bottom: 1%;
   width:70%;
   height: 40px;
+
 }
 
 .signup_body form input[placeholder]{
   padding-left:30px;
   padding-top:15px;
   padding-bottom:15px;
+
+ /* border: 1px solid rgb(203,87,9);*/
 }
 
-.loginBody form input[type="text"]{
-  border-top-left-radius:5px;
-  border-top-right-radius:5px;
-  border-bottom: 1px solid #E0E0E0;
-  border-top:2px solid rgb(203,87,9);
-  border-left:2px solid rgb(203,87,9);
-  border-right:2px solid rgb(203,87,9);
-}
+
 
 .submitButton{
   color: white;
-  background-color: rgb(111, 96, 90);
+  background-color: rgb(243,121,38);
   margin-top: 5%;
   width: 70%; 
   height: 40px; 
   border: none;
+  border: 1px solid rgb(203,87,9);
+  border-radius:5px;
+  margin-top:10px;
+  padding-top:15px;
+  padding-bottom:35px;
+  border:2px solid rgb(203,87,9);
+  border-radius:5px;
+  background: #f2a979; /* Old browsers */
+  background: -moz-linear-gradient(top,  #f2a979 0%, #f37926 50%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2a979), color-stop(50%,#f37926)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* IE10+ */
+  background: linear-gradient(to bottom,  #f2a979 0%,#f37926 50%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2a979', endColorstr='#f37926',GradientType=0 ); /* IE6-9 */
+  color:#fff;
+  font-size:17px;
+}
+
+.loginButton {
+	margin-top: 3%;
+	color: rgb(243,121,38);
+	background-color: white;
+	border: 1px solid rgb(203,87,9);
+	border-radius:5px;
+	width: 30%;
+	height: 35px;
+
 }
