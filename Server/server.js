@@ -28,8 +28,8 @@ app.use(express.static('../Client/www'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', accountRoutes);
-app.use('/', rideRoutes);
+app.use('/user', accountRoutes);
+app.use('/account', rideRoutes);
 
 app.listen(8080);
 console.log("App listening on port 8080");
