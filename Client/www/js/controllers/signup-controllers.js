@@ -11,7 +11,7 @@ angular.module('iTRides.signupControllers', [])
                                                                   'password': newUser.password}).
               success(function(data, status, headers, config) {
                 if(data)
-                  $state.go('home');
+                  $state.go('home'); /* TODO mudar para uma pagina a dizer para ir ao email confirmar */ 
               }).
               error(function(data, status, headers, config) {
                 console.log("Can´t signup");

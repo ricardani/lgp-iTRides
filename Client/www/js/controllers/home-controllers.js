@@ -1,6 +1,26 @@
 angular.module('iTRides.homeControllers', [])
 
-    .controller('HomeCtrl', function($scope, $http) {
+    .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout) {
+
+        /*$http.get('http://localhost:8080/user/users').
+         success(function(data, status, headers, config) {
+         window.alert(JSON.stringify(data));
+         }).
+         error(function(data, status, headers, config) {
+         console.log("Can´t get users");
+         });*/
+
+        //test load screen
+        $http.get('http://www.w3schools.com/angular/customers.php').
+            success(function(data, status, headers, config) {
+                //window.alert(JSON.stringify(data));
+                console.log("Success");
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(config));
+                $ionicLoading.hide();
+            });
 
         $scope.notifications = [{
             id: 0,
@@ -83,9 +103,16 @@ angular.module('iTRides.homeControllers', [])
             destination: 'Rua Artes Bairro de Santa Luzia, Porto'
         };
 
-
         $scope.removeNotification = function (index) {
             $scope.notifications.splice(index, 1);
+
+        };
+
+        $scope.removeAllNotification = function () {
+
+            while($scope.notifications.length > 0){
+                $scope.removeNotification($scope.notifications.length - 1);
+            }
         };
 
 

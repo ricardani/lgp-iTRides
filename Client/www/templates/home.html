@@ -7,6 +7,7 @@
                 <i class="icon ion-email-unread orange"></i>
                 Notificações
                 <span ng-if="notifications.length > 3" class="badge badge-assertive orange">+{{notifications.length - 3}}</span>
+                <i class="ion-checkmark ion-trash-b" style="color:red;float:right" ng-click="removeAllNotification()"></i>
             </div>
 
             <ion-list>
@@ -29,7 +30,7 @@
                     </div>
 
                     <ion-option-button class="button-assertive" ng-click="removeNotification($index)">
-                        Delete
+                        <i class="icon ion-trash-b" style="color:white"> </i>
                     </ion-option-button>
                 </ion-item>
             </ion-list>
