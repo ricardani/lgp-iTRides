@@ -1,5 +1,8 @@
-angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
-    'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers'])
+angular.module('iTRides',
+    [
+        'ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
+        'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.services'
+    ])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -109,9 +112,9 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 }
             })
 
-             .state('createRide', {
+            .state('createRide', {
                 url: "/createRide",
-                 views: {
+                views: {
                     'header': {
                         templateUrl: 'templates/header.html',
                         controller: ''
