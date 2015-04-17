@@ -3,9 +3,9 @@
 		<div class="loginBody">
 			<div class="icon"></div>
 			<form>
-				<input class="email" type="text" name="email" placeholder="Email">
-				<input class="password" type="password" name="password" placeholder="Password">
-                <input class="loginButton" type="submit" value="Entrar" ng-click="login()">
+				<input class="email" type="text" name="email" placeholder="Email" ng-model="user.email">
+				<input class="password" type="password" name="password" placeholder="Password" ng-model="user.password">
+                <input class="loginButton" type="submit" value="Entrar" ng-click="login(user)">
 			</form>
 			<button class="signupButtonLink" ui-sref="signup">
                     Registar

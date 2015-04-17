@@ -24,6 +24,7 @@ function register(req, res) {
   var hash, temp;
   hash = sha256(req.body.password);
   temp = req.body;
+  temp.name = req.body.firstName + " " + req.body.lastName;
   temp.password = hash;
   var person = new Account(temp);
   person.save(function(error, data) {
@@ -58,3 +59,19 @@ function accountConfirmation(req, res) {
 }
 
 module.exports.confirmAccount = accountConfirmation;
+
+function login(req, res) {
+  Account.findOne({
+    email: req.body.email,
+    password: sha256(req.body.password)
+  }, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.json(err);
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports.checkLogin = login;
