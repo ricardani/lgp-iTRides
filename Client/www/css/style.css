@@ -57,14 +57,14 @@
 
 /* Login page */
 
-.loginBody{
+.loginBody, .signup_body{
 	background-image:url(../img/loginBackground.jpg);
 	height:100vh;
 	overflow: auto;
 	background-size:cover;
 }
 
-.loginBody .icon{
+.loginBody .icon, .signup_body .icon{
 	width:123px;
 	height:43px;
 	margin-left:auto;
@@ -76,7 +76,7 @@
 	margin-bottom:80px;
 }
 
-.loginBody form input[placeholder]{
+.loginBody form input[placeholder], .signup_body form input[placeholder]{
 	padding-left:35px;
 	padding-top:15px;
 	padding-bottom:10px;
@@ -84,7 +84,7 @@
 	color:#fff;
 }
 
-.loginBody form input[type="text"],.loginBody form input[type="password"],.loginBody form input[type="submit"]{
+.loginBody form input[type="text"],.loginBody form input[type="password"],.loginBody form input[type="submit"],.signup_body form input[type="text"], .signup_body form input[type="email"],.signup_body form input[type="password"],.signup_body form input[type="submit"]{
 	margin-left:auto;
 	margin-right:auto;
 	width:40%;
@@ -94,14 +94,13 @@
 	font-size:16px;
 }
 
-.loginBody form input[type="submit"]{
+.loginBody form input[type="submit"], .signup_body form input[type="submit"]{
 	display: block;
 	margin-top:50px;
 	height:5%;
 	padding-top:15px;
 	padding-bottom:15px;
 	border:1px solid rgb(203,87,9);
-	
 	background: #f2a979; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f2a979 0%, #f37926 50%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2a979), color-stop(50%,#f37926)); /* Chrome,Safari4+ */
@@ -114,7 +113,7 @@
 	font-size:17px;
 }
 
-.loginBody .signupButtonLink{
+.loginBody .signupButtonLink, .signup_body .loginButton{
 	margin-left:auto;
 	margin-right:auto;
 	width:40%;
@@ -123,7 +122,6 @@
 	padding-top:15px;
 	padding-bottom:15px;
 	border:1px solid rgb(203,87,9);
-	
 	background: #ffffff; /* Old browsers */
 	color:rgb(243,121,38);
 	font-size:17px;
@@ -133,13 +131,13 @@
 	border-radius:0px;
 }
 
-.loginBody .email{
+.loginBody .email, .signup_body .first_name, .signup_body .last_name, .signup_body .email{
 	background-repeat:no-repeat;
 	background-size:contain;
 	background-image:url(../img/email_login.png);
 }
 
-.loginBody .password{
+.loginBody .password, .signup_body .password, .signup_body .confirm_password{
 	background-repeat:no-repeat;
 	background-size:contain;
 	background-image:url(../img/lock.png);
@@ -199,13 +197,13 @@
   
   /* Login page */
   
-  .loginBody form input[type="text"],.loginBody form input[type="password"]{
+  .loginBody form input[type="text"],.loginBody form input[type="password"], .signup_body form input[type="text"], .signup_body form input[type="password"], .signup_body form input[type="email"]{
 	margin-left:auto;
 	margin-right:auto;
 	width:80%;
   }
   
-  .loginBody form input[type="submit"]{
+  .loginBody form input[type="submit"], .signup_body form input[type="submit"]{
 	width:80%;
   }
   
@@ -213,7 +211,7 @@
 	width:100%;
   }
   
-  .loginBody .signupButtonLink{
+  .loginBody .signupButtonLink, .signup_body .loginButton{
 	width:80%;
   }
   
@@ -225,101 +223,28 @@
   }
 }
 
-/* Signup Page */
+/* Sign Up Page only */
 
- 
-.signup_body {
-  background-color: rgb(243,121,38);
-  height:100vh;
-  overflow: auto;
-  text-align: center;
-
+.signup_body form input[type="text"], .signup_body form input[type="email"], .signup_body form input[type="password"] {
+	margin-bottom:10px;
 }
 
-
-.signup_body .icon{
-  width:123px;
-  height:43px;
-  margin-left:auto;
-  margin-right:auto;
-  background-image:url(../img/iTGrow.png);
-  background-size:contain;
-  background-repeat:no-repeat;
-  margin-top:30px;
-  margin-bottom:30px;
+.signup_body form input[type="submit"] {
+	margin-bottom: -20px;
 }
 
-
- input.first_name {
-	border-top-left-radius:5px;
-  	border-top-right-radius:5px;
-  	border-top: 2px solid rgb(203,87,9);
+.signup_body ::-webkit-input-placeholder {
+    color:    #fff;
 }
 
-input:nth-child(5) {
-	border-bottom-left-radius:5px;
-  	border-bottom-right-radius:5px;
-  	border-bottom: 2px solid rgb(203,87,9);
+.signup_body :-moz-placeholder {
+    color:    #fff;
 }
 
-input.last_name {
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
+.signup_body ::-moz-placeholder {
+    color:    #fff;
 }
 
-.signup_body form input{
-  border-left: 2px solid rgb(203,87,9);
-  border-right: 2px solid rgb(203,87,9);
-  margin-left:auto;
-  margin-right:auto;
-  width:90%;
-  height: 40px;
-
-}
-
-.signup_body form input[placeholder]{
-  padding-left:30px;
-  padding-top:15px;
-  padding-bottom:15px;
-
- /* border: 1px solid rgb(203,87,9);*/
-}
-
-
-
-.submitButton{
-  color: white;
-  background-color: rgb(243,121,38);
-  margin-top: 5%;
-  width: 90%; 
-  height: 40px; 
-  border: none;
-  border: 1px solid rgb(203,87,9);
-  border-radius:5px;
-  margin-top:10px;
-  padding-top:15px;
-  padding-bottom:35px;
-  border:2px solid rgb(203,87,9);
-  border-radius:5px;
-  background: #f2a979; /* Old browsers */
-  background: -moz-linear-gradient(top,  #f2a979 0%, #f37926 50%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2a979), color-stop(50%,#f37926)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #f2a979 0%,#f37926 50%); /* IE10+ */
-  background: linear-gradient(to bottom,  #f2a979 0%,#f37926 50%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2a979', endColorstr='#f37926',GradientType=0 ); /* IE6-9 */
-  color:#fff;
-  font-size:17px;
-}
-
-.loginButton {
-	margin-top: 3%;
-	color: rgb(243,121,38);
-	background-color: white;
-	border: 1px solid rgb(203,87,9);
-	border-radius:5px;
-	width: 30%;
-	height: 35px;
-
+.signup_body :-ms-input-placeholder {
+    color:    #fff;
 }
