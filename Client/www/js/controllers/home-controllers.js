@@ -1,16 +1,6 @@
 angular.module('iTRides.homeControllers', [])
 
-
-
     .controller('HomeCtrl', function($scope, $http) {
-
-        $http.get('http://localhost:8080/user/users').
-          success(function(data, status, headers, config) {
-            window.alert(JSON.stringify(data));
-          }).
-          error(function(data, status, headers, config) {
-            console.log("Can´t get users");
-        })
 
         $scope.notifications = [{
             id: 0,

@@ -1,5 +1,5 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
-    'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers'])
+    'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -104,7 +104,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 views: {
                     'content': {
                         templateUrl: 'templates/signup.html',
-                        controller: ''
+                        controller: 'SignupCtrl'
                     }
                 }
             })

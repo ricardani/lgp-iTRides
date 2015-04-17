@@ -13,4 +13,6 @@ router.post('/register', authenticate.reg);
 
 router.get('/confirmAccount', authenticate.confirmAccount);
 
+router.post('/login', authenticate.checkLogin);
+
 module.exports = router;
