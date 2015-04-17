@@ -1,6 +1,19 @@
 
 /* CSS to color the icons to iTGrow's orange */
 
+::-webkit-input-placeholder {
+    color:    #fff;
+}
+:-moz-placeholder {
+    color:    #fff;
+}
+::-moz-placeholder {
+    color:    #fff;
+}
+:-ms-input-placeholder {
+    color:    #fff;
+}
+
 .badge.badge-assertive.orange {
   background-color: rgb(243,121,38);
 }
@@ -45,9 +58,10 @@
 /* Login page */
 
 .loginBody{
-	background-color: rgb(243,121,38);
+	background-image:url(../img/loginBackground.jpg);
 	height:100vh;
 	overflow: auto;
+	background-size:cover;
 }
 
 .loginBody .icon{
@@ -58,29 +72,35 @@
 	background-image:url(../img/iTGrow.png);
 	background-size:contain;
 	background-repeat:no-repeat;
-	margin-top:30px;
-	margin-bottom:30px;
+	margin-top:80px;
+	margin-bottom:80px;
 }
 
 .loginBody form input[placeholder]{
-	padding-left:30px;
+	padding-left:35px;
 	padding-top:15px;
-	padding-bottom:15px;
+	padding-bottom:10px;
+	margin-bottom:15px;
+	color:#fff;
 }
 
 .loginBody form input[type="text"],.loginBody form input[type="password"],.loginBody form input[type="submit"]{
 	margin-left:auto;
 	margin-right:auto;
 	width:40%;
-	height:5%;
+	height:47px;
+	border-bottom:1px solid #fff;
+	background-color:transparent;
+	font-size:16px;
 }
+
 .loginBody form input[type="submit"]{
 	display: block;
-	margin-top:10px;
+	margin-top:50px;
+	height:5%;
 	padding-top:15px;
 	padding-bottom:15px;
-	border:2px solid rgb(203,87,9);
-	border-radius:5px;
+	border:1px solid rgb(203,87,9);
 	
 	background: #f2a979; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f2a979 0%, #f37926 50%); /* FF3.6+ */
@@ -97,38 +117,75 @@
 .loginBody .signupButtonLink{
 	margin-left:auto;
 	margin-right:auto;
-	width:10%;
+	width:40%;
 	display: block;
 	margin-top:10px;
-	padding-top:7px;
-	padding-bottom:7px;
-	border:2px solid rgb(203,87,9);
-	border-radius:5px;
+	padding-top:15px;
+	padding-bottom:15px;
+	border:1px solid rgb(203,87,9);
 	
 	background: #ffffff; /* Old browsers */
 	color:rgb(243,121,38);
-	font-size:15px;
-}
-
-.loginBody form input[type="text"]{
-	border-top-left-radius:5px;
-	border-top-right-radius:5px;
-	border-bottom: 1px solid #E0E0E0;
-	border-top:2px solid rgb(203,87,9);
-	border-left:2px solid rgb(203,87,9);
-	border-right:2px solid rgb(203,87,9);
-}
-
-.loginBody form input[type="password"]{
-	border-bottom-left-radius:5px;
-	border-bottom-right-radius:5px;
-	border-bottom:2px solid rgb(203,87,9);
-	border-left:2px solid rgb(203,87,9);
-	border-right:2px solid rgb(203,87,9);
+	font-size:17px;
 }
 
 .loginBody .loginButton{
-	border-radius:5px;
+	border-radius:0px;
+}
+
+.loginBody .email{
+	background-repeat:no-repeat;
+	background-size:contain;
+	background-image:url(../img/email_login.png);
+}
+
+.loginBody .password{
+	background-repeat:no-repeat;
+	background-size:contain;
+	background-image:url(../img/lock.png);
+}
+
+.loginBody .email::-webkit-input-placeholder,.loginBody .password::-webkit-input-placeholder
+{
+  color:#fff;
+  font-size:16px;
+  opacity:0.7;
+}
+.loginBody .email:-moz-placeholder , .loginBody .password:-moz-placeholder 
+{
+  color:#fff;
+  font-size:16px;
+  opacity:0.7;
+}
+.loginBody .email::-moz-placeholder, .loginBody .password::-moz-placeholder
+{
+  color:#fff;
+  font-size:16px;
+  opacity:0.7;
+}
+.loginBody .email:-ms-input-placeholder , .loginBody .password:-ms-input-placeholder 
+{
+  color:#fff;
+  font-size:16px;
+  opacity:0.7;
+}
+
+.loginBody .forgotPass{
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:15px;
+	padding-bottom:15px;
+	text-align:center;
+	margin-top:25px;
+}
+
+.loginBody .forgotPass a{
+	text-decoration:none;
+	color:#fff;
+}
+
+.loginBody .forgotPass a:hover{
+	text-decoration:underline;
 }
 
 @media all and (max-width: 600px) {
@@ -145,27 +202,28 @@
   .loginBody form input[type="text"],.loginBody form input[type="password"]{
 	margin-left:auto;
 	margin-right:auto;
-	width:90%;
+	width:80%;
   }
   
   .loginBody form input[type="submit"]{
-	width:90%;
+	width:80%;
+  }
+  
+  .loginBody .forgotPass{
+	width:100%;
   }
   
   .loginBody .signupButtonLink{
-	width:35%;
+	width:80%;
+  }
+  
+  .loginBody .forgotPass .text{
+	margin-left:10%;
+  }
+  .loginBody .forgotPass .arrow{
+	margin-right:10%;
   }
 }
-
-.loginBody form input[type="text"]{
-  border-top-left-radius:5px;
-  border-top-right-radius:5px;
-  border-bottom: 1px solid #E0E0E0;
-  border-top:2px solid rgb(203,87,9);
-  border-left:2px solid rgb(203,87,9);
-  border-right:2px solid rgb(203,87,9);
-}
-
 
 /* Signup Page */
 
@@ -196,8 +254,6 @@
 	border-top-left-radius:5px;
   	border-top-right-radius:5px;
   	border-top: 2px solid rgb(203,87,9);
-  	
-
 }
 
 input:nth-child(5) {
@@ -207,11 +263,6 @@ input:nth-child(5) {
 }
 
 input.last_name {
-	border-top: 1px solid grey;
-	border-bottom: 1px solid grey;
-}
-
-input.password {
 	border-top: 1px solid grey;
 	border-bottom: 1px solid grey;
 }
