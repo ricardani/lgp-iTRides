@@ -8,15 +8,9 @@
                     <i class="icon ion-home"></i>
                     Partida
                 </div>
-                <button class="button button-ride-search" ng-click="toggleLeft()">
-                    Distrito
-                </button>
-                <button class="button button-ride-search">
-                    Concelho
-                </button>
-                <button class="button button-ride-search">
-                    Freguesia
-                </button>
+                <input class="button button-ride-search" placeholder="Distrito" ng-model="newRide.startDistrict" ng-click="toggleLeft()">
+                <input class="button button-ride-search" placeholder="Concelho" ng-model="newRide.startMunicipality">
+                <input class="button button-ride-search" placeholder="Rua" ng-model="newRide.startStreet">
             </div>
 
             <div class="card col search-ride">
@@ -24,52 +18,43 @@
                     <i class="icon ion-ios-location"></i>
                     Destino
                 </div>
-                <button class="button button-ride-search">
-                    Distrito
-                </button>
-                <button class="button button-ride-search">
-                    Concelho
-                </button>
-                <button class="button button-ride-search">
-                    Freguesia
-                </button>
+                <input class="button button-ride-search" placeholder="Distrito" ng-model="newRide.destinationDistrict" ng-click="toggleLeft()">
+                <input class="button button-ride-search" placeholder="Concelho" ng-model="newRide.destinationMunicipality">
+                <input class="button button-ride-search" placeholder="Rua" ng-model="newRide.destinationStreet">
             </div>
         </div>
 
 
         <div class="list" style="width:93%;margin-left:3.5%">
-			  <label class="item item-input item-stacked-label">
-			    <span class="input-label">Data</span>
-			    <input type="date">
-			  </label>
-			  <label class="item item-input item-stacked-label">
-			    <span class="input-label">Hora</span>
-			    <input type="time" placeholder="hrs:mins">
-			  </label>
-		</div>
+    		  <label class="item item-input item-stacked-label">
+    		    <span class="input-label">Data</span>
+    		    <input type="date" ng-model="newRide.date">
+    		  </label>
+    		  <label class="item item-input item-stacked-label">
+    		    <span class="input-label">Hora</span>
+    		    <input type="time" placeholder="hrs:mins" ng-model="newRide.hour">
+    		  </label>
+    		</div>
 
 
         <div class="list" style="width:93%;margin-left:3.5%">
-		  <label class="item item-input item-select">
-		    <div class="input-label">
-		      Tipo
-		    </div>
-		    <select>
-		      <option>Casa->Trabalho</option>
-		      <option selected>Trabalho->Casa</option>
-		      <option>Ocasional</option>
-		    </select>
-		  </label>
-		</div>
+    		  <label class="item item-input item-select">
+    		    <div class="input-label">
+    		      Tipo
+    		    </div>
+    		    <select ng-model="newRide.type">
+    		      <option>Casa->Trabalho</option>
+    		      <option selected>Trabalho->Casa</option>
+    		      <option>Ocasional</option>
+    		    </select>
+    		  </label>
+    		</div>
 
+        <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)">
 
-        <button class="button button-large submit-search">
-          <i class=""></i>
-          Criar Boleia
-        </button>
         <br><br>
         <br><br>
-      
+
 
     </ion-content>
 </ion-view>

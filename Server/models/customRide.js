@@ -35,7 +35,7 @@ var CustomRide = new Schema({
     ref: 'accounts'
   },
   seats: Number,
-  time_start: Date,
+  time_start: String,
   ride_type: String,
   type_cost: String,
   cost: Number,

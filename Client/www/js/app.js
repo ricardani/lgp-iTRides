@@ -119,7 +119,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     },
                     'content': {
                         templateUrl: 'templates/createRide.html',
-                        controller: ''
+                        controller: 'CreateRideCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',
