@@ -1,6 +1,9 @@
 var Account = require('../models/account');
 var sha256 = require('sha256');
 var mandrill = require('node-mandrill')('Kj-1SGPKFICoSgUIo9OEqw');
+//Tokens
+var jwt = require('jsonwebtoken');
+var secret_key = 'shhhhhhared-secret';
 
 function sendMail(who, title, msg) {
   mandrill('/messages/send', {
@@ -69,7 +72,12 @@ function login(req, res) {
       console.log(err);
       res.json(err);
     } else {
-      res.json(data);
+      var profile = {
+        email: data.email
+      };
+      var token = jwt.sign(profile, secret_key, { expiresInMinutes: 60 });
+      res.json({ activated: data.activated,token: token });
+      //res.json(data);
     }
   });
 }

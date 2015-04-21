@@ -5,6 +5,11 @@ var bodyParser = require('body-parser');
 var accountRoutes = require('./routes/account');
 var rideRoutes = require('./routes/ride');
 
+//Tokens
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
+var secret_key = 'shhhhhhared-secret';
+
 var app = express();
 
 app.use(bodyParser());
@@ -28,7 +33,9 @@ app.use(express.static('../Client/www'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/user', accountRoutes);
+app.use('/user', accountRoutes);
+// We are going to protect /api routes with JWT
+app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
 
 app.listen(8080);

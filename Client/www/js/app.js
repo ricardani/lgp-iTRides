@@ -1,6 +1,6 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-     'iTRides.services'])
+    'iTRides.loadingControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -17,6 +17,36 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
 
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
+
+            .state('loading', {
+                url: "/loading",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/loading.html',
+                        controller: 'LoadingCtrl'
+                    }
+                }
+            })
+
+            .state('login', {
+                url: "/login",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/login.html',
+                        controller: 'LoginCtrl'
+                    }
+                }
+            })
+
+            .state('signup', {
+                url: "/signup",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/signup.html',
+                        controller: 'SignupCtrl'
+                    }
+                }
+            })
 
             .state('home', {
                 url: "/home",
@@ -90,26 +120,6 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 }
             })
 
-            .state('login', {
-                url: "/login",
-                views: {
-                    'content': {
-                        templateUrl: 'templates/login.html',
-                        controller: 'LoginCtrl'
-                    }
-                }
-            })
-
-            .state('signup', {
-                url: "/signup",
-                views: {
-                    'content': {
-                        templateUrl: 'templates/signup.html',
-                        controller: 'SignupCtrl'
-                    }
-                }
-            })
-
             .state('createRide', {
                 url: "/createRide",
                 views: {
@@ -131,5 +141,5 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
         ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/loading');
     });

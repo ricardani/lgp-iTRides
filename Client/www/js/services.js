@@ -38,10 +38,10 @@ iTRides_Services.config(function ($httpProvider) {
 
 iTRides_Services.run(function($rootScope, $ionicLoading) {
     $rootScope.$on('loading:show', function() {
-        $ionicLoading.show({template: '<ion-spinner icon="lines"></ion-spinner>'})
+        $ionicLoading.show({template: '<ion-spinner icon="lines"></ion-spinner>'});
     });
 
     $rootScope.$on('loading:hide', function() {
-        $ionicLoading.hide()
+        $ionicLoading.hide();
     })
 });
