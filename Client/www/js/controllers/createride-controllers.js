@@ -1,11 +1,11 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $ionicModal, $timeout, $http) {
+    .controller('CreateRideCtrl', function($scope, $ionicModal, $timeout, $http, Server) {
 
         $scope.createRide = function (newRide) {
 
             if(newRide.type == "Trabalho->Casa") {
-                $http.post('http://localhost:8080/api/ride/createDR',
+                $http.post(Server.url + 'api/ride/createDR',
                     { 'startLocation' : [{ "district": newRide.startDistrict,
                         "municipality": newRide.startMunicipality,
                         "street": newRide.startStreet
@@ -28,7 +28,7 @@ angular.module('iTRides.createRideControllers', [])
 
             }
             else if(newRide.type == "Ocasional") {
-                $http.post('http://localhost:8080/api/ride/createCR',
+                $http.post(Server.url + 'api/ride/createCR',
                     { 'startLocation' : { "district": newRide.startDistrict,
                         "municipality": newRide.startMunicipality,
                         "street": newRide.startStreet

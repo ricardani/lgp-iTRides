@@ -1,11 +1,11 @@
 angular.module('iTRides.signupControllers', [])
 
-    .controller('SignupCtrl', function($scope, $state, $http, $ionicLoading) {
+    .controller('SignupCtrl', function($scope, $state, $http, $ionicLoading, Server) {
 
         $scope.signup = function (newUser) {
 
             if(newUser.password == newUser.confirmPassword) {
-                $http.post('http://localhost:8080/user/register', {'firstName' : newUser.firstName,
+                $http.post(Server.url + 'user/register', {'firstName' : newUser.firstName,
                     'lastName' : newUser.lastName,
                     'email': newUser.email,
                     'password': newUser.password}).

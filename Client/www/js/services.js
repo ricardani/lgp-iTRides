@@ -1,6 +1,6 @@
 var iTRides_Services = angular.module('iTRides.services', []);
 
-/*
+
 iTRides_Services.factory('authInterceptor', function ($rootScope, $q, $window) {
     return {
         request: function (config) {
@@ -17,7 +17,7 @@ iTRides_Services.factory('authInterceptor', function ($rootScope, $q, $window) {
             return response || $q.when(response);
         }
     };
-});*/
+});
 
 iTRides_Services.config(function ($httpProvider) {
     //$httpProvider.interceptors.push('authInterceptor');
@@ -44,4 +44,11 @@ iTRides_Services.run(function($rootScope, $ionicLoading) {
     $rootScope.$on('loading:hide', function() {
         $ionicLoading.hide();
     })
+});
+
+iTRides_Services.factory('Server', function() {
+    return {
+         url: 'http://localhost:8080/'
+        //url: 'https://itrides.herokuapp.com/'
+    };
 });

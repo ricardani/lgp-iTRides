@@ -1,13 +1,13 @@
 angular.module('iTRides.loginControllers', [])
 
-    .controller('LoginCtrl', function($scope, $state, $http, $window, $ionicLoading) {
+    .controller('LoginCtrl', function($scope, $state, $http, $window, $ionicLoading, Server) {
 
         $scope.user = {email:'', password:''};
 
         $scope.login = function (user) {
 
             if(user.email && user.password){
-                $http.post('http://localhost:8080/user/login', {'email': user.email, 'password': user.password}).
+                $http.post(Server.url + 'user/login', {'email': user.email, 'password': user.password}).
                     success(function(data, status, headers, config) {
                         console.log(data.activated);
                         if(data.activated){
