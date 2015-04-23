@@ -20,7 +20,7 @@ iTRides_Services.factory('authInterceptor', function ($rootScope, $q, $window) {
 });
 
 iTRides_Services.config(function ($httpProvider) {
-    //$httpProvider.interceptors.push('authInterceptor');
+    $httpProvider.interceptors.push('authInterceptor');
     $httpProvider.interceptors.push(function($rootScope) {
         return {
             request: function (config) {
@@ -48,7 +48,7 @@ iTRides_Services.run(function($rootScope, $ionicLoading) {
 
 iTRides_Services.factory('Server', function() {
     return {
-         url: 'http://localhost:8080/'
+        url: 'http://localhost:8080/'
         //url: 'https://itrides.herokuapp.com/'
     };
 });
