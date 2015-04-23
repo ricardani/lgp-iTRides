@@ -19,7 +19,32 @@ angular.module('iTRides.searchControllers', [])
 	};
 
 
-})
+	$scope.rides = [{
+		    id: 0,
+            name: 'Ben Sparrow',
+            seats:'2',
+            time_start: "8:00",
+  			ride_type: "Ocasional",
+  			type_cost: "Custo total",
+  			cost: 30,
+  			name: "Boleia fixe",
+  			startLocation: "Antas",
+  			destination: "Matosinhos"
+        },
+        {
+		    id: 1,
+            name: 'Paulo Silva',
+            seats:'4',
+            time_start: "18:00",
+  			ride_type: "Casa->trabalho",
+  			type_cost: "Por pessoa",
+  			cost: 10,
+  			name: "Vamos trabalhar",
+  			startLocation: "Azambuja",
+  			destination: "ItGrow Porto"
+        }];
+
+    })
 
  	
 
