@@ -28,7 +28,7 @@ var DefaultRide = new Schema({
   },
   passengers: [Passenger],
   feedback:[Feedback],
-  defaultRideInfo: {
+  _defaultRideInfo: {
     type: Schema.ObjectId,
     ref: 'defaultrideinfos'
   }

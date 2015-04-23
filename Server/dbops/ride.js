@@ -78,95 +78,58 @@ function defaultRideCreation(req, res) {
     }
     else {
 
-      /* Get start location id */
-      WorkLocation.findOne({
-        "name" : req.body.startLocation.name
+      DefaultRideInfo.findOne({
+        "name": req.body.rideName
       })
       .populate('_id')
-      .exec(function(error, start) {
-        if(error) {
-          res.json("Starting location not found");
-        }
-        else {
+      .exec(function(error, rideInfo) {
 
-          /* Get destination location id */
-          WorkLocation.findOne({
-            "name" : req.body.destination.name
-          })
-          .populate('_id')
-          .exec(function(error, finish) {
-            if(error) {
-              res.json("Destination location not found");
-            }
-            else {
-
-              var defaultRide = new DefaultRide(req.body);
-              defaultRide._owner = owner;
-              defaultRide._startLocation = start._id;
-              defaultRide._destination = finish._id;
-              defaultRide.save(function(error, data) {
-                if (error) {
-                  console.log(error);
-                  res.json(error);
-                } else {
-                  console.log(data);
-                  res.json(data);
-                }
-              });
-            }
-          });
-
-        }
+        var defaultRide = new DefaultRide(req.body);
+        defaultRide._owner = owner;
+        defaultRide._defaultRideInfo = rideInfo;
+        defaultRide.save(function(error, data) {
+          if (error) {
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log(data);
+            res.json(data);
+          }
+        });
       });
-
-
     }
   });
 
 }
 
 module.exports.createDefaultRide = defaultRideCreation;
-/*
-{
-  "owner_email":"j.miguelgsantos@hotmail.com",
-  "ride_type":"default",
-  "time_start":"1970-01-01T15:55:00.000Z",
-  "startLocation": {
-            "location" : {
-              "district" : "distrito",
-              "municipality" : "concelho",
-              "street" : "rua",
-              "info" : "Escritório B9"
-          },
-          "name" : "String"
-      },
-  "destination": {
-            "location" : {
-              "district" : "distrito",
-              "municipality" : "concelho",
-              "street" : "rua",
-              "info" : "Escritório B9"
-          },
-          "name" : "String"
-   }
-}
-*/
+
 
 function removeRide(req, res) {
-  console.log('hey');
+
   if(req.body.ride_type == 'default') {
-    DefaultRide.findOne({
-        "name": req.body.name
-      }).remove(function(error, data) {
-        if (error) {
-          res.json(error);
-        } else
-          res.json(data);
-      });
+
+    DefaultRideInfo.findOne({
+      "name": req.body.rideName
+    })
+    .populate('_id')
+    .exec(function(err, rideInfo) {
+      DefaultRide.findOne({
+          "_owner": req.user.id,
+          "_defaultRideInfo": rideInfo
+        }).remove(function(error, data) {
+          if (error) {
+            res.json(error);
+          } else
+            res.json(data);
+        });
+    });
+
+
   }
   else if(req.body.ride_type == 'custom') {
     CustomRide.findOne({
-        "owner": req.body.owner,
+        "_owner": req.user.id,
         "time_start": req.body.time_start,
         "startLocation": req.body.startLocation,
         "destination": req.body.destination
