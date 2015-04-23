@@ -6,24 +6,10 @@ angular.module('iTRides.createRideControllers', [])
 
             if(newRide.type == "Trabalho->Casa") {
                 $http.post(Server.url + 'api/ride/createDR',
-                        { 'startLocation' : {
-                            "location" : {
-                              "district": newRide.startDistrict,
-                              "municipality": newRide.startMunicipality,
-                              "street": newRide.startStreet
-                            },
-                            "name": newRide.locationName
-                        },
-                        'destination' : {
-                          "location" : {
-                            "district": newRide.destinationDistrict,
-                            "municipality": newRide.destinationMunicipality,
-                            "street": newRide.destinationStreet
-                          },
-                          "name": newRide.destinationName
-                        },
-                        'ride_type': newRide.type,
-                        'time_start': newRide.hour}
+                        {
+                          'owner_email': newRide.ownerEmail,
+                          'rideName': newRide.rideName
+                        }
                 ).
                     success(function(data, status, headers, config) {
                         if(data){
@@ -37,16 +23,28 @@ angular.module('iTRides.createRideControllers', [])
             }
             else if(newRide.type == "Ocasional") {
                 $http.post(Server.url + 'api/ride/createCR',
-                    { 'startLocation' : { "district": newRide.startDistrict,
+                    {
+                      //TODO '_owner': < ID do user actual>,
+
+                      'seats': newRide.seats,
+                      'time_start': newRide.hour,
+                      'ride_type': newRide.rideType,
+                      'type_cost': newRide.typeCost,
+                      'cost': newRide.cost,
+                      'date': newRide.startingDate,
+                      'startLocation' : {
+                        "district": newRide.startDistrict,
                         "municipality": newRide.startMunicipality,
-                        "street": newRide.startStreet
-                    },
-                        'destination' : { "district": newRide.destinationDistrict,
-                            "municipality": newRide.destinationMunicipality,
-                            "street": newRide.destinationStreet
-                        },
-                        'ride_type': newRide.type,
-                        'time_start': newRide.hour}
+                        "street": newRide.startStreet,
+                        "info": newRide.startLocationInfo
+                      },
+                      'destination' : {
+                          "district": newRide.destinationDistrict,
+                          "municipality": newRide.destinationMunicipality,
+                          "street": newRide.destinationStreet,
+                          "info": newRide.destinationInfo
+                      }
+                    }
                 ).
                     success(function(data, status, headers, config) {
                         if(data){

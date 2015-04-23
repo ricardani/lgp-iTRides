@@ -34,7 +34,10 @@ var CustomRide = new Schema({
   passengers: [Passenger],
   feedback:[Feedback],
   date: Date,
-  state: String,
+  state: {
+    type: String,
+    default: "waiting"
+  },
   startLocation: {
     district: String,
     municipality: String,
@@ -50,37 +53,3 @@ var CustomRide = new Schema({
 });
 
 module.exports = mongoose.model('CustomRide', CustomRide);
-/*
-var small = new CustomRideFunc({
-  'seats': 3,
-  'ride_type': 'String',
-  'type_cost': 'String',
-  'cost': 4.5,
-  'passagers': [{
-    'user_email': 'String'
-  }],
-  'feedback': [{
-    'user_email': 'String',
-    'feedback': 3,
-    'message': 'String'
-  }],
-  'state': 'String',
-  'startLocation': [{
-    'district': 'String',
-    'municipality': 'String',
-    'street': 'String',
-    'info': 'String'
-  }],
-  'destination': [{
-    'district': 'String',
-    'municipality': 'String',
-    'street': 'String',
-    'info': 'String'
-  }]
-});
-small.save(function (err) {
-  if (err) {
-    return console.log(err);
-  }
-  // saved!
-})*/

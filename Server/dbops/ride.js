@@ -47,24 +47,7 @@ function customRideCreation(req, res) {
 }
 
 module.exports.createCustomRide = customRideCreation;
-/*
-{
-  "owner_email":"j.miguelgsantos@hotmail.com",
-  "ride_type":"custom",
-  "time_start":"1970-01-01T15:55:00.000Z",
-  "startLocation": {
-            "district" : "distrito",
-            "municipality" : "concelho",
-            "street" : "rua"
-        },
-  "destination":
-        {
-            "district" : "distrito",
-            "municipality" : "concelho",
-            "street" : "rua"
-        }
-}
-*/
+
 
 function defaultRideCreation(req, res) {
 
@@ -125,7 +108,6 @@ function removeRide(req, res) {
         });
     });
 
-
   }
   else if(req.body.ride_type == 'custom') {
     CustomRide.findOne({
@@ -148,104 +130,68 @@ module.exports.deleteRide = removeRide;
 function requestRide(req, res) {
 
   if(req.body.ride_type == 'default') {
-    DefaultRide.findOne({
+    DefaultRideInfo.findOne({
         "name": req.body.rideName
-      }, function(error, data) {
-        if (error) {
-          res.json(error);
-        } else {
-          res.json(data);
+      })
+      .populate('_id')
+      .exec( function(error, rideInfo) {
+        if(error) {
+          res.json("Couldn't find the ride info");
+        }
+        else {
+          Account.findOne({
+            "email": req.body.owner_email
+          })
+          .populate('_id')
+          .exec( function(err, owner) {
+            if(err) {
+              res.json("Couldn't find the owner");
+            }
+            else {
+              DefaultRide.findOne({
+                "_owner": owner,
+                "_defaultRideInfo": rideInfo
+              }, function(erro, ride) {
+
+                if(erro) {
+                  res.json("Couldn't find the ride");
+                }
+                else {
+                  ride.passengers.push({"_user": req.user.id});
+                  res.json(ride);
+                }
+              });
+            }
+          });
         }
       });
   }
   else if(req.body.ride_type == 'custom') {
 
-
     Account.findOne({
       "email": req.body.owner_email
     })
     .populate('_id')
-    .exec(function( err, user) {
+    .exec( function(err, owner) {
+      if(err) {
+        res.json("Couldn't find the owner");
+      }
+      else {
+        CustomRide.findOne({
+          "_owner": owner
+        }, function(erro, ride) {
 
-      CustomRide.findOne({
-        '_owner': user._id,
-        'time_start' : req.body.tim_start,
-        'startLocation' : req.body.startLocation,
-        'destination' : req.body.destination
-      }, function(error, ride) {
-
-      });
-
+          if(erro) {
+            res.json("Couldn't find the ride");
+          }
+          else {
+            ride.passengers.push({"_user": req.user.id});
+            res.json(ride);
+          }
+        });
+      }
     });
-
   }
-    /*.populate('_id')
-    .exec ( function(err, owner) {
-
-      console.log(JSON.stringify(req.body.startLocation) + "\n\n" +
-                  JSON.stringify(req.body.destination));
-
-
-      CustomRide.findOne({
-            "owner": owner._id,
-            "time_start": req.body.time_start
-          })
-          .populate('_startLocation')
-          .populate('_destination')
-          .exec( function(error, ride) {
-
-            if (error) {
-              res.json(error);
-            }
-            else if(ride != null) {
-
-              console.log(ride);
-
-              Account.findOne({
-                "email": req.body.newPassengerEmail
-              }, function(err, passenger) {
-                if(err) {
-                  res.json(err);
-                }
-                else {
-                  console.log("Woohoo!  " + passenger._id)
-                  //ride.passengers.push({"user": passenger._id});
-                  res.json(passenger);
-                }
-              })
-
-            }
-            else
-              res.json("couldn't find ride");
-
-          })
-
-      })
-
-    }
-    */
-
 }
 
 module.exports.requestsRide = requestRide;
-/*
-{
-  "newPassengerEmail": "ei11057@fe.up.pt",
-  "owner_email":"j.miguelgsantos@hotmail.com",
-  "ride_type":"custom",
-  "owner":"553135f5219a7ad40c67bbc3",
-  "time_start":"1970-01-01T15:55:00.000Z",
-  "startLocation": [{
-            "district" : "distrito",
-            "municipality" : "concelho",
-            "street" : "rua"
-        }],
-  "destination":[
-        {
-            "district" : "distrito",
-            "municipality" : "concelho",
-            "street" : "rua"
-        }
-    ]
-}
-*/
