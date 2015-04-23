@@ -6,14 +6,22 @@ angular.module('iTRides.createRideControllers', [])
 
             if(newRide.type == "Trabalho->Casa") {
                 $http.post(Server.url + 'api/ride/createDR',
-                    { 'startLocation' : [{ "district": newRide.startDistrict,
-                        "municipality": newRide.startMunicipality,
-                        "street": newRide.startStreet
-                    }],
-                        'destination' : [{ "district": newRide.destinationDistrict,
+                        { 'startLocation' : {
+                            "location" : {
+                              "district": newRide.startDistrict,
+                              "municipality": newRide.startMunicipality,
+                              "street": newRide.startStreet
+                            },
+                            "name": newRide.locationName
+                        },
+                        'destination' : {
+                          "location" : {
+                            "district": newRide.destinationDistrict,
                             "municipality": newRide.destinationMunicipality,
                             "street": newRide.destinationStreet
-                        }],
+                          },
+                          "name": newRide.destinationName
+                        },
                         'ride_type': newRide.type,
                         'time_start': newRide.hour}
                 ).

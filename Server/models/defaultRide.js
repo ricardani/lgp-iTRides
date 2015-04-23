@@ -1,17 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var WorkLocation = new Schema({
-  district: String,
-  municipality: String,
-  street: String,
-  info: String,
-  name: String
-
-});
-
 var DefaultRide = new Schema({
-  owner: {
+  _owner: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
@@ -21,8 +12,14 @@ var DefaultRide = new Schema({
   type_cost: String,
   cost: Number,
   name: String,
-  startLocation: [WorkLocation],
-  destination: [WorkLocation]
+  _startLocation: {
+    type: Schema.ObjectId,
+    ref: 'worklocations'
+  },
+  _destination: {
+    type: Schema.ObjectId,
+    ref: 'worklocations'
+  }
 
 });
 

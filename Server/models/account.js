@@ -2,13 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Notification = new Schema({
-  message: String,
-  sender: {
+  _sender: {
     type: Schema.ObjectId,
     ref:'accounts'
   },
   type: String,
-  customRideId: {
+  _customRideId: {
     type: Schema.ObjectId,
     ref:'customrides'
   }

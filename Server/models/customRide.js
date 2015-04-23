@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Passenger = new Schema({
-  user: {
+  _user: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
@@ -13,7 +13,7 @@ var Passenger = new Schema({
 });
 
 var Feedback = new Schema({
-  user: {
+  _user: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
@@ -21,16 +21,8 @@ var Feedback = new Schema({
   message: String
 });
 
-var RideLocation = new Schema({
-  district: String,
-  municipality: String,
-  street: String,
-  info: String
-
-});
-
 var CustomRide = new Schema({
-  owner: {
+  _owner: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
@@ -43,9 +35,18 @@ var CustomRide = new Schema({
   feedback:[Feedback],
   date: Date,
   state: String,
-  startLocation: [RideLocation],
-  destination: [RideLocation]
-
+  startLocation: {
+    district: String,
+    municipality: String,
+    street: String,
+    info: String
+  },
+  destination: {
+    district: String,
+    municipality: String,
+    street: String,
+    info: String
+  }
 });
 
 module.exports = mongoose.model('CustomRide', CustomRide);
