@@ -9,4 +9,6 @@ router.post('/createDR', rides.createDefaultRide);
 
 router.post('/deleteRide', rides.deleteRide);
 
+router.post('/requestRide', rides.requestsRide);
+
 module.exports = router;

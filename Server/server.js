@@ -37,6 +37,7 @@ app.use('/user', accountRoutes);
 // We are going to protect /api routes with JWT
 app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
+app.use('/ride', rideRoutes);
 
 app.listen(8080);
 console.log("App listening on port 8080");
