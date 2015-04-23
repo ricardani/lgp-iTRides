@@ -1,6 +1,6 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-    'iTRides.loadingControllers', 'iTRides.services'])
+    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -130,6 +130,24 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     'content': {
                         templateUrl: 'templates/createRide.html',
                         controller: 'CreateRideCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+
+            .state('listRides', {
+                url: "/listRides",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/listRides.html',
+                        controller: 'ListRidesCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',
