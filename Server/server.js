@@ -4,6 +4,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var accountRoutes = require('./routes/account');
 var rideRoutes = require('./routes/ride');
+var profileRoutes = require('./routes/profile');
 
 //Tokens
 var expressJwt = require('express-jwt');
@@ -23,7 +24,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With, content-type, x-access-token');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, content-type, x-access-token');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -61,6 +62,7 @@ app.use('/user', accountRoutes);
 // We are going to protect /api routes with JWT
 app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
+app.use('/api/profile', profileRoutes);
 app.use('/ride', rideRoutes);
 
 app.listen(8080);

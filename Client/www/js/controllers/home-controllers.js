@@ -1,12 +1,24 @@
 angular.module('iTRides.homeControllers', [])
 
-    .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout) {
+    .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout, Server) {
 
         //test load screen
-        $http.get('http://www.w3schools.com/angular/customers.php').
+       /* $http.get('http://www.w3schools.com/angular/customers.php').
             success(function(data, status, headers, config) {
                 //window.alert(JSON.stringify(data));
                 console.log("Success");
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(config));
+                $ionicLoading.hide();
+            });*/
+
+        $http.get(Server.url + 'api/profile/getNotifications').
+            success(function(data, status, headers, config) {
+                //window.alert(JSON.stringify(data));
+                console.log("Success Notifications");
+                console.log(data);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
