@@ -1,6 +1,13 @@
 <ion-view view-title="Search">
     <ion-content>
         <br><br>
+
+        <div class="card">
+            <label class="item item-input">
+                <span class="input-label" style="padding:0">Data</span>
+                <input type="date" style="margin-left:20%; padding:0" placeholder="dd/mm/aa" ng-change="dateChange(date)" ng-model="date">
+            </label>
+        </div>
         <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="RideTypeCtrl">
             <div class="button-bar">
                 <a ng-repeat="type in collection"
@@ -12,15 +19,9 @@
             </div>
         </ion-scroll>
 
-        <div class="card">
-            <label class="item item-input">
-                <span class="input-label" style="padding:0">Data</span>
-                <input type="date" style="margin-left:20%; padding:0" placeholder="dd/mm/aa">
-            </label>
-        </div>
 
         <div class="row">
-            <div class="card col search-ride" ng-controller="StartAddressCtrl">
+            <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType !== 1">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                     <i class="icon ion-home"></i>
                     Partida
@@ -36,7 +37,23 @@
                 </button>
             </div>
 
-            <div class="card col search-ride">
+
+           <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType === 1">
+                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                    <i class="icon ion-home"></i>
+                    Partida
+                </div>
+                <button class="button button-ride-search" ng-disabled="true">
+                </button>
+                <button class="button button-ride-search">
+                    Escritório
+                </button>
+            </div>
+
+
+
+
+        <div class="card col search-ride" ng-if= "selectedRideType !== 0">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                     <i class="icon ion-ios-location"></i>
                     Destino
@@ -49,6 +66,19 @@
                 </button>
                 <button class="button button-ride-search">
                     Freguesia
+                </button>
+        </div>
+       
+
+         <div class="card col search-ride" ng-if= "selectedRideType === 0">
+                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                    <i class="icon ion-ios-location"></i>
+                    Destino
+                </div>
+                 <button class="button button-ride-search" ng-disabled="true">
+                </button>
+                <button class="button button-ride-search">
+                    Escritório
                 </button>
             </div>
         </div>
