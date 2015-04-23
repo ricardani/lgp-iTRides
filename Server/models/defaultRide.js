@@ -1,24 +1,36 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var Passenger = new Schema({
+  _user: {
+    type: Schema.ObjectId,
+    ref: 'accounts'
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+var Feedback = new Schema({
+  _user: {
+    type: Schema.ObjectId,
+    ref: 'accounts'
+  },
+  feedback: Number,
+  message: String
+});
+
 var DefaultRide = new Schema({
   _owner: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
-  seats: Number,
-  time_start: String,
-  ride_type: String,
-  type_cost: String,
-  cost: Number,
-  name: String,
-  _startLocation: {
+  passengers: [Passenger],
+  feedback:[Feedback],
+  defaultRideInfo: {
     type: Schema.ObjectId,
-    ref: 'worklocations'
-  },
-  _destination: {
-    type: Schema.ObjectId,
-    ref: 'worklocations'
+    ref: 'defaultrideinfos'
   }
 
 });

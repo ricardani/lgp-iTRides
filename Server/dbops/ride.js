@@ -1,7 +1,23 @@
 var CustomRide = require('../models/customRide');
 var DefaultRide = require('../models/defaultRide');
+var DefaultRideInfo = require('../models/defaultRideInfo');
 var Account = require('../models/account');
-var WorkLocation = require('../models/workLocation');
+
+function defaultRideInfoCreation(req, res) {
+
+  var defaultRideInfo = new DefaultRideInfo(req.body);
+  defaultRideInfo.save(function(error, data) {
+    if (error) {
+      console.log(error);
+      res.json(error);
+    } else {
+      res.json(data);
+    }
+  });
+
+}
+module.exports.createDefaultRideInfo = defaultRideInfoCreation;
+
 
 function customRideCreation(req, res) {
 
@@ -110,6 +126,31 @@ function defaultRideCreation(req, res) {
 }
 
 module.exports.createDefaultRide = defaultRideCreation;
+/*
+{
+  "owner_email":"j.miguelgsantos@hotmail.com",
+  "ride_type":"default",
+  "time_start":"1970-01-01T15:55:00.000Z",
+  "startLocation": {
+            "location" : {
+              "district" : "distrito",
+              "municipality" : "concelho",
+              "street" : "rua",
+              "info" : "Escritório B9"
+          },
+          "name" : "String"
+      },
+  "destination": {
+            "location" : {
+              "district" : "distrito",
+              "municipality" : "concelho",
+              "street" : "rua",
+              "info" : "Escritório B9"
+          },
+          "name" : "String"
+   }
+}
+*/
 
 function removeRide(req, res) {
   console.log('hey');
@@ -156,10 +197,26 @@ function requestRide(req, res) {
   }
   else if(req.body.ride_type == 'custom') {
 
+
     Account.findOne({
       "email": req.body.owner_email
     })
     .populate('_id')
+    .exec(function( err, user) {
+
+      CustomRide.findOne({
+        '_owner': user._id,
+        'time_start' : req.body.tim_start,
+        'startLocation' : req.body.startLocation,
+        'destination' : req.body.destination
+      }, function(error, ride) {
+
+      });
+
+    });
+
+  }
+    /*.populate('_id')
     .exec ( function(err, owner) {
 
       console.log(JSON.stringify(req.body.startLocation) + "\n\n" +
@@ -203,6 +260,7 @@ function requestRide(req, res) {
       })
 
     }
+    */
 
 }
 

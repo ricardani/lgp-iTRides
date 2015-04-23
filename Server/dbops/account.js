@@ -73,7 +73,7 @@ function login(req, res) {
       res.json(err);
     } else {
       var profile = {
-        email: data.email
+        id: data.id
       };
       var token = jwt.sign(profile, secret_key, { expiresInMinutes: 60 });
       res.json({ activated: data.activated,token: token });
