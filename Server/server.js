@@ -64,9 +64,6 @@ app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
 app.use('/api/profile', profileRoutes);
 
-//TODO /ride é usada so para testar, remover quando nao for mais necessario
-app.use('/ride', rideRoutes);
-
 app.listen(8080);
 console.log("App listening on port 8080");
 

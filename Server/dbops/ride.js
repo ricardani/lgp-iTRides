@@ -1,5 +1,6 @@
-var CustomRide = require('../models/customRide');
-var DefaultRide = require('../models/defaultRide');
+var OccasionalRide = require('../models/occasionalRide');
+var HomeToWorkRide = require('../models/homeToWorkRide');
+var WorkToHomeRide = require('../models/workToHomeRide');
 var WorkLocation = require('../models/workLocation');
 var Account = require('../models/account');
 
@@ -18,8 +19,7 @@ function WorkLocationCreation(req, res) {
 }
 module.exports.createWorkLocation = WorkLocationCreation;
 
-
-function customRideCreation(req, res) {
+function occasionalRideCreation(req, res) {
 
   Account.findOne({
     "email": req.body.owner_email
@@ -30,10 +30,10 @@ function customRideCreation(req, res) {
       res.json(err);
     }
     else {
-      var customRide = new CustomRide(req.body);
-      customRide._owner = owner;
+      var occasionalRide = new OccasionalRide(req.body);
+      occasionalRide._owner = owner;
 
-      customRide.save(function(error, data) {
+      occasionalRide.save(function(error, data) {
         if (error) {
           console.log(error);
           res.json(error);
@@ -46,13 +46,13 @@ function customRideCreation(req, res) {
 
 }
 
-module.exports.createCustomRide = customRideCreation;
+module.exports.createOccasionalRide = occasionalRideCreation;
 
 
 function defaultRideCreation(req, res) {
 
   if(req.body.startLocation) {
-    Account.findOne({
+  /*  Account.findOne({
       "email": req.body.owner_email
     })
     .populate('_id')
@@ -61,16 +61,18 @@ function defaultRideCreation(req, res) {
         res.json(err);
       }
       else {
-
+*/
         WorkLocation.findOne({
-          "name": req.body.rideName
+          "name": req.body.locationName
         })
         .populate('_id')
         .exec(function(error, rideInfo) {
 
           var defaultRide = new HomeToWorkRide(req.body);
-          defaultRide._owner = owner;
-          defaultRide._defaultRideInfo = rideInfo;
+          /*TODO alterar para ler o id do owner
+          defaultRide._owner = owner; */
+          defaultRide._owner = null;
+          defaultRide._workLocation = rideInfo;
           defaultRide.save(function(error, data) {
             if (error) {
               console.log(error);
@@ -81,11 +83,11 @@ function defaultRideCreation(req, res) {
             }
           });
         });
-      }
-    });
+/*    }
+    }); */
   }
   else if(req.body.destination) {
-    Account.findOne({
+    /*Account.findOne({
       "email": req.body.owner_email
     })
     .populate('_id')
@@ -94,16 +96,18 @@ function defaultRideCreation(req, res) {
         res.json(err);
       }
       else {
-
+        */
         WorkLocation.findOne({
-          "name": req.body.rideName
+          "name": req.body.locationName
         })
         .populate('_id')
         .exec(function(error, rideInfo) {
 
           var defaultRide = new WorkToHomeRide(req.body);
-          defaultRide._owner = owner;
-          defaultRide._defaultRideInfo = rideInfo;
+          /*TODO alterar para ler o id do owner
+          defaultRide._owner = owner; */
+          defaultRide._owner = null;
+          defaultRide._workLocation = rideInfo;
           defaultRide.save(function(error, data) {
             if (error) {
               console.log(error);
@@ -114,8 +118,8 @@ function defaultRideCreation(req, res) {
             }
           });
         });
-      }
-    });
+  /*    }
+    });*/
   }
   else
     res.json("Failed to identify if it is a work to home or home to work ride");
@@ -124,19 +128,19 @@ function defaultRideCreation(req, res) {
 
 module.exports.createDefaultRide = defaultRideCreation;
 
-/* TODO update to the new HomeToWork WorkToHome WorkLocation sintax*/
+/* TODO update to the new HomeToWork WorkToHome WorkLocation OccasionalRide sintax*/
 function removeRide(req, res) {
 
-  if(req.body.ride_type == 'default') {
+  if(req.body.startLocation.district) {
 
-    DefaultRideInfo.findOne({
+    WorkLocation.findOne({
       "name": req.body.rideName
     })
     .populate('_id')
     .exec(function(err, rideInfo) {
-      DefaultRide.findOne({
+      HomeToWorkRide.findOne({
           "_owner": req.user.id,
-          "_defaultRideInfo": rideInfo
+          "_workLocation": rideInfo
         }).remove(function(error, data) {
           if (error) {
             res.json(error);
@@ -146,18 +150,36 @@ function removeRide(req, res) {
     });
 
   }
-  else if(req.body.ride_type == 'custom') {
-    CustomRide.findOne({
-        "_owner": req.user.id,
-        "time_start": req.body.time_start,
-        "startLocation": req.body.startLocation,
-        "destination": req.body.destination
-      }).remove(function(error, data) {
-        if (error) {
-          res.json(error);
-        } else
-          res.json(data);
-      });
+  else if(req.body.destination.district) {
+    WorkLocation.findOne({
+      "name": req.body.rideName
+    })
+    .populate('_id')
+    .exec(function(err, rideInfo) {
+      WorkToHomeRide.findOne({
+          "_owner": req.user.id,
+          "_workLocation": rideInfo
+        }).remove(function(error, data) {
+          if (error) {
+            res.json(error);
+          } else
+            res.json(data);
+        });
+    });
+  }
+  else if(req.body.destination.address) {
+
+    OccasionalRide.findOne({
+      "_owner": req.user.id,
+      "time_start": req.body.time_start,
+      "startLocation": req.body.startLocation,
+      "destination": req.body.destination
+    }).remove(function(error, data) {
+      if (error) {
+        res.json(error);
+      } else
+        res.json(data);
+    });
   }
 
 }
@@ -167,7 +189,7 @@ module.exports.deleteRide = removeRide;
 function requestRide(req, res) {
 
   if(req.body.ride_type == 'default') {
-    DefaultRideInfo.findOne({
+    WorkLocation.findOne({
         "name": req.body.rideName
       })
       .populate('_id')
@@ -187,7 +209,7 @@ function requestRide(req, res) {
             else {
               DefaultRide.findOne({
                 "_owner": owner,
-                "_defaultRideInfo": rideInfo
+                "_workLocation": rideInfo
               }, function(erro, ride) {
 
                 if(erro) {
@@ -214,7 +236,7 @@ function requestRide(req, res) {
         res.json("Couldn't find the owner");
       }
       else {
-        CustomRide.findOne({
+        OccasionalRide.findOne({
           "_owner": owner
         }, function(erro, ride) {
 

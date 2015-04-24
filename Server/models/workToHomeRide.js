@@ -21,35 +21,28 @@ var Feedback = new Schema({
   message: String
 });
 
-var CustomRide = new Schema({
+var WorkToHomeRide = new Schema({
   _owner: {
     type: Schema.ObjectId,
     ref: 'accounts'
   },
   seats: Number,
   time_start: String,
-  ride_type: String,
   type_cost: String,
   cost: Number,
   passengers: [Passenger],
   feedback:[Feedback],
-  date: Date,
-  state: {
-    type: String,
-    default: "waiting"
-  },
-  startLocation: {
-    district: String,
-    municipality: String,
-    street: String,
-    info: String
-  },
   destination: {
     district: String,
     municipality: String,
     street: String,
     info: String
+  },
+  _workLocation: {
+    type: Schema.ObjectId,
+    ref: 'worklocations'
   }
+
 });
 
-module.exports = mongoose.model('CustomRide', CustomRide);
+module.exports = mongoose.model('WorkToHomeRide', WorkToHomeRide);

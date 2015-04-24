@@ -71,13 +71,17 @@ function login(req, res) {
     if (err) {
       console.log(err);
       res.json(err);
-    } else {
+    } else if(data != null) {
       var profile = {
         id: data.id
       };
       var token = jwt.sign(profile, secret_key, { expiresInMinutes: 60 });
       res.json({ activated: data.activated,token: token });
       //res.json(data);
+    }
+    else
+    {
+      res.json("Wrong Email/Password");
     }
   });
 }

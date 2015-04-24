@@ -1,6 +1,6 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $ionicModal, $ionicLoading, $timeout, $http, Server) {
+    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $http, Server) {
 
       $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
@@ -13,14 +13,14 @@ angular.module('iTRides.createRideControllers', [])
 
           var rideType = $scope.collection[$scope.selectedRideType];
 
-          console.log(rideType);
+          console.log(newRide);
 
           if(rideType == "Trabalho>Casa") {
               $http.post(Server.url + 'api/ride/createDR',
                       {
+                        '_owner': $window.sessionStorage.token,
                         'seats': newRide.seats,
                         'time_start': newRide.hour,
-                        'ride_type': rideType,
                         'type_cost': newRide.typeCost,
                         'cost': newRide.cost,
                         'date': newRide.date,
@@ -50,7 +50,6 @@ angular.module('iTRides.createRideControllers', [])
                     {
                       'seats': newRide.seats,
                       'time_start': newRide.hour,
-                      'ride_type': rideType,
                       'type_cost': newRide.typeCost,
                       'cost': newRide.cost,
                       'date': newRide.date,
@@ -79,21 +78,16 @@ angular.module('iTRides.createRideControllers', [])
                   {
                     'seats': newRide.seats,
                     'time_start': newRide.hour,
-                    'ride_type': rideType,
                     'type_cost': newRide.typeCost,
                     'cost': newRide.cost,
                     'date': newRide.date,
                     'startLocation' : {
-                      "district": newRide.startDistrict,
-                      "municipality": newRide.startMunicipality,
-                      "street": newRide.startStreet,
-                      "info": newRide.startLocationInfo
+                      "address": newRide.startAddress,
+                      "identifier": newRide.startIdentifier
                     },
                     'destination' : {
-                        "district": newRide.destinationDistrict,
-                        "municipality": newRide.destinationMunicipality,
-                        "street": newRide.destinationStreet,
-                        "info": newRide.destinationInfo
+                      "address": newRide.destinationAddress,
+                      "identifier": newRide.destinationIdentifier
                     }
                   }
               ).
