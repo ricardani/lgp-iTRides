@@ -38,7 +38,7 @@
             </div>
 
 
-           <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType === 1">
+            <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType === 1">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                     <i class="icon ion-home"></i>
                     Partida
@@ -50,10 +50,7 @@
                 </button>
             </div>
 
-
-
-
-        <div class="card col search-ride" ng-if= "selectedRideType !== 0">
+            <div class="card col search-ride" ng-if= "selectedRideType !== 0">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                     <i class="icon ion-ios-location"></i>
                     Destino
@@ -67,19 +64,19 @@
                 <button class="button button-ride-search">
                     Freguesia
                 </button>
-        </div>
-       
+            </div>
 
-         <div class="card col search-ride" ng-if= "selectedRideType === 0">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-ios-location"></i>
-                    Destino
-                </div>
-                 <button class="button button-ride-search" ng-disabled="true">
-                </button>
-                <button class="button button-ride-search">
-                    Escritório
-                </button>
+
+            <div class="card col search-ride" ng-if= "selectedRideType === 0">
+              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                  <i class="icon ion-ios-location"></i>
+                  Destino
+              </div>
+               <button class="button button-ride-search" ng-disabled="true">
+              </button>
+              <button class="button button-ride-search">
+                  Escritório
+              </button>
             </div>
         </div>
 

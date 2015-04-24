@@ -1,12 +1,12 @@
 var CustomRide = require('../models/customRide');
 var DefaultRide = require('../models/defaultRide');
-var DefaultRideInfo = require('../models/defaultRideInfo');
+var WorkLocation = require('../models/workLocation');
 var Account = require('../models/account');
 
-function defaultRideInfoCreation(req, res) {
+function WorkLocationCreation(req, res) {
 
-  var defaultRideInfo = new DefaultRideInfo(req.body);
-  defaultRideInfo.save(function(error, data) {
+  var WorkLocation = new WorkLocation(req.body);
+  WorkLocation.save(function(error, data) {
     if (error) {
       console.log(error);
       res.json(error);
@@ -16,7 +16,7 @@ function defaultRideInfoCreation(req, res) {
   });
 
 }
-module.exports.createDefaultRideInfo = defaultRideInfoCreation;
+module.exports.createWorkLocation = WorkLocationCreation;
 
 
 function customRideCreation(req, res) {
@@ -51,43 +51,80 @@ module.exports.createCustomRide = customRideCreation;
 
 function defaultRideCreation(req, res) {
 
-  Account.findOne({
-    "email": req.body.owner_email
-  })
-  .populate('_id')
-  .exec( function(err,owner) {
-    if(err) {
-      res.json(err);
-    }
-    else {
+  if(req.body.startLocation) {
+    Account.findOne({
+      "email": req.body.owner_email
+    })
+    .populate('_id')
+    .exec( function(err,owner) {
+      if(err) {
+        res.json(err);
+      }
+      else {
 
-      DefaultRideInfo.findOne({
-        "name": req.body.rideName
-      })
-      .populate('_id')
-      .exec(function(error, rideInfo) {
+        WorkLocation.findOne({
+          "name": req.body.rideName
+        })
+        .populate('_id')
+        .exec(function(error, rideInfo) {
 
-        var defaultRide = new DefaultRide(req.body);
-        defaultRide._owner = owner;
-        defaultRide._defaultRideInfo = rideInfo;
-        defaultRide.save(function(error, data) {
-          if (error) {
-            console.log(error);
-            res.json(error);
-          } else {
-            console.log(data);
-            res.json(data);
-          }
+          var defaultRide = new HomeToWorkRide(req.body);
+          defaultRide._owner = owner;
+          defaultRide._defaultRideInfo = rideInfo;
+          defaultRide.save(function(error, data) {
+            if (error) {
+              console.log(error);
+              res.json(error);
+            } else {
+              console.log(data);
+              res.json(data);
+            }
+          });
         });
-      });
-    }
-  });
+      }
+    });
+  }
+  else if(req.body.destination) {
+    Account.findOne({
+      "email": req.body.owner_email
+    })
+    .populate('_id')
+    .exec( function(err,owner) {
+      if(err) {
+        res.json(err);
+      }
+      else {
+
+        WorkLocation.findOne({
+          "name": req.body.rideName
+        })
+        .populate('_id')
+        .exec(function(error, rideInfo) {
+
+          var defaultRide = new WorkToHomeRide(req.body);
+          defaultRide._owner = owner;
+          defaultRide._defaultRideInfo = rideInfo;
+          defaultRide.save(function(error, data) {
+            if (error) {
+              console.log(error);
+              res.json(error);
+            } else {
+              console.log(data);
+              res.json(data);
+            }
+          });
+        });
+      }
+    });
+  }
+  else
+    res.json("Failed to identify if it is a work to home or home to work ride");
 
 }
 
 module.exports.createDefaultRide = defaultRideCreation;
 
-
+/* TODO update to the new HomeToWork WorkToHome WorkLocation sintax*/
 function removeRide(req, res) {
 
   if(req.body.ride_type == 'default') {
