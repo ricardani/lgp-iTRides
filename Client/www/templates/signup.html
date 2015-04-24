@@ -1,5 +1,5 @@
 <ion-view view-title="Sign Up">
-    <ion-content scroll="false">
+    <ion-content scroll="true">
         <div class="signup_body">
             <div class="icon"></div>
             <form>
@@ -10,8 +10,9 @@
                 <input class="confirm_password" type="password" name="confirm_password" placeholder="Confirm Password" ng-model="newUser.confirmPassword">
                 <input class="submitButton" type="submit" value="Registar" ng-click="signup(newUser)">
                 <br>
-                <button class="loginButton" ui-sref="login"> Entrar </button>
+                <button class="loginButton" ui-sref="login"> Voltar </button>
             </form>
+			<div class="fillHeight"></div>
         </div>
     </ion-content>
 </ion-view>
