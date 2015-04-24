@@ -1,15 +1,26 @@
 angular.module('iTRides.searchControllers', [])
 
-.controller('SearchCtrl', function($scope) {
+.controller('SearchCtrl', function($scope, $filter) {
 	$scope.selectedRideType = 0;
 	$scope.startDistrito = '';
 	$scope.startConcelho = '';
-
-
-	$scope.date='';
+	$scope.dateSelected='';
+  $scope.dateFilter='';
 
 	$scope.dateChange=function(val){
-		console.log("on-change",val);
+    $scope.dateSelected = val.toString();
+    $scope.month = $scope.dateSelected.substr(4,3);
+    $scope.day = $scope.dateSelected.substr(8,2);
+    $scope.year = $scope.dateSelected.substr(11,4);
+    $scope.dateFilter = $scope.month + " " + $scope.day + " " + $scope.year;
+   
+   /* console.log("date: ", $scope.dateSelected);
+    console.log("filtered: ", $scope.dateFilter);
+    console.log("Dia: " + $scope.day );
+    console.log("Mes: " + $scope.month );
+    console.log("Ano: " + $scope.year );
+*/
+
   };
 
 	$scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
@@ -44,7 +55,13 @@ angular.module('iTRides.searchControllers', [])
   			destination: "ItGrow Porto"
         }];
 
+
+
+  $scope.dates = [{ date: 'Apr 24 2015'}, { date: 'Apr 24 2015'} , { date: 'Apr 20 2015'},
+  { date: 'Apr 20 2012'},{ date: 'Jan 12 1999'}];
+
     })
+
 
 
 
