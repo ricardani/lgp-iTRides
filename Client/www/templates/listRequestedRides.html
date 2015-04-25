@@ -11,8 +11,9 @@
             <ion-item ng-if="requestedRides.length > 0" ng-repeat="requestedRide in requestedRides" type="item-text-wrap">
                 <div class="text-wrap">
                     <a href="#/rideDetails" style="text-decoration: none; color:black;">
-                    	<h2> <img ng-src="{{requestedRide.owner_photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';" style="border-radius: 100%"> </img> Boleia de {{requestedRide.owner}} </h2>
-                        <h2 style="margin-left: 40px;"> {{requestedRide.name}} </h2>
+                    	<img ng-src="{{requestedRide.owner_photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';" style="border-radius: 100%"> </img> 
+                        <h2 style="margin-left: 17%; margin-top:-10%; margin-bottom:2%;">Boleia de {{requestedRide.owner}} </h2>
+                        <div style="margin-left: 9%;">
                         <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
 	                    <p style="margin-left: 47px"> {{requestedRide.day}} às {{requestedRide.start_time}} </p>
                         <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
@@ -20,6 +21,7 @@
                         <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
                         <p style="margin-left: 47px;">  {{requestedRide.destination_street}}, {{requestedRide.destination_city }}</p>
                         <i ng-if="defaultRide.type == 1" class="ion-android-arrow-back orange" style="font-size:200%; float:left;"> </i>
+                    </div>
                     </a>
                 </div>
             </ion-item> 

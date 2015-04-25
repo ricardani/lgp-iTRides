@@ -2,9 +2,6 @@
     <ion-content>
     <br><br>
 
-
-
-
     <div class="list card">
         <ion-list>
             <div class="item item-divider" style="white-space:normal">
@@ -14,7 +11,7 @@
                 <div class="text-wrap">
                     <a href="#/rideDetails" style="text-decoration: none; color:black;">
                         <h2> <i class="ion-home"> </i>  {{createdRide.start_street}} </h2> <h3 style="margin-left: 17px;"> {{createdRide.start_city}} </h3>
-                        <h2> <i class="ion-ios-location"> </i> {{createdRide.destination_street}} </h2> <h3 style="margin-left: 17px;"> {{createdRide.destination_city}} </h3>
+                        <h2> <i class="ion-ios-location"> </i> <span  style="margin-left:1%;"> {{createdRide.destination_street}} </span></h2><h3 style="margin-left:6%;"> {{createdRide.destination_city}} </h3>
                         <p> {{createdRide.day}} às {{createdRide.start_time}} <span style="float:right; margin-top:-20px;"> <i class="ion-person-stalker orange" style="font-size:135%"> </i> {{createdRide.passengers.length}} </span> </p>
                     </a>
                 </div>

@@ -1,5 +1,5 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
-    'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
+    'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.services'])
 
@@ -35,6 +35,16 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     'content': {
                         templateUrl: 'templates/login.html',
                         controller: 'LoginCtrl'
+                    }
+                }
+            })
+
+            .state('resetPassword', {
+                url: "/resetPassword",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/resetPassword.html',
+                        controller: 'ResetPasswordCtrl'
                     }
                 }
             })
@@ -194,7 +204,6 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 }
             })
         ;
-
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/loading');
