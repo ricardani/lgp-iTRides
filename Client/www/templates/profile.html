@@ -9,9 +9,10 @@
             </div>
 
             <div class="item item-avatar item-text-wrap" href="#">
-                <img src="{{user.photo}}">
+                <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                 <h2> {{user.name}} </h2>
-                <p> {{user.email}}  |  {{user.contact}} </p>
+                <p> {{user.email}} </p>
+                <p style="margin-top: 2%;"> {{user.contact}} </p>
                 <span ng-repeat="i in getNumber(user.rating) track by $index"> <i class="icon ion-android-star"></i></span>
                 <span ng-repeat="i in getNumber(number) track by $index"><i class="icon ion-android-star-outline"></i> </span>
             </div>
@@ -19,6 +20,13 @@
             <a class="item item-icon-left assertive" href="#/editProfile">
                 <i class="icon ion-android-create orange" style="font-size:150%"></i>
                 <a1 class="orange"> Editar o meu perfil </a1>
+            </a>
+        </div>
+
+        <div class="list card">
+            <a class="item item-icon-left orange" href="#/listRequestedRides" style="background-color: rgb(243,121,38)">
+                <i class="icon ion-plus" style="font-size:150%; color: white"></i>
+                <a1 style="color: white"> Criar boleia</a1>
             </a>
         </div>
 
@@ -49,8 +57,9 @@
         </ion-list>
     </div>
 
+
     <div class="list card">
-        <a class="item item-icon-left assertive" href="#">
+        <a class="item item-icon-left assertive" href="#/listCreatedRides">
             <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
             <a1 class="orange"> As minhas boleias criadas </a1>
         </a>

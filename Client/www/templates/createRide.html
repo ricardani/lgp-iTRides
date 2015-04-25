@@ -14,7 +14,7 @@
         </ion-scroll>
 
         <div class="row">
-          <div class="card col search-ride" ng-controller="CreateStartAddressCtrl"  ng-if= "selectedRideType !== 1">
+          <div class="card col search-ride" ng-controller="CreateStartAddressCtrl"  ng-if= "selectedRideType === 0">
               <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                   <i class="icon ion-home"></i>
                   Partida
@@ -31,7 +31,7 @@
               <button class="button button-ride-search" ng-model="newRide.startLocationInfo">
                   Info
               </button>
-            </div>
+          </div>
           <div class="card col search-ride" ng-controller="CreateStartAddressCtrl"  ng-if= "selectedRideType === 1">
             <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                 <i class="icon ion-home"></i>
@@ -45,29 +45,18 @@
 
           </div>
 
-          <div class="card col search-ride" ng-if= "selectedRideType !== 0">
+          <div class="card col search-ride" ng-controller="CreateStartAddressCtrl"  ng-if= "selectedRideType === 2">
               <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                  <i class="icon ion-ios-location"></i>
-                  Destino
+                  <i class="icon ion-home"></i>
+                  Partida
               </div>
-              <input class="button button-ride-search" ng-model="newRide.destinationDistrict">
-              <input class="button button-ride-search" ng-model="newRide.destinationMunicipality">
-              <input class="button button-ride-search" ng-model="newRide.destinationStreet">
-              <input class="button button-ride-search" ng-model="newRide.destinationLocationInfo">
-            <!--  <button class="button button-ride-search">
-                  Distrito
+              <button class="button button-ride-search" ng-model="newRide.startAddress">
+                  Morada
               </button>
-              <button class="button button-ride-search">
-                  Concelho
+              <button class="button button-ride-search" ng-model="newRide.startIdentifier">
+                  Identificador
               </button>
-              <button class="button button-ride-search">
-                  Freguesia
-              </button>
-              <button class="button button-ride-search" ng-model="newRide.startLocationInfo">
-                  Info
-              </button>-->
-          </div>
-
+            </div>
 
           <div class="card col search-ride" ng-if= "selectedRideType === 0">
             <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
@@ -79,6 +68,38 @@
             <button class="button button-ride-search">
                 Escritório
             </button>
+          </div>
+
+          <div class="card col search-ride" ng-if= "selectedRideType === 1">
+              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                  <i class="icon ion-ios-location"></i>
+                  Destino
+              </div>
+              <button class="button button-ride-search">
+                  Distrito
+              </button>
+              <button class="button button-ride-search">
+                  Concelho
+              </button>
+              <button class="button button-ride-search">
+                  Freguesia
+              </button>
+              <button class="button button-ride-search" ng-model="newRide.startLocationInfo">
+                  Info
+              </button>
+          </div>
+
+          <div class="card col search-ride" ng-if= "selectedRideType === 2">
+              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                  <i class="icon ion-ios-location"></i>
+                  Destino
+              </div>
+              <button class="button button-ride-search" ng-model="newRide.destinationAddress">
+                  Morada
+              </button>
+              <button class="button button-ride-search" ng-model="newRide.destinationIdentifier">
+                  Identificador
+              </button>
           </div>
 
         </div>
@@ -102,6 +123,11 @@
 
           <label class="item item-input item-stacked-label">
     		    <span class="input-label">Custo</span>
+            <!--<input class="button button-ride-search" placeholder="Location Name" ng-model="newRide.locationName">
+            <input class="button button-ride-search" placeholder="Distrito" ng-model="newRide.destinationDistrict">
+            <input class="button button-ride-search" placeholder="Concelho" ng-model="newRide.destinationMunicipality">
+            <input class="button button-ride-search" placeholder="Rua" ng-model="newRide.destinationStreet">
+            <input class="button button-ride-search" placeholder="info" ng-model="newRide.destinationLocationInfo"> -->
     		    <input type= "number" ng-model="newRide.cost">
     		  </label>
 

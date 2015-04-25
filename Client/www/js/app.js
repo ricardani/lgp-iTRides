@@ -1,6 +1,7 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
-    'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers', 'iTRides.services','iTRides.editProfileControllers'])
+    'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
+    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers',
+    'iTRides.listCreatedRidesControllers', 'iTRides.editProfileControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -34,6 +35,16 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     'content': {
                         templateUrl: 'templates/login.html',
                         controller: 'LoginCtrl'
+                    }
+                }
+            })
+
+            .state('resetPassword', {
+                url: "/resetPassword",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/resetPassword.html',
+                        controller: 'ResetPasswordCtrl'
                     }
                 }
             })
@@ -156,7 +167,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                 }
             })
 
-        .state('listRequestedRides', {
+			.state('listRequestedRides', {
                 url: "/listRequestedRides",
                 views: {
                     'header': {
@@ -173,7 +184,6 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     }
                 }
             })
-			
 			.state('editProfile', {
                 url: "/editProfile",
                 views: {
@@ -191,8 +201,25 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     }
                 }
             })
-        ;
 
+			.state('listCreatedRides', {
+                url: "/listCreatedRides",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/listCreatedRides.html',
+                        controller: 'listCreatedRidesCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+        ;
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/loading');

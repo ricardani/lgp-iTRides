@@ -19,6 +19,11 @@
             </div>
         </ion-scroll>
 
+        <div>
+            <div class="ng-hide" ng-repeat="date in count = (dates | filter : dateFilter)" ></div>
+            <p>{{count.length}}</p>
+        </div>
+
 
         <div class="row">
             <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType !== 1">
