@@ -43,14 +43,14 @@ mongoose.connect('mongodb://itrides:itridesadmin1@ds037581.mongolab.com:37581/it
 
 //load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
-  if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
+    if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
     console.log(filename);
 });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
-  console.log('connection to mongoDB sucesseful');
+    console.log('connection to mongoDB sucesseful');
 });
 
 app.use(express.static('../Client/www'));

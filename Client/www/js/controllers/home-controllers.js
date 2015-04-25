@@ -2,23 +2,9 @@ angular.module('iTRides.homeControllers', [])
 
     .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout, Server) {
 
-        //test load screen
-       /* $http.get('http://www.w3schools.com/angular/customers.php').
-            success(function(data, status, headers, config) {
-                //window.alert(JSON.stringify(data));
-                console.log("Success");
-                $ionicLoading.hide();
-            }).
-            error(function(data, status, headers, config) {
-                console.log(JSON.stringify(config));
-                $ionicLoading.hide();
-            });*/
-
         $http.get(Server.url + 'api/profile/getNotifications').
             success(function(data, status, headers, config) {
-                //window.alert(JSON.stringify(data));
-                console.log("Success Notifications");
-                console.log(data);
+                $scope.notifications = data;
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
@@ -26,7 +12,8 @@ angular.module('iTRides.homeControllers', [])
                 $ionicLoading.hide();
             });
 
-        $scope.notifications = [{
+        //Notifications test data
+        /*$scope.notifications = [{
             id: 0,
             name: 'Ben Sparrow',
             photo: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png',
@@ -74,7 +61,7 @@ angular.module('iTRides.homeControllers', [])
             photo: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460',
             msgType:'Exit',
             rideDate:'16 Maio 17:00h'
-        }];
+        }];*/
 
         $scope.myNextRide = {
             id:0,
