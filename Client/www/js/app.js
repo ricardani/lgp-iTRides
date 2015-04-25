@@ -1,6 +1,6 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers', 'iTRides.services'])
+    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers', 'iTRides.services','iTRides.editProfileControllers'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -166,6 +166,24 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     'content': {
                         templateUrl: 'templates/listRequestedRides.html',
                         controller: 'listRequestedRidesCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+			
+			.state('editProfile', {
+                url: "/editProfile",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/editProfile.html',
+                        controller: 'EditProfileCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

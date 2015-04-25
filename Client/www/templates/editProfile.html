@@ -1,0 +1,48 @@
+<ion-view view-title="editProfile">
+	<ion-content>
+		<br><br>
+        <div class="list card" ng-if="user.name != null">
+
+            <div class="item item-divider">
+               <span style="font-weight: bold">  Editar perfil </span>
+            </div>
+			
+			<div class="item item-avatar">
+				<i class="icon ion-edit orange edit_profile_icon"></i>
+				<h2 class="up35">{{user.name}}</h2>
+				<p>{{user.email}}</p>
+			</div>
+
+		    <div class="item item-body">
+				<form class="edit_profile">
+					<center><img class="full-imageEdited" src="{{user.photo}}" style="border-radius:50%"></center>
+					<center>
+						<p class="change_profile_photo">
+							<input type="file" name="imgfile_profile" accept="image/gif, image/jpeg, image/png" style="margin-bottom:-28px;"/>
+							<i class="icon ion-ios-upload orange" style="font-size:150%;color:rgb(243,121,38);"></i>
+							<a1 style="margin-left:5px;"> Alterar imagem de perfil </a1>
+						</p>
+					</center>
+					<p>
+					  <span class="input_title">Nome </span>
+					  <input type="text" placeholder="{{user.name}}" pattern="[A-Za-z]{0,30}" name="name_profile"/>
+					</p>
+					<p>
+					  <span class="input_title">Contacto </span>
+					  <input type="text" placeholder="{{user.contact}}" pattern="9[1236][0-9]{7}|2[1-9][0-9]{7}" name="name_profile"/>
+					</p>
+				</form>
+			</div>
+			
+			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);">
+				<i class="icon ion-checkmark #fff" style="font-size:150%;color:#fff"></i>
+				<a1 class="white"> Gravar </a1>
+			</a>
+			<a class="item item-icon-left assertive" href="#/profile" style="background-color:#fff">
+				<i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+				<a1 class="orange"> Cancelar </a1>
+			</a>
+		</div>
+		<br><br>
+	</ion-content>
+</ion-view>

@@ -21,6 +21,10 @@
   color: rgb(243,121,38);
 }
 
+.white{
+	color:#fff;
+}
+
 /* Search page */
 
 .card.col.search-ride {
@@ -237,6 +241,53 @@
 	.fillHeight{
 		height:59vh;
 	}
+}
+
+
+/*EDIT PROFILE PAGE*/
+
+.edit_profile_icon{
+	font-size:150%;
+	color:rgb(243,121,38);
+	margin-left:-45px;
+	display:inline-block;
+	margin-top:15px;
+}
+
+h2.up35{
+	margin-top:-35px;
+}
+
+p.change_profile_photo{
+	overflow: hidden;
+}
+
+p.change_profile_photo input[type="file"] {
+    display: block !important;
+	height:30px;
+    opacity: 0 !important;
+    overflow: hidden !important;
+}
+
+p.change_profile_photo input[type="file"]:hover {
+	cursor:pointer;
+}
+
+.edit_profile p input[type="text"]{
+	border:1px solid #DDD;
+	border-radius:3px;
+	width:100%;
+	padding:7px;
+}
+
+.edit_profile p input[type="text"]:focus{
+	border:1px solid rgb(243,121,38);
+}
+
+.input_title{
+	color:black;
+	font-size:13px;
+	font-weight: bold;
 }
 
 /*PARA A APLICAÇÃO MÓVEL*/

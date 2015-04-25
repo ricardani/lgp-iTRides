@@ -5018,7 +5018,7 @@ a.item-content {
     position: absolute;
     top: 16px;
     right: 16px;
-    max-width: 40px;
+	max-width: 40px;
     max-height: 40px;
     width: 100%;
     height: 100%;
@@ -7277,6 +7277,9 @@ a.button {
 
 .full-image {
   width: 100%; }
+.full-imageEdited {
+  width: 150px;
+}
 
 .clearfix {
   *zoom: 1; }
