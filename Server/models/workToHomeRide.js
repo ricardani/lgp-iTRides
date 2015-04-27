@@ -27,7 +27,7 @@ var WorkToHomeRide = new Schema({
     ref: 'accounts'
   },
   seats: Number,
-  time_start: String,
+  time_start: Date,
   type_cost: String,
   cost: Number,
   passengers: [Passenger],

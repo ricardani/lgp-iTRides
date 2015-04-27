@@ -254,3 +254,18 @@ function requestRide(req, res) {
 }
 
 module.exports.requestsRide = requestRide;
+
+function getWorkLocations(req, res) {
+
+    WorkLocation.find({}, function(err,workLocations) {
+      if(err) {
+        res.json("Couldn't find any work locations");
+      }
+      else {
+        res.json(workLocations);
+      }
+    });
+
+}
+
+module.exports.workLocations = getWorkLocations;

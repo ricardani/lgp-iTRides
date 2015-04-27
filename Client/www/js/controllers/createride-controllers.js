@@ -6,7 +6,7 @@ angular.module('iTRides.createRideControllers', [])
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
       $scope.municipality = 'Concelho';
-      $scope.street = 'Freguesia';
+      $scope.street = 'Rua';
       $scope.info = 'Info';
       $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
                           "Coimbra","Évora","Faro","Guarda","Leiria","Lisboa",
@@ -15,6 +15,92 @@ angular.module('iTRides.createRideControllers', [])
                           "Ponta Delgada", "Funchal"];
       $scope.municipalities = [];
       $scope.streets = [];
+
+      $scope.workLocation = "Local de trabalho";
+      $scope.workLocations = [];
+
+      $http.get(Server.url + 'api/ride/getWorkLocations').
+          success(function(data, status, headers, config) {
+              for(i=0; i < data.length; i++) {
+                $scope.workLocations.push(data[i].name);
+              }
+              $ionicLoading.hide();
+          }).
+          error(function(data, status, headers, config) {
+              console.log(JSON.stringify(data));
+              $ionicLoading.hide();
+      });
+
+      /*--------------------- Modals ---------------------*/
+      $ionicModal.fromTemplateUrl('districts.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalD) {
+        $scope.modalDistrict = modalD;
+      });
+
+      $ionicModal.fromTemplateUrl('municipalities.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalM) {
+        $scope.modalMunicipality = modalM;
+      });
+
+      $ionicModal.fromTemplateUrl('streets.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalS) {
+        $scope.modalStreet = modalS;
+      });
+
+      $ionicModal.fromTemplateUrl('rideInfo.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalI) {
+        $scope.modalInfo = modalI;
+      });
+
+      $ionicModal.fromTemplateUrl('workLocations.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalWL) {
+        $scope.modalWorkLocation = modalWL;
+      });
+
+      $scope.showModalDistrict = function() {
+        $scope.modalDistrict.show();
+      };
+
+      $scope.showModalMunicipality = function() {
+        $scope.modalMunicipality.show();
+      };
+
+      $scope.showModalStreet = function() {
+        $scope.modalStreet.show();
+      };
+
+      $scope.showModalInfo = function() {
+        $scope.modalInfo.show();
+      };
+
+      $scope.showModalWorkLocation = function() {
+        $scope.modalWorkLocation.show();
+      };
+
+      //Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      // Execute action on hide modal
+      $scope.$on('modal.hidden', function() {
+        // Execute action
+      });
+      // Execute action on remove modal
+      $scope.$on('modal.removed', function() {
+        // Execute action
+      });
+
+      /*--------------------------------------------------*/
 
       $scope.itemClicked = function ($index) {
         $scope.selectedRideType = $index;
@@ -25,7 +111,7 @@ angular.module('iTRides.createRideControllers', [])
           var rideType = $scope.collection[$scope.selectedRideType];
 
           console.log(newRide);
-
+          /*TODO verificar se local de trabalho e/ou localização foram especificados */
           if(rideType == "Trabalho>Casa") {
               $http.post(Server.url + 'api/ride/createDR',
                       {
@@ -35,12 +121,12 @@ angular.module('iTRides.createRideControllers', [])
                         'type_cost': newRide.typeCost,
                         'cost': newRide.cost,
                         'date': newRide.date,
-                        'locationName': newRide.locationName,
+                        'locationName': $scope.workLocation,
                         'destination' : {
-                            "district": newRide.destinationDistrict,
-                            "municipality": newRide.destinationMunicipality,
-                            "street": newRide.destinationStreet,
-                            "info": newRide.destinationLocationInfo
+                            "district": $scope.district,
+                            "municipality": $scope.municipality,
+                            "street": $scope.street,
+                            "info": $scope.info
                         }
                       }
               )
@@ -64,12 +150,12 @@ angular.module('iTRides.createRideControllers', [])
                       'type_cost': newRide.typeCost,
                       'cost': newRide.cost,
                       'date': newRide.date,
-                      'locationName': newRide.locationName,
+                      'locationName': $scope.workLocation,
                       'startLocation' : {
-                          "district": newRide.startDistrict,
-                          "municipality": newRide.startMunicipality,
-                          "street": newRide.startStreet,
-                          "info": newRide.startLocationInfo
+                          "district": $scope.district,
+                          "municipality": $scope.municipality,
+                          "street": $scope.street,
+                          "info": $scope.info
                       }
                     }
             )
@@ -119,6 +205,28 @@ angular.module('iTRides.createRideControllers', [])
           }
 
       };
+
+      $scope.workLocationSelected = function(workLocation) {
+
+        $scope.workLocation = workLocation;
+
+        /*TODO o resto dos casos */
+
+        $scope.modalWorkLocation.hide();
+
+      };
+
+      $scope.streetSelected = function(street) {
+        $scope.street = street;
+
+        $scope.modalStreet.hide();
+      }
+
+      $scope.infoSelected = function(info) {
+        $scope.info = info;
+
+        $scope.modalInfo.hide();
+      }
 
       $scope.districtSelected = function(district) {
 
@@ -275,53 +383,13 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.municipalitySelected = function(municipality) {
 
-
-
         $scope.municipality = municipality;
 
-        
         /*TODO o resto dos casos */
 
         $scope.modalMunicipality.hide();
 
-
-
       };
-
-      $ionicModal.fromTemplateUrl('districts.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modalD) {
-        $scope.modalDistrict = modalD;
-      });
-
-      $ionicModal.fromTemplateUrl('municipalities.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modalM) {
-        $scope.modalMunicipality = modalM;
-      });
-
-      $scope.showModalDistrict = function() {
-        $scope.modalDistrict.show();
-      };
-
-      $scope.showModalMunicipality = function() {
-        $scope.modalMunicipality.show();
-      };
-
-      //Cleanup the modal when we're done with it!
-      $scope.$on('$destroy', function() {
-        $scope.modal.remove();
-      });
-      // Execute action on hide modal
-      $scope.$on('modal.hidden', function() {
-        // Execute action
-      });
-      // Execute action on remove modal
-      $scope.$on('modal.removed', function() {
-        // Execute action
-      });
 
     })
 

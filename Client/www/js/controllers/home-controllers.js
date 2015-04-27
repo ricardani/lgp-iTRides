@@ -10,7 +10,7 @@ angular.module('iTRides.homeControllers', [])
             error(function(data, status, headers, config) {
                 console.log(JSON.stringify(config));
                 $ionicLoading.hide();
-            });
+        });
 
         //Notifications test data
         /*$scope.notifications = [{
