@@ -77,3 +77,26 @@ function getNotifications(req, res) {
 }
 
 module.exports.notifications = getNotifications;
+
+
+
+function getProfileInfo(req, res) {
+    Account.findOne({
+        '_id': req.user.id
+    }, function(err, data) {
+        if (err || data === null) {
+            console.log(err);
+            res.json(err);
+        } else {
+            var information = {
+                name : data.name,
+                photo : data.photo,
+                contact : data.contact,
+                email: data.email
+            };
+        res.json(information);
+    }});
+};
+
+module.exports.information = getProfileInfo;
+ 

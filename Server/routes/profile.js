@@ -5,6 +5,8 @@ profiles = require('../dbops/profile');
 
 router.get('/getNotifications', profiles.notifications);
 
+router.get('/getProfileInfo', profiles.information)
+
 /*
 router.post('/createCR', rides.createCustomRide);
 
