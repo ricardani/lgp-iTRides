@@ -90,8 +90,8 @@
                     <i class="icon ion-ios-location"></i>
                     Destino
                 </div>
-                <input class="button button-ride-search" placeholder="Morada" ng-model="newRide.destinationAddress"></input>
-                <input class="button button-ride-search" placeholder="Identificador" ng-model="newRide.destinationIdentifier"></input>
+                <input class="button button-ride-search" placeholder="Morada" ng-model="newRide.destinationAddress">
+                <input class="button button-ride-search" placeholder="Identificador" ng-model="newRide.destinationIdentifier">
             </div>
 
           </div>
@@ -152,7 +152,6 @@
         <br><br>
         <br><br>
 
-
     </ion-content>
 
     <script id="districts.html" type="text/ng-template">
@@ -205,7 +204,7 @@
         <ion-content>
 
           <input class="button button-ride-search" placeholder="Rua" ng-model="newRide.street">
-          <input class="button button-ride-search" type="submit" ng-click="streetSelected(newRide.street)">
+          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="streetSelected(newRide.street)">
 
         </ion-content>
       </ion-modal-view>
@@ -219,7 +218,7 @@
         <ion-content>
 
           <input class="button button-ride-search" placeholder="Info" ng-model="newRide.info">
-          <input class="button button-ride-search" type="submit" ng-click="infoSelected(newRide.info)">
+          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newRide.info)">
 
         </ion-content>
       </ion-modal-view>

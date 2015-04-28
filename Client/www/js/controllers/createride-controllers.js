@@ -110,19 +110,20 @@ angular.module('iTRides.createRideControllers', [])
 
           var rideType = $scope.collection[$scope.selectedRideType];
 
-          console.log(newRide);
           /*TODO verificar se local de trabalho e/ou localização foram especificados */
+          /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
           if(rideType == "Trabalho>Casa") {
-              $http.post(Server.url + 'api/ride/createDR',
+              $http.post(Server.url + 'api/ride/createRide',
                       {
                         '_owner': $window.sessionStorage.token,
                         'seats': newRide.seats,
                         'time_start': newRide.hour,
+                        'ride_type': 'TC',
                         'type_cost': newRide.typeCost,
                         'cost': newRide.cost,
                         'date': newRide.date,
                         'locationName': $scope.workLocation,
-                        'destination' : {
+                        'homeLocation' : {
                             "district": $scope.district,
                             "municipality": $scope.municipality,
                             "street": $scope.street,
@@ -143,15 +144,17 @@ angular.module('iTRides.createRideControllers', [])
 
           }
           else if(rideType == "Casa>Trabalho") {
-            $http.post(Server.url + 'api/ride/createDR',
+            $http.post(Server.url + 'api/ride/createRide',
                     {
+                      '_owner': $window.sessionStorage.token,
                       'seats': newRide.seats,
                       'time_start': newRide.hour,
+                      'ride_type': 'CT',
                       'type_cost': newRide.typeCost,
                       'cost': newRide.cost,
                       'date': newRide.date,
                       'locationName': $scope.workLocation,
-                      'startLocation' : {
+                      'homeLocation' : {
                           "district": $scope.district,
                           "municipality": $scope.municipality,
                           "street": $scope.street,
@@ -171,20 +174,22 @@ angular.module('iTRides.createRideControllers', [])
             });
           }
           else if(rideType == "Ocasional") {
-              $http.post(Server.url + 'api/ride/createCR',
+              console.log(newRide);
+              $http.post(Server.url + 'api/ride/createRide',
                   {
                     'seats': newRide.seats,
                     'time_start': newRide.hour,
+                    'ride_type': 'Ocasional',
                     'type_cost': newRide.typeCost,
                     'cost': newRide.cost,
                     'date': newRide.date,
                     'startLocation' : {
-                      "address": newRide.startAddress,
-                      "identifier": newRide.startIdentifier
+                      "address": 'Daqui',
+                      "identifier": 'Aqui'
                     },
                     'destination' : {
-                      "address": newRide.destinationAddress,
-                      "identifier": newRide.destinationIdentifier
+                      "address": 'Dali',
+                      "identifier": 'Ali'
                     }
                   }
               ).
