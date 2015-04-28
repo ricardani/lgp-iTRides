@@ -1,6 +1,6 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers',
+    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.editProfileControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
@@ -114,7 +114,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
             })
 
             .state('rideDetails', {
-                url: "/rideDetails",
+                url: "/rideDetails/:rideID",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',
@@ -122,7 +122,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     },
                     'content': {
                         templateUrl: 'templates/rideDetails.html',
-                        controller: ''
+                        controller: 'RideDetailsCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

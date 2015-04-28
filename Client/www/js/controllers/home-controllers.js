@@ -8,7 +8,18 @@ angular.module('iTRides.homeControllers', [])
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
-                console.log(JSON.stringify(config));
+                console.log(JSON.stringify(data));
+                $ionicLoading.hide();
+            });
+
+        $http.get(Server.url + 'api/profile/getNextRide').
+            success(function(data, status, headers, config) {
+                $scope.myNextRide = data;
+                console.log(data);
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(data));
                 $ionicLoading.hide();
             });
 
@@ -63,7 +74,7 @@ angular.module('iTRides.homeControllers', [])
          rideDate:'16 Maio 17:00h'
          }];*/
 
-        $scope.myNextRide = {
+        /*$scope.myNextRide = {
             id:0,
             startLocation : 'Rua Professor António Gomes, Braga',
             date: '15 de fevereiro',
@@ -80,7 +91,7 @@ angular.module('iTRides.homeControllers', [])
                     photo:'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
                 }],
             destination: 'Avenida Lusíadas, Viseu'
-        };
+        };*/
 
         $scope.myNextRequest = {
             id:0,
