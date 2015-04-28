@@ -1,7 +1,7 @@
 angular.module('iTRides.createRideControllers', [])
 
     .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $http, Server) {
-
+      //var creatRideCtrl = this; e remover $scope
       $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
@@ -18,6 +18,9 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.workLocation = "Local de trabalho";
       $scope.workLocations = [];
+
+      /*Occasional Ride variables */
+      $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
 
       $http.get(Server.url + 'api/ride/getWorkLocations').
           success(function(data, status, headers, config) {
@@ -174,7 +177,6 @@ angular.module('iTRides.createRideControllers', [])
             });
           }
           else if(rideType == "Ocasional") {
-              console.log(newRide);
               $http.post(Server.url + 'api/ride/createRide',
                   {
                     'seats': newRide.seats,
@@ -184,12 +186,12 @@ angular.module('iTRides.createRideControllers', [])
                     'cost': newRide.cost,
                     'date': newRide.date,
                     'startLocation' : {
-                      "address": 'Daqui',
-                      "identifier": 'Aqui'
+                      "address": $scope.occasional.startAddress,
+                      "identifier": $scope.occasional.startIdentifier
                     },
                     'destination' : {
-                      "address": 'Dali',
-                      "identifier": 'Ali'
+                      "address": $scope.occasional.destinationAddress,
+                      "identifier": $scope.occasional.destinationIdentifier
                     }
                   }
               ).
