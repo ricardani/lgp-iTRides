@@ -9,19 +9,19 @@ angular.module('iTRides.loginControllers', [])
             if(user.email && user.password){
                 $http.post(Server.url + 'user/login', {'email': user.email, 'password': user.password}).
                     success(function(data, status, headers, config) {
-                        console.log(data.activated);
                         if(data.activated){
                             $window.sessionStorage.token = data.token;
+                            localStorage.setItem('SessionToken', data.token );
                             $state.go('home');
                         }else{
                             delete $window.sessionStorage.token;
                         }
-
                         $ionicLoading.hide();
                     }).
                     error(function(data, status, headers, config) {
                         console.log("Can´t login");
                         delete $window.sessionStorage.token;
+                        localStorage.removeItem('SessionToken');
                         $ionicLoading.hide();
                     });
             }else{

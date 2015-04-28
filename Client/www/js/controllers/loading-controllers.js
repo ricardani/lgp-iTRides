@@ -1,8 +1,10 @@
 angular.module('iTRides.loadingControllers', [])
 
-    .controller('LoadingCtrl', function($scope, $state, $window, $ionicLoading) {
-        $ionicLoading.show({template: '<ion-spinner icon="lines"></ion-spinner>', hideOnStateChange:true, duration:5000})
-        if ($window.sessionStorage.token) {
+    .controller('LoadingCtrl', function($scope, $state, $window) {
+
+        $window.sessionStorage.token = localStorage.getItem('SessionToken');
+
+        if ($window.sessionStorage.token && $window.sessionStorage.token != null && $window.sessionStorage.token != 'null') {
             $state.go('home');
         }else{
             $state.go('login');

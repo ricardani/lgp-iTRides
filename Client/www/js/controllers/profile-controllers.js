@@ -51,7 +51,7 @@ angular.module('iTRides.profileControllers', [])
 
         $scope.logout = function () {
             delete $window.sessionStorage.token;
-            $state.go('loading');
+            $state.go('login');
         };
 
 })
