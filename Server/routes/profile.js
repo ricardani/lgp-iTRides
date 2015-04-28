@@ -5,6 +5,11 @@ profiles = require('../dbops/profile');
 
 router.get('/getNotifications', profiles.notifications);
 
+router.get('/getProfileInfo', profiles.information);
+
+//router.post('/updateProfile', profiles.updateProfile);
+
+
 /*
 router.post('/createCR', rides.createCustomRide);
 
