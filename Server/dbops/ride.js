@@ -19,6 +19,7 @@ function WorkLocationCreation(req, res) {
 }
 module.exports.createWorkLocation = WorkLocationCreation;
 
+
 function rideCreation(req, res) {
 
     if(req.body.ride_type == "Ocasional") {
@@ -73,24 +74,7 @@ function rideCreation(req, res) {
 }
 
 module.exports.createRide = rideCreation;
-/*
- function occasionalRideCreation(req, res) {
 
-
-
- }
-
- module.exports.createOccasionalRide = occasionalRideCreation;
-
-
- function defaultRideCreation(req, res) {
-
-
-
- }
-
- module.exports.createDefaultRide = defaultRideCreation;
- */
 /* TODO update to the new HomeToWork WorkToHome WorkLocation OccasionalRide sintax*/
 
 function removeRide(req, res) {
@@ -149,6 +133,7 @@ function removeRide(req, res) {
 }
 
 module.exports.deleteRide = removeRide;
+
 
 function requestRide(req, res) {
 
@@ -219,6 +204,7 @@ function requestRide(req, res) {
 
 module.exports.requestsRide = requestRide;
 
+
 function getWorkLocations(req, res) {
 
     WorkLocation.find({}, function(err,workLocations) {
@@ -233,6 +219,13 @@ function getWorkLocations(req, res) {
 }
 
 module.exports.workLocations = getWorkLocations;
+
+
+function WorkLocationCreation(req, res) {
+
+}
+
+module.exports.createWorkLocations = WorkLocationCreation;
 
 function getRide(req, res) {
 

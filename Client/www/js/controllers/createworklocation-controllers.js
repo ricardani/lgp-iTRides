@@ -1,13 +1,14 @@
-angular.module('iTRides.createRideControllers', [])
+angular.module('iTRides.createWorkLocationControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $http, Server) {
-      //var creatRideCtrl = this; e remover $scope
-      $scope.selectedRideType = 0;
-      $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
-      $scope.district = 'Distrito';
-      $scope.municipality = 'Concelho';
-      $scope.street = 'Rua';
-      $scope.info = 'Info';
+    .controller('CreateWorkLocationCtrl', function($scope, $http, $ionicModal, $ionicLoading, $timeout, Server) {
+
+      $scope.workLocation = {
+        district : 'Distrito',
+        municipality : 'Concelho',
+        street : 'Rua',
+        locationInfo : 'Info',
+        workLocationName : ''
+      };
       $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
                           "Coimbra","Évora","Faro","Guarda","Leiria","Lisboa",
                           "Portalegre","Porto","Santarém","Setúbal","Viana do Castelo",
@@ -15,24 +16,6 @@ angular.module('iTRides.createRideControllers', [])
                           "Ponta Delgada", "Funchal"];
       $scope.municipalities = [];
       $scope.streets = [];
-
-      $scope.workLocation = "Local de trabalho";
-      $scope.workLocations = [];
-
-      /*Occasional Ride variables */
-      $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
-
-      $http.get(Server.url + 'api/ride/getWorkLocations').
-          success(function(data, status, headers, config) {
-              for(i=0; i < data.length; i++) {
-                $scope.workLocations.push(data[i].name);
-              }
-              $ionicLoading.hide();
-          }).
-          error(function(data, status, headers, config) {
-              console.log(JSON.stringify(data));
-              $ionicLoading.hide();
-      });
 
       /*--------------------- Modals ---------------------*/
       $ionicModal.fromTemplateUrl('districts.html', {
@@ -63,13 +46,6 @@ angular.module('iTRides.createRideControllers', [])
         $scope.modalInfo = modalI;
       });
 
-      $ionicModal.fromTemplateUrl('workLocations.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modalWL) {
-        $scope.modalWorkLocation = modalWL;
-      });
-
       $scope.showModalDistrict = function() {
         $scope.modalDistrict.show();
       };
@@ -92,7 +68,7 @@ angular.module('iTRides.createRideControllers', [])
 
       //Cleanup the modal when we're done with it!
       $scope.$on('$destroy', function() {
-        $scope.modal.remove();
+        $scope.modalWorkLocation.remove();
       });
       // Execute action on hide modal
       $scope.$on('modal.hidden', function() {
@@ -105,123 +81,30 @@ angular.module('iTRides.createRideControllers', [])
 
       /*--------------------------------------------------*/
 
-      $scope.itemClicked = function ($index) {
-        $scope.selectedRideType = $index;
-      };
-
-      $scope.createRide = function (newRide) {
-
-          var rideType = $scope.collection[$scope.selectedRideType];
-
-          /*TODO verificar se local de trabalho e/ou localização foram especificados */
-          /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
-          if(rideType == "Trabalho>Casa") {
-              $http.post(Server.url + 'api/ride/createRide',
-                      {
-                        '_owner': $window.sessionStorage.token,
-                        'seats': newRide.seats,
-                        'time_start': newRide.hour,
-                        'ride_type': 'TC',
-                        'type_cost': newRide.typeCost,
-                        'cost': newRide.cost,
-                        'date': newRide.date,
-                        'locationName': $scope.workLocation,
-                        'homeLocation' : {
-                            "district": $scope.district,
-                            "municipality": $scope.municipality,
-                            "street": $scope.street,
-                            "info": $scope.info
-                        }
-                      }
-              )
-              .success(function(data, status, headers, config) {
-                  if(data){
-                      /* TODO caso funcione */
-                      $ionicLoading.hide();
+      $scope.createWorkLocation = function() {
+        $http.post(Server.url + 'api/ride/createWorkLocation',
+                {
+                  'name': $scope.workLocationName,
+                  'homeLocation' : {
+                      "district": $scope.district,
+                      "municipality": $scope.municipality,
+                      "street": $scope.street,
+                      "info": $scope.locationInfo
                   }
-              }).
-              error(function(data, status, headers, config) {
-                  /* TODO caso dê erro */
-                  $ionicLoading.hide();
-              });
-
-          }
-          else if(rideType == "Casa>Trabalho") {
-            $http.post(Server.url + 'api/ride/createRide',
-                    {
-                      '_owner': $window.sessionStorage.token,
-                      'seats': newRide.seats,
-                      'time_start': newRide.hour,
-                      'ride_type': 'CT',
-                      'type_cost': newRide.typeCost,
-                      'cost': newRide.cost,
-                      'date': newRide.date,
-                      'locationName': $scope.workLocation,
-                      'homeLocation' : {
-                          "district": $scope.district,
-                          "municipality": $scope.municipality,
-                          "street": $scope.street,
-                          "info": $scope.info
-                      }
-                    }
-            )
-            .success(function(data, status, headers, config) {
-                if(data){
-                    /* TODO caso funcione */
-                    $ionicLoading.hide();
                 }
-            }).
-            error(function(data, status, headers, config) {
-                /* TODO caso dê erro */
+        )
+        .success(function(data, status, headers, config) {
+            if(data){
+                /* TODO caso funcione */
                 $ionicLoading.hide();
-            });
-          }
-          else if(rideType == "Ocasional") {
-              $http.post(Server.url + 'api/ride/createRide',
-                  {
-                    'seats': newRide.seats,
-                    'time_start': newRide.hour,
-                    'ride_type': 'Ocasional',
-                    'type_cost': newRide.typeCost,
-                    'cost': newRide.cost,
-                    'date': newRide.date,
-                    'startLocation' : {
-                      "address": $scope.occasional.startAddress,
-                      "identifier": $scope.occasional.startIdentifier
-                    },
-                    'destination' : {
-                      "address": $scope.occasional.destinationAddress,
-                      "identifier": $scope.occasional.destinationIdentifier
-                    }
-                  }
-              ).
-                  success(function(data, status, headers, config) {
-                      if(data){
-                          /* TODO caso funcione */
-                          $ionicLoading.hide();
-                      }
-                  }).
-                  error(function(data, status, headers, config) {
-                      /* TODO caso dê erro */
-                      $ionicLoading.hide();
-                  });
-          }
-          else {
-              /* TODO caso dê erro ao definir o tipo da boleia */
-              $ionicLoading.hide();
-          }
+            }
+        }).
+        error(function(data, status, headers, config) {
+            /* TODO caso dê erro */
+            $ionicLoading.hide();
+        });
+      }
 
-      };
-
-      $scope.workLocationSelected = function(workLocation) {
-
-        $scope.workLocation = workLocation;
-
-        /*TODO o resto dos casos */
-
-        $scope.modalWorkLocation.hide();
-
-      };
 
       $scope.streetSelected = function(street) {
         $scope.street = street;
@@ -398,9 +281,6 @@ angular.module('iTRides.createRideControllers', [])
 
       };
 
-    })
-
-    .controller('CreateRideTypeCtrl', function($scope) {
 
     })
 
