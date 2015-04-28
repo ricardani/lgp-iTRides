@@ -41,7 +41,7 @@
 
             <div class="item item-divider">
                 A minha Próxima Boleia
-                <p>{{myNextRide.date}} {{myNextRide.time_start}}</p>
+                <p>{{myNextRide.date | date : 'dd/MM/yy HH:mm' }}</p>
             </div>
 
             <div class="item item-text-wrap item-icon-left">
@@ -50,11 +50,13 @@
             </div>
 
             <div class="item">
-                <div class="item item-avatar" ng-repeat="p in myNextRide.passengers">
+                <div class="item item-avatar" ng-repeat="p in myNextRide.passengers | orderBy:'date'">
 
                     <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{p.name}}</h2>
-
+                    <p ng-if="$index === 0" style = "color: red">
+                        Riding shotgun
+                    </p>
                 </div>
             </div>
 
@@ -63,7 +65,7 @@
                 {{myNextRide.destination}}
             </div>
 
-            <a class="item item-icon-left assertive" href="#/rideDetails">
+            <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRide.id}}">
                 <i class="icon ion-information-circled orange"></i>
                 <a1 class="orange"> Ver detalhes </a1>
             </a>

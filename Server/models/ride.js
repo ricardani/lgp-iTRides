@@ -36,7 +36,7 @@ var RideSchema = new Schema({
     default: "active"
   },
   passengers: [Passenger],
-  feedback:[Feedback],
+  feedback:[Feedback]
 }, {collection: 'rides', discriminatorKey : '_type'});
 
 

@@ -7,6 +7,8 @@ router.get('/getNotifications', profiles.notifications);
 
 router.get('/getProfileInfo', profiles.information);
 
+router.get('/getNextRide', profiles.nextRide);
+
 //router.post('/updateProfile', profiles.updateProfile);
 
 

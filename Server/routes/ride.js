@@ -11,4 +11,6 @@ router.post('/requestRide', rides.requestsRide);
 
 router.get('/getWorkLocations', rides.workLocations);
 
+router.get('/getRide', rides.oneRide);
+
 module.exports = router;
