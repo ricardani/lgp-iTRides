@@ -99,4 +99,5 @@ function getProfileInfo(req, res) {
 };
 
 module.exports.information = getProfileInfo;
- 
+
+

@@ -25,18 +25,18 @@
 					</center>
 					<p>
 					  <span class="input_title">Nome </span>
-					  <input type="text" placeholder="{{user.name}}" pattern="[A-Za-z]{0,30}" name="name_profile"/>
+					  <input type="text" placeholder="{{user.name}}" name="name_profile" ng-model="new_name"/>
 					</p>
 					<p>
 					  <span class="input_title">Contacto </span>
-					  <input type="text" placeholder="{{user.contact}}" pattern="9[1236][0-9]{7}|2[1-9][0-9]{7}" name="name_profile"/>
+					  <input type="text" placeholder="{{user.contact}}" name="name_profile" ng-model="new_contact"/>
 					</p>
 				</form>
 			</div>
 			
-			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);">
+			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);" ng-click="submitChanges(new_name, new_contact)">
 				<i class="icon ion-checkmark #fff" style="font-size:150%;color:#fff"></i>
-				<a1 class="white"> Gravar </a1>
+				<a1 class="white" > Gravar </a1>
 			</a>
 			<a class="item item-icon-left assertive" href="#/profile" style="background-color:#fff">
 				<i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>

@@ -4,22 +4,28 @@ angular.module('iTRides.profileControllers', [])
 
 .controller('ProfileCtrl', function($scope,$http,$ionicLoading, $timeout, Server, $window, $state) {
 
-    $http.get(Server.url + 'api/profile/getProfileInfo').
-        success(function(data, status, headers, config) {
-            console.log(data);
-            $scope.user = data;
-            $ionicLoading.hide();
-        }).
-        error(function(data, status, headers, config) {
-            console.log(JSON.stringify(config));
-            $ionicLoading.hide();
-    });
+        $http.get(Server.url + 'api/profile/getProfileInfo').
+            success(function(data, status, headers, config) {
+                $scope.user = data;
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(config));
+                $ionicLoading.hide();
+        });
 
-
-/*
-        $scope.user = {
-            name: 'Raquel Gomes', photo: 'https://lh3.googleusercontent.com/-IYWkoctkgdo/AAAAAAAAAAI/AAAAAAAAAAA/v3okpkLGc_4/s46-c-k-no/photo.jpg', email: 'raquel_gomes@itgrow.com', contact: '913 637 973', rating: 3
-        };*/
+    /*
+        $http.get(Server.url + 'api/profile/getNextDefaultRides').
+            success(function(data, status, headers, config) {
+                console.log(data);
+                $scope.user = data;
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(config));
+                $ionicLoading.hide();
+        });
+    */
 
         $scope.defaultRides = [{
         	id:0,
@@ -38,7 +44,7 @@ angular.module('iTRides.profileControllers', [])
         	start_time: '08:00'
         }];
 
-//        $scope.number = 5-$scope.user.rating;
+      //$scope.number = 5-$scope.user.rating;
 		$scope.getNumber = function(num) {
 		    return new Array(num);   
 		}
