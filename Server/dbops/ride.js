@@ -40,7 +40,7 @@ function WorkLocationDeletion(req, res) {
   });
 }
 
-module.exports.createWorkLocations = WorkLocationDeletion;
+module.exports.deleteWorkLocations = WorkLocationDeletion;
 
 
 //TODO verificar senao esta a criar uma boleia igual a uma que ele proprio ja criou
