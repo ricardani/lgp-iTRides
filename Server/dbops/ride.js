@@ -6,67 +6,107 @@ var Ride = require('../models/ride').rideModel;
 
 function WorkLocationCreation(req, res) {
 
-    var WorkLocation = new WorkLocation(req.body);
-    WorkLocation.save(function(error, data) {
-        if (error) {
-            console.log(error);
-            res.json(error);
-        } else {
-            res.json(data);
-        }
+    //TODO Verifica se existe um local de trabalho com o nome pedido contando o numero de locais de trabalho com esse nome
+    WorkLocation.count({
+      "name": req.body.name
+    }, function(err,count) {
+      if(count==0) {
+        var WorkLocation = new WorkLocation(req.body);
+        WorkLocation.save(function(error, data) {
+            if (error) {
+                console.log(error);
+                res.json(error);
+            } else {
+                res.json(data);
+            }
+        });
+      }
+      else
+        res.json('Já existe um local de trabalho com esse nome');
+
     });
-
 }
-module.exports.createWorkLocation = WorkLocationCreation;
+module.exports.createWorkLocations = WorkLocationCreation;
 
 
+function WorkLocationDeletion(req, res) {
+  WorkLocation.findOne({
+    "name": req.body.workLocationName
+  }).remove(function(error, data) {
+      if (error) {
+          res.json(error);
+      } else
+          res.json(data);
+  });
+}
+
+module.exports.createWorkLocations = WorkLocationDeletion;
+
+
+//TODO verificar senao esta a criar uma boleia igual a uma que ele proprio ja criou
 function rideCreation(req, res) {
 
     if(req.body.ride_type == "Ocasional") {
         Account.findOne({
-            "email": req.body.owner_email
+            "_id": req.user.id
         })
-            .populate('_id')
-            .exec( function(err,owner) {
-                if(err) {
-                    res.json(err);
-                }
-                else {
-                    var occasionalRide = new OccasionalRide(req.body);
-                    occasionalRide._owner = owner;
+        .populate('_id')
+        .exec( function(err,owner) {
+            if(err) {
+                res.json(err);
+            }
+            else {
+                var occasionalRide = new OccasionalRide(req.body);
+                occasionalRide._owner = owner;
 
-                    occasionalRide.save(function(error, data) {
-                        if (error) {
-                            console.log(error);
-                            res.json(error);
-                        } else {
-                            res.json(data);
-                        }
-                    });
-                }
-            });
-    }
-    else if(req.body.ride_type == "Trabalho>Casa" || req.body.ride_type == "Casa>Trabalho") {
-        WorkLocation.findOne({
-            "name": req.body.locationName
-        })
-            .populate('_id')
-            .exec(function(error, rideInfo) {
-                var defaultRide = new HomeAndWorkRide(req.body);
-                /*TODO alterar para ler o id do owner
-                 defaultRide._owner = owner; */
-                defaultRide._owner = null;
-                defaultRide._workLocation = rideInfo;
-                defaultRide.save(function(error, data) {
+                occasionalRide.save(function(error, data) {
                     if (error) {
                         console.log(error);
                         res.json(error);
                     } else {
-                        console.log(data);
                         res.json(data);
                     }
                 });
+            }
+        });
+    }
+    else if(req.body.ride_type == "TC" || req.body.ride_type == "CT") {
+      Account.findOne({
+          "_id": req.user.id
+      })
+      .populate('_id')
+      .exec( function(err,owner) {
+          if(err) {
+            console.log(err);
+            res.json(err);
+          }
+          else {
+            WorkLocation.findOne({
+                "name": req.body.locationName
+            })
+            .populate('_id')
+            .exec(function(error, workLocation) {
+                if(error) {
+                  console.log(error);
+                  res.json(error);
+                }
+                else {
+                  var defaultRide = new HomeAndWorkRide(req.body);
+                  defaultRide._owner = owner;
+                  defaultRide._workLocation = workLocation;
+                  defaultRide.save(function(error, data) {
+                      if (error) {
+                          console.log(error);
+                          res.json(error);
+                      } else {
+                          console.log(data);
+                          res.json(data);
+                      }
+                  });
+                }
             });
+          }
+      });
     }
     else {
         res.json('Couldn`t determine the ride type');
@@ -84,18 +124,18 @@ function removeRide(req, res) {
         WorkLocation.findOne({
             "name": req.body.rideName
         })
-            .populate('_id')
-            .exec(function(err, rideInfo) {
-                HomeAndWorkRide.findOne({
-                    "_owner": req.user.id,
-                    "_workLocation": rideInfo
-                }).remove(function(error, data) {
-                    if (error) {
-                        res.json(error);
-                    } else
-                        res.json(data);
-                });
+        .populate('_id')
+        .exec(function(err, rideInfo) {
+            HomeAndWorkRide.findOne({
+                "_owner": req.user.id,
+                "_workLocation": rideInfo
+            }).remove(function(error, data) {
+                if (error) {
+                    res.json(error);
+                } else
+                    res.json(data);
             });
+        });
 
     }
     else if(req.body.destination.district) {
@@ -134,72 +174,62 @@ function removeRide(req, res) {
 
 module.exports.deleteRide = removeRide;
 
-
+//TODO verificar o problema de haver 2 donos com o mesmo nome
 function requestRide(req, res) {
 
-    if(req.body.ride_type == 'default') {
-        WorkLocation.findOne({
-            "name": req.body.rideName
-        })
-            .populate('_id')
-            .exec( function(error, rideInfo) {
-                if(error) {
-                    res.json("Couldn't find the ride info");
-                }
-                else {
-                    Account.findOne({
-                        "email": req.body.owner_email
-                    })
-                        .populate('_id')
-                        .exec( function(err, owner) {
-                            if(err) {
-                                res.json("Couldn't find the owner");
-                            }
-                            else {
-                                DefaultRide.findOne({
-                                    "_owner": owner,
-                                    "_workLocation": rideInfo
-                                }, function(erro, ride) {
-
-                                    if(erro) {
-                                        res.json("Couldn't find the ride");
-                                    }
-                                    else {
-                                        ride.passengers.push({"_user": req.user.id});
-                                        res.json(ride);
-                                    }
-                                });
-                            }
-                        });
-                }
-            });
-    }
-    else if(req.body.ride_type == 'custom') {
-
-        Account.findOne({
-            "email": req.body.owner_email
-        })
-            .populate('_id')
-            .exec( function(err, owner) {
+    Account.findOne({
+        "name": req.body.ownerName
+    })
+    .populate('_id')
+    .exec( function(error, rideOwner) {
+      if(error) {
+          res.json("Couldn't find that work location");
+      }
+      else {
+        if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
+          WorkLocation.findOne({
+              "name": req.body.workLocationName
+          })
+          .populate('_id')
+          .exec( function(error, workLocation) {
+            if(error) {
+                res.json("Couldn't find that work location");
+            }
+            else {
+              Ride.findOne({
+                "ride_type": req.body.ride_type,
+                "homeLocation": req.body.homeLocation,
+                "_workLocation": workLocation,
+                "_owner": rideOwner
+              }, function(err, data) {
                 if(err) {
-                    res.json("Couldn't find the owner");
+                  res.json(err);
                 }
                 else {
-                    OccasionalRide.findOne({
-                        "_owner": owner
-                    }, function(erro, ride) {
-
-                        if(erro) {
-                            res.json("Couldn't find the ride");
-                        }
-                        else {
-                            ride.passengers.push({"_user": req.user.id});
-                            res.json(ride);
-                        }
-                    });
+                  data.passengers.push({"_user":req.user.id});
                 }
-            });
-    }
+              });
+            }
+          });
+        }
+        else if(req.body.ride_type == 'Ocasional') {
+          Ride.findOne({
+            "ride_type": req.body.ride_type,
+            "startLocation": req.body.startLocation,
+            "destination": req.body.destination,
+            "_owner": rideOwner
+          }, function(err, data) {
+            if(err) {
+              res.json(err);
+            }
+            else {
+              data.passengers.push({"_user":req.user.id});
+            }
+          });
+        }
+      }
+    });
+
 }
 
 module.exports.requestsRide = requestRide;
@@ -220,12 +250,6 @@ function getWorkLocations(req, res) {
 
 module.exports.workLocations = getWorkLocations;
 
-
-function WorkLocationCreation(req, res) {
-
-}
-
-module.exports.createWorkLocations = WorkLocationCreation;
 
 function getRide(req, res) {
 

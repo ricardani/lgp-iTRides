@@ -15,7 +15,6 @@ angular.module('iTRides.homeControllers', [])
         $http.get(Server.url + 'api/profile/getNextRide').
             success(function(data, status, headers, config) {
                 $scope.myNextRide = data;
-                console.log(data);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {

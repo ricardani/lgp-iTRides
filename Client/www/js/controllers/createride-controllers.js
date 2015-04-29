@@ -92,7 +92,11 @@ angular.module('iTRides.createRideControllers', [])
 
       //Cleanup the modal when we're done with it!
       $scope.$on('$destroy', function() {
-        $scope.modal.remove();
+        $scope.modalDistrict.remove();
+        $scope.modalMunicipality.remove();
+        $scope.modalStreet.remove();
+        $scope.modalInfo.remove();
+        $scope.modalWorkLocation.remove();
       });
       // Execute action on hide modal
       $scope.$on('modal.hidden', function() {
