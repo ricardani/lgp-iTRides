@@ -2,57 +2,76 @@
     <ion-content>
         <br><br>
         <div class="list card">
-          <div class="item item-divider">
-              Detalhes da Boleia
-          </div>
+            <div class="item item-divider">
+                Detalhes da Boleia
+            </div>
 
-          <div class="item item-avatar item-text-wrap" href="#">
-              <img src="img/default_profile_photo.png">
-              <h2>Boleia de Celia Bell</h2>
-              <span class="item-note" style="float:left">15 fevereiro às 08:00</span>
-              <br>
+            <div class="item item-avatar item-text-wrap" href="#">
+                <img ng-src="{{ride.ownerPhoto}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                <h2>Boleia de {{ride.ownerName}}</h2>
+                <span class="item-note" style="float:left">{{ride.date | date : 'dd/MM/yy HH:mm' }}</span>
+                <br>
               <span class="item-note" style="float:left">
                   <i class="icon ion-checkmark" style="color:green"> </i>
                   Boleia confirmada
               </span>
-              <br>
-          </div>
+                <br>
+            </div>
 
-          <div class="item item-text-wrap item-icon-left">
-              <i class="icon ion-ios-home"></i>
-              Rua Professor António Gomes, Braga
-          </div>
+            <div class="item item-text-wrap item-icon-left">
+                <i class="icon ion-android-car"></i>
+                <div ng-if="ride.seats - ride.passengers.length > 1"> {{ride.seats - ride.passengers.length}} Lugares disponíveis </div>
+                <div ng-if="ride.seats - ride.passengers.length === 1"> {{ride.seats - ride.passengers.length}} Lugar disponível </div>
+                <div ng-if="ride.seats - ride.passengers.length === 0"> Não há mais lugares disponíveis </div>
+                <div ng-if="ride.seats - ride.passengers.length < 0" style="color:red;"> Alguém vai ter que ir a pé</div>
+            </div>
 
-          <div class="item">
-              <div class="item item-avatar">
-                  <img src="img/default_profile_photo.png">
-                  <h2>Tiago Gonçalves</h2>
-              </div>
-              <div class="item item-avatar">
-                  <img src="img/default_profile_photo.png">
-                  <h2>Fernanda Santos</h2>
-              </div>
-              <div class="item item-avatar">
-                  <img src="img/default_profile_photo.png">
-                  <h2>Leonardo Ribeiro</h2>
-              </div>
-          </div>
+            <div class="item item-text-wrap item-icon-left">
+                <i class="icon ion-ios-home"></i>
+                {{ride.startLocation}}
+            </div>
 
-          <div class="item item-text-wrap item-icon-left">
-              <i class="icon ion-ios-location"></i>
-              R.Artes, Bairro de Santa Luzia, Porto
-          </div>
+            <div class="item">
+                <div class="item item-avatar" ng-repeat="p in ride.passengers">
+                    <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                    <h2>{{p.name}}</h2>
+                    <p ng-if="$index === 0" style = "color: red">
+                        Riding shotgun
+                    </p>
+                </div>
+            </div>
 
-          <div class="item item-text-wrap item-icon-left">
-              <i class="icon ion-social-euro"></i>
-              €8,80 / pessoa
-          </div>
+            <div class="item item-text-wrap item-icon-left">
+                <i class="icon ion-ios-location"></i>
+                {{ride.destination}}
+            </div>
 
-          <a class="item item-icon-left assertive" href="#">
-              <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
-              Cancelar pedido de boleia
-          </a>
+            <div class="item item-text-wrap item-icon-left">
+                <i class="icon ion-social-euro"></i>
+                <div ng-if="!ride.typeCost"> {{ride.cost}}€ / pessoa</div>
 
+            </div>
+
+            <a ng-if="ride.myStatus === 'myRequest'" class="item item-icon-left assertive" href="#">
+                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
+                Cancelar pedido de boleia //TODO
+            </a>
+            <a ng-if="ride.myStatus === 'myRide'" class="item item-icon-left assertive" href="#">
+                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
+                Partilhar Boleia //TODO
+            </a>
+            <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" href="#">
+                <i class="icon ion-close-round" style="color:green; font-size:150%"></i>
+                Solicitar Boleia //TODO
+            </a>
+
+        </div>
+
+        <div class="list card">
+            <a class="item item-icon-left assertive" href="#/home">
+                <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
+                <a1 class="orange"> Regressar </a1>
+            </a>
         </div>
         <br><br>
     </ion-content>

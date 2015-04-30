@@ -11,6 +11,11 @@ angular.module('iTRides.editProfileControllers', [])
 	        }).
 	        error(function(data, status, headers, config) {
 	            console.log(JSON.stringify(config));
+                if(status === 401){
+                    delete window.sessionStorage.token;
+                    localStorage.removeItem('SessionToken');
+                    $state.go('login');
+                }
 	            $ionicLoading.hide();
 	    });
 

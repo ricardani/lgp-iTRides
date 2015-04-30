@@ -7,7 +7,10 @@ angular.module('iTRides.loadingControllers', [])
         if ($window.sessionStorage.token && $window.sessionStorage.token != null && $window.sessionStorage.token != 'null') {
             $state.go('home');
         }else{
+            delete window.sessionStorage.token;
+            localStorage.removeItem('SessionToken');
             $state.go('login');
+
         }
     })
 ;

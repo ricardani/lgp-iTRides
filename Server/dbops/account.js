@@ -76,7 +76,7 @@ function login(req, res) {
                 var profile = {
                     id: data.id
                 };
-                var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60});
+                var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60*24});
                 res.json({activated: data.activated, token: token});
             }else{
                 res.json("Account Not activated");
