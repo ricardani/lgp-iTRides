@@ -233,6 +233,8 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.createRideInfo = function (newRide) {
 
+        console.log($scope.workLocation);
+
         $http.post(Server.url + 'api/ride/createRideInfo',
                 {
                   '_owner': $window.sessionStorage.token,
@@ -240,7 +242,7 @@ angular.module('iTRides.createRideControllers', [])
                   'time_start': newRide.hour,
                   'type_cost': newRide.typeCost,
                   'cost': newRide.cost,
-                  'locationName': $scope.workLocation,
+                  'workLocationName': $scope.workLocation,
                   'homeLocation' : {
                       "district": $scope.district,
                       "municipality": $scope.municipality,

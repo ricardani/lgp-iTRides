@@ -1,7 +1,7 @@
 angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
-    'iTRides.listCreatedRidesControllers', 'iTRides.editProfileControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
+    'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -160,6 +160,23 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
                     'content': {
                         templateUrl: 'templates/createWorkLocation.html',
                         controller: 'CreateWorkLocationCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+            .state('listWorkLocation', {
+                url: "/listWorkLocation",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/listWorkLocation.html',
+                        controller: 'ListWorkLocationCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

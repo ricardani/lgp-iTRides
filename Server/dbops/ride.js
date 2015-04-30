@@ -37,8 +37,9 @@ function WorkLocationDeletion(req, res) {
   }).remove(function(error, data) {
       if (error) {
           res.json(error);
-      } else
+      } else {
           res.json(data);
+      }
   });
 }
 

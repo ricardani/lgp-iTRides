@@ -147,7 +147,8 @@
       		  </label>
       		</div>
   -->
-          <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)">
+          <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)" ng-if= "createNew === 'createNow'">
+          <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRideInfo(newRide)" ng-if= "createNew === 'createInfo'">
         </form>
         <br><br>
         <br><br>

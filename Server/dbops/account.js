@@ -39,7 +39,7 @@ function register(req, res) {
         }
     });
 
-    sendMail(req.body.email, "iTRides Account Confirmation", "Hello, Confirmation Link: <br><br> <a href=\"http://localhost:8080/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\"> LINK </a> <br><br> LGP iTRides");
+    sendMail(req.body.email, "iTRides Account Confirmation", "Hello, Confirmation Link: <br><br> <a href=\"http://localhost:5000/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\"> LINK </a> <br><br> LGP iTRides");
 }
 
 module.exports.reg = register;

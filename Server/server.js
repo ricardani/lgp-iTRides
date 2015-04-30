@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var accountRoutes = require('./routes/account');
 var rideRoutes = require('./routes/ride');
 var profileRoutes = require('./routes/profile');
+var adminRoutes = require('./routes/admin');
 
 //Tokens
 var expressJwt = require('express-jwt');
@@ -61,6 +62,7 @@ app.use('/user', accountRoutes);
 app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
