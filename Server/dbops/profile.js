@@ -3,6 +3,7 @@ var Account = require('../models/account');
 var Ride = require('../models/ride').rideModel;
 var WorkLocation = require('../models/workLocation');
 var async = require('async');
+var sha256 = require('sha256');
 
 function getNotifications(req, res) {
     Account.findOne({
@@ -266,3 +267,79 @@ function getNextRequestedRide(req, res) {
 module.exports.nextRequestedRide = getNextRequestedRide;
 
 
+
+function updateProfile(req, res) {
+    Account.update(
+       {'_id': req.user.id},
+       {
+        'name' : req.body.name,
+        'contact' : req.body.contact,
+        //photo: req.body.photo,
+       },
+       { upsert: true },
+       function(err, data) {
+        if(err) {
+            res.json(err);
+        } else {
+            res.json(data);
+        }
+       }
+    );
+}
+
+module.exports.profileUpdate = updateProfile;
+
+function updateProfilePassword(req, res) {
+
+    var user_old_password;
+    console.log('updateProfilePassword');
+
+    Account.findOne({'_id' : req.user.id}, 
+        function(err, data) {
+            if (err || data === null) {
+                console.log(err);
+                res.json(err);
+            } else {
+                console.log("data: ");
+                console.log(data);
+                console.log("----------------------------");
+                user_old_password = data.password;
+
+
+
+                console.log("old password sent by user");
+                console.log(sha256(req.body.old_password));
+                if (sha256(req.body.old_password) == user_old_password){
+                    console.log("they're the same, bitch");
+                } else {
+                    console.log("guess not");
+                }
+
+                if (sha256(req.body.old_password) == user_old_password){
+                    Account.update(
+                       {'_id': req.user.id},
+                       {
+                        'name' : req.body.name,
+                        'contact' : req.body.contact,
+                        'password' : sha256(req.body.new_password)
+                        //photo: req.body.photo,
+                       },
+                       { upsert: true },
+                       function(err, data) {
+                        if(err) {
+                            res.json(err);
+                        } else {
+                            res.json(data);
+                        }
+                       }
+                    );
+                }
+
+
+
+            }
+        }   
+    );
+}
+
+module.exports.profileUpdatePassword = updateProfilePassword;
