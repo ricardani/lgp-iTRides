@@ -1,7 +1,19 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $http, Server) {
+    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
       //var creatRideCtrl = this; e remover $scope
+
+      $scope.createNew = $stateParams.createNew;
+
+      if($scope.createNew == 'createNow') {
+        console.log('create ride now');
+      }
+      else if($scope.createNew == 'createInfo') {
+        console.log('create ride info');
+      }
+      else
+        ;//TODO enviar para uma pagina com erro 500
+
       $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
@@ -216,6 +228,41 @@ angular.module('iTRides.createRideControllers', [])
           }
 
       };
+
+      /*------------------Create Ride Info--------------------*/
+
+      $scope.createRideInfo = function (newRide) {
+
+        $http.post(Server.url + 'api/ride/createRideInfo',
+                {
+                  '_owner': $window.sessionStorage.token,
+                  'seats': newRide.seats,
+                  'time_start': newRide.hour,
+                  'type_cost': newRide.typeCost,
+                  'cost': newRide.cost,
+                  'locationName': $scope.workLocation,
+                  'homeLocation' : {
+                      "district": $scope.district,
+                      "municipality": $scope.municipality,
+                      "street": $scope.street,
+                      "info": $scope.info
+                  }
+                }
+        )
+        .success(function(data, status, headers, config) {
+            if(data){
+                /* TODO caso funcione */
+                console.log(data);
+                $ionicLoading.hide();
+            }
+        }).
+        error(function(data, status, headers, config) {
+            /* TODO caso dê erro */
+            $ionicLoading.hide();
+        });
+
+      };
+      /*------------------------------------------------------*/
 
       $scope.workLocationSelected = function(workLocation) {
 

@@ -9,7 +9,13 @@ router.get('/getProfileInfo', profiles.information);
 
 router.get('/getNextRide', profiles.nextRide);
 
-//router.post('/updateProfile', profiles.updateProfile);
+router.get('/getNextRequestedRide', profiles.nextRequestedRide);
+
+router.post('/updateProfile', profiles.profileUpdate);
+
+router.post('/updateProfilePassword', profiles.profileUpdatePassword);
+
+
 
 
 /*

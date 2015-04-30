@@ -18,8 +18,8 @@
                 <button class="button button-ride-search" ng-model="workLocation.street" ng-click="showModalStreet()">
                     {{workLocation.street}}
                 </button>
-                <button class="button button-ride-search" ng-model="workLocation.locationInfo" ng-click="showModalInfo()">
-                    {{workLocation.locationInfo}}
+                <button class="button button-ride-search" ng-model="workLocation.info" ng-click="showModalInfo()">
+                    {{workLocation.info}}
                 </button>
             </div>
           </div>
@@ -27,7 +27,7 @@
           <div class="list" style="width:93%;margin-left:3.5%">
             <label class="item item-input item-stacked-label">
       		    <span class="input-label">Nome do local de trabalho</span>
-      		    <input type= "number" ng-model="workLocation.workLocationName">
+      		    <input type= "text" ng-model="workLocation.workLocationName">
       		  </label>
           </div>
           <input class="button button-large submit-search" type="submit" value="Criar Novo Local de Trabalho" ng-click="createWorkLocation()">
@@ -83,7 +83,7 @@
     <script id="streets.html" type="text/ng-template">
       <ion-modal-view>
         <ion-header-bar>
-          <h1 class="title">Identifique a rua</h1>
+          <h1 class="title">Identifique a Rua</h1>
         </ion-header-bar>
         <ion-content>
 
@@ -101,8 +101,8 @@
         </ion-header-bar>
         <ion-content>
 
-          <input class="button button-ride-search" placeholder="Info" ng-model="newRide.info">
-          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newRide.info)">
+          <input class="button button-ride-search" placeholder="Info" ng-model="newWorkLocation.info">
+          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newWorkLocation.info)">
 
         </ion-content>
       </ion-modal-view>

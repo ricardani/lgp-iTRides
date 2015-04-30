@@ -3,6 +3,8 @@ var HomeAndWorkRide = require('../models/homeAndWorkRide');
 var WorkLocation = require('../models/workLocation');
 var Account = require('../models/account');
 var Ride = require('../models/ride').rideModel;
+var RideInfo = require('../models/rideInfo');
+var async = require('async');
 
 function WorkLocationCreation(req, res) {
 
@@ -11,8 +13,8 @@ function WorkLocationCreation(req, res) {
       "name": req.body.name
     }, function(err,count) {
       if(count==0) {
-        var WorkLocation = new WorkLocation(req.body);
-        WorkLocation.save(function(error, data) {
+        var newWorkLocation = new WorkLocation(req.body);
+        newWorkLocation.save(function(error, data) {
             if (error) {
                 console.log(error);
                 res.json(error);
@@ -174,6 +176,49 @@ function removeRide(req, res) {
 
 module.exports.deleteRide = removeRide;
 
+
+function rideInfoCreation(req,res) {
+
+  Account.findOne({
+      "_id": req.user.id
+  })
+  .populate('_id')
+  .exec( function(err,owner) {
+      if(err) {
+        console.log(err);
+        res.json(err);
+      }
+      else {
+        WorkLocation.findOne({
+            "name": req.body.workLocationName
+        })
+        .populate('_id')
+        .exec(function(error, workLocation) {
+            if(error) {
+              console.log(error);
+              res.json(error);
+            }
+            else {
+              var rideInfo = new RideInfo(req.body);
+              rideInfo._owner = owner;
+              rideInfo._workLocation = workLocation;
+              rideInfo.save(function(error, data) {
+                  if (error) {
+                      console.log(error);
+                      res.json(error);
+                  } else {
+                      console.log(data);
+                      res.json(data);
+                  }
+              });
+            }
+        });
+      }
+  });
+}
+
+module.exports.createRideInfo = rideInfoCreation;
+
 //TODO verificar o problema de haver 2 donos com o mesmo nome
 function requestRide(req, res) {
 
@@ -254,15 +299,122 @@ module.exports.workLocations = getWorkLocations;
 function getRide(req, res) {
 
     Ride.findOne({
-        '_id': req.query.rideID
+        $and: [
+            { '_id': req.query.rideID }/*,
+             { state: 'active' },
+             { time_start: { $gte: Date.now() } }*/
+        ]
     }, function(err, data) {
         if (err || data === null) {
             console.log(err);
             res.json(err);
         } else {
-            res.json(data);
-        }});
+            var RideInfo = {
+                id : data._id,
+                date : data.time_start,
+                passengers : [],
+                typeCost : data.typeCost,
+                cost : data.cost,
+                seats : data.seats,
+                startLocation : '',
+                destination : '',
+                ownerName : '',
+                ownerPhoto : '',
+                myStatus : ''
+            };
 
+            var wLocation = [data._workLocation];
+            var rideType = data.ride_type;
+            var ownerID = data._owner;
+            var passengersID = [];
+
+            if(rideType === 'CT'){
+                RideInfo.startLocation = data.homeLocation.street + ', ' + data.homeLocation.municipality + ', ' + data.homeLocation.district;
+            }else if(rideType === 'TC'){
+                RideInfo.destination = data.homeLocation.street + ', ' + data.homeLocation.municipality + ', ' + data.homeLocation.district;
+            }else if(rideType === 'Ocasional'){
+                RideInfo.startLocation = data.startLocation.identifier;
+                RideInfo.destination = data.destination.identifier;
+            }
+
+            async.eachSeries(data.passengers, function(p, callback) {
+                var passenger = JSON.parse(JSON.stringify(p));
+                var userID = passenger._user;
+                var registerDate = passenger.date;
+
+                Account.findOne({
+                    '_id': userID
+                }, function(err, data) {
+                    if (err || data === null) {
+                        console.log(err);
+                        callback('error');
+                    }else{
+                        var user = {
+                            name : data.name,
+                            photo : data.photo,
+                            date : registerDate
+                        };
+
+                        passengersID.push(JSON.stringify(data._id));
+                        RideInfo.passengers.push(user);
+                        callback();
+                    }
+                });
+
+            }, function(err){
+                // if any of the file processing produced an error, err would equal that error
+                if( err ) {
+                    // One of the iterations produced an error.
+                    // All processing will now stop.
+                    res.json(err);
+                    console.log(err);
+                } else {
+
+                    var myID = JSON.stringify(req.user.id);
+
+                    if(passengersID.indexOf(myID) > -1) {
+                        RideInfo.myStatus = 'myRequest';
+                    }else if(JSON.stringify(ownerID) === myID){
+                        RideInfo.myStatus = 'myRide';
+                    }else{
+                        RideInfo.myStatus = 'other';
+                    }
+
+                    Account.findOne({
+                        '_id': ownerID
+                    }, function(err, data) {
+                        if (err || data === null) {
+                            console.log(err);
+                            res.json(err);
+                        } else {
+                            RideInfo.ownerName = data.name;
+                            RideInfo.ownerPhoto = data.photo;
+
+                            if (rideType != 'Ocasional') {
+
+                                WorkLocation.findOne({
+                                    '_id': wLocation
+                                }, function (err, data) {
+                                    if (err || data === null) {
+                                        console.log(err);
+                                        callback('error');
+                                    } else {
+                                        if (rideType === 'TC') {
+                                            RideInfo.startLocation = data.name;
+                                        } else {
+                                            RideInfo.destination = data.name;
+                                        }
+                                        res.json(RideInfo);
+                                    }
+                                });
+
+                            }else{
+                                res.json(RideInfo);
+                            }
+                        }});
+                }
+            });
+        }});
 }
 
 module.exports.oneRide = getRide;

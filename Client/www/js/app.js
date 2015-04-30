@@ -132,7 +132,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
             })
 
             .state('createRide', {
-                url: "/createRide",
+                url: "/createRide/:createNew",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',
@@ -241,5 +241,5 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
         ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/search');
+        $urlRouterProvider.otherwise('/loading');
     });

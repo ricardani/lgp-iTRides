@@ -48,7 +48,7 @@ iTRides_Services.run(function($rootScope, $ionicLoading) {
 
 iTRides_Services.factory('Server', function() {
     return {
-        url: 'http://localhost:8080/'
+        url: 'http://localhost:5000/'
         //url: 'https://itrides.herokuapp.com/'
     };
 });

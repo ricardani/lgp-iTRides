@@ -76,7 +76,7 @@ function login(req, res) {
                 var profile = {
                     id: data.id
                 };
-                var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60});
+                var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60*24});
                 res.json({activated: data.activated, token: token});
             }else{
                 res.json("Account Not activated");
@@ -90,3 +90,27 @@ function login(req, res) {
 }
 
 module.exports.checkLogin = login;
+
+function resetPassword(req, res) {
+    console.log("password: " + req.body.password);
+    Account.update(
+       {'email': req.body.email},
+       {
+        'password' : sha256(req.body.password),
+       },
+       { upsert: true },
+       function(err, data) {
+        if(err) {
+            res.json(err);
+        } else {
+            sendMail(req.body.email, 'iTRides: Nova Password Gerada', 'Nova password: ' + req.body.password);
+            console.log("mail sent");
+            res.json(data);
+        }
+       }
+    );
+}
+
+module.exports.passwordReset = resetPassword;
+
+

@@ -11,7 +11,7 @@ angular.module('iTRides.signupControllers', [])
                     'password': newUser.password}).
                     success(function(data, status, headers, config) {
                         if(data)
-                            $state.go('home'); /* TODO mudar para uma pagina a dizer para ir ao email confirmar */
+                            $state.go('login'); /* TODO mudar para uma pagina a dizer para ir ao email confirmar */
                         $ionicLoading.hide();
                     }).
                     error(function(data, status, headers, config) {

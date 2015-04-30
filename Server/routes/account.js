@@ -15,4 +15,6 @@ router.get('/confirmAccount', authenticate.confirmAccount);
 
 router.post('/login', authenticate.checkLogin);
 
+router.post('/resetPassword', authenticate.passwordReset);
+
 module.exports = router;

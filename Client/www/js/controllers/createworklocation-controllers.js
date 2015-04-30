@@ -6,7 +6,7 @@ angular.module('iTRides.createWorkLocationControllers', [])
         district : 'Distrito',
         municipality : 'Concelho',
         street : 'Rua',
-        locationInfo : 'Info',
+        info : 'Info',
         workLocationName : ''
       };
       $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
@@ -84,12 +84,12 @@ angular.module('iTRides.createWorkLocationControllers', [])
       $scope.createWorkLocation = function() {
         $http.post(Server.url + 'api/ride/createWorkLocation',
                 {
-                  'name': $scope.workLocationName,
-                  'homeLocation' : {
-                      "district": $scope.district,
-                      "municipality": $scope.municipality,
-                      "street": $scope.street,
-                      "info": $scope.locationInfo
+                  'name': $scope.workLocation.workLocationName,
+                  'defaultLocation' : {
+                      "district": $scope.workLocation.district,
+                      "municipality": $scope.workLocation.municipality,
+                      "street": $scope.workLocation.street,
+                      "info": $scope.workLocation.info
                   }
                 }
         )
@@ -107,13 +107,13 @@ angular.module('iTRides.createWorkLocationControllers', [])
 
 
       $scope.streetSelected = function(street) {
-        $scope.street = street;
+        $scope.workLocation.street = street;
 
         $scope.modalStreet.hide();
       }
 
       $scope.infoSelected = function(info) {
-        $scope.info = info;
+        $scope.workLocation.info = info;
 
         $scope.modalInfo.hide();
       }
@@ -121,8 +121,8 @@ angular.module('iTRides.createWorkLocationControllers', [])
       $scope.districtSelected = function(district) {
 
 
-        $scope.municipality = 'Concelho';
-        $scope.district = district;
+        $scope.workLocation.municipality = 'Concelho';
+        $scope.workLocation.district = district;
 
         if(district == "Aveiro")
           $scope.municipalities = ["Águeda","Albergaria-a-velha", "Anadia","Arouca",
@@ -273,7 +273,7 @@ angular.module('iTRides.createWorkLocationControllers', [])
 
       $scope.municipalitySelected = function(municipality) {
 
-        $scope.municipality = municipality;
+        $scope.workLocation.municipality = municipality;
 
         /*TODO o resto dos casos */
 
