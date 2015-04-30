@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 
     if (req.method === 'OPTIONS') {
         // Bypass browser's CORS options requests
-        res.send(200);
+        res.sendStatus(200);
     } else {
         // Pass to next layer of middleware
         next();
