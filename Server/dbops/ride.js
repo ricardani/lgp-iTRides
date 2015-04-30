@@ -12,8 +12,8 @@ function WorkLocationCreation(req, res) {
       "name": req.body.name
     }, function(err,count) {
       if(count==0) {
-        var WorkLocation = new WorkLocation(req.body);
-        WorkLocation.save(function(error, data) {
+        var newWorkLocation = new WorkLocation(req.body);
+        newWorkLocation.save(function(error, data) {
             if (error) {
                 console.log(error);
                 res.json(error);
