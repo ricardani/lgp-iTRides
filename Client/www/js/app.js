@@ -241,5 +241,5 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
         ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/search');
+        $urlRouterProvider.otherwise('/loading');
     });

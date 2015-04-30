@@ -53,8 +53,6 @@ db.once('open', function (callback) {
     console.log('connection to mongoDB sucesseful');
 });
 
-app.use(express.static('../Client/www'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -64,7 +62,13 @@ app.use('/api', expressJwt({secret: secret_key}));
 app.use('/api/ride', rideRoutes);
 app.use('/api/profile', profileRoutes);
 
-app.listen(8080);
-console.log("App listening on port 8080");
+app.set('port', (process.env.PORT || 5000));
+app.use(express.static(__dirname + '/public'));
 
-module.exports = app;
+app.get('/', function(request, response) {
+    response.send('Hello World!');
+});
+
+app.listen(app.get('port'), function() {
+    console.log("Node app is running at localhost:" + app.get('port'));
+});
