@@ -9,6 +9,8 @@ router.get('/getProfileInfo', profiles.information);
 
 router.get('/getNextRide', profiles.nextRide);
 
+router.get('/getNextRequestedRide', profiles.nextRequestedRide);
+
 //router.post('/updateProfile', profiles.updateProfile);
 
 
