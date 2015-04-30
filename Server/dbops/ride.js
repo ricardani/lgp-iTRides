@@ -3,6 +3,7 @@ var HomeAndWorkRide = require('../models/homeAndWorkRide');
 var WorkLocation = require('../models/workLocation');
 var Account = require('../models/account');
 var Ride = require('../models/ride').rideModel;
+var RideInfo = require('../models/rideInfo');
 
 function WorkLocationCreation(req, res) {
 
@@ -173,6 +174,49 @@ function removeRide(req, res) {
 }
 
 module.exports.deleteRide = removeRide;
+
+
+function rideInfoCreation(req,res) {
+
+  Account.findOne({
+      "_id": req.user.id
+  })
+  .populate('_id')
+  .exec( function(err,owner) {
+      if(err) {
+        console.log(err);
+        res.json(err);
+      }
+      else {
+        WorkLocation.findOne({
+            "name": req.body.workLocationName
+        })
+        .populate('_id')
+        .exec(function(error, workLocation) {
+            if(error) {
+              console.log(error);
+              res.json(error);
+            }
+            else {
+              var rideInfo = new RideInfo(req.body);
+              rideInfo._owner = owner;
+              rideInfo._workLocation = workLocation;
+              rideInfo.save(function(error, data) {
+                  if (error) {
+                      console.log(error);
+                      res.json(error);
+                  } else {
+                      console.log(data);
+                      res.json(data);
+                  }
+              });
+            }
+        });
+      }
+  });
+}
+
+module.exports.createRideInfo = rideInfoCreation;
 
 //TODO verificar o problema de haver 2 donos com o mesmo nome
 function requestRide(req, res) {

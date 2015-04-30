@@ -2,7 +2,7 @@
     <ion-content>
         <br><br><br><br>
 
-        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="CreateRideTypeCtrl">
+        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="CreateRideTypeCtrl" ng-if= "createNew === 'createNow'">
             <div class="button-bar">
                 <a ng-repeat="type in collection"
                    ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
@@ -122,7 +122,7 @@
       		    <input type= "number" ng-model="newRide.cost">
       		  </label>
 
-      		  <label class="item item-input item-stacked-label">
+      		  <label class="item item-input item-stacked-label" ng-if= "createNew === 'createNow'">
       		    <span class="input-label">Data</span>
       		    <input type="date" ng-model="newRide.date">
       		  </label>

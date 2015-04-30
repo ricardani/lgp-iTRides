@@ -11,6 +11,8 @@ router.post('/createRide', rides.createRide);
 
 router.post('/deleteRide', rides.deleteRide);
 
+router.post('/createRideInfo', rides.createRideInfo);
+
 router.post('/requestRide', rides.requestsRide);
 
 router.get('/getWorkLocations', rides.workLocations);

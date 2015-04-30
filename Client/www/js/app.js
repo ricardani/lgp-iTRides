@@ -132,7 +132,7 @@ angular.module('iTRides', ['ionic', 'iTRides.homeControllers', 'iTRides.searchCo
             })
 
             .state('createRide', {
-                url: "/createRide",
+                url: "/createRide/:createNew",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',
