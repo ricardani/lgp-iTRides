@@ -300,22 +300,7 @@ function updateProfilePassword(req, res) {
                 console.log(err);
                 res.json(err);
             } else {
-                console.log("data: ");
-                console.log(data);
-                console.log("----------------------------");
-                user_old_password = data.password;
-
-
-
-                console.log("old password sent by user");
-                console.log(sha256(req.body.old_password));
-                if (sha256(req.body.old_password) == user_old_password){
-                    console.log("they're the same, bitch");
-                } else {
-                    console.log("guess not");
-                }
-
-                if (sha256(req.body.old_password) == user_old_password){
+                    if (sha256(req.body.old_password) == user_old_password){
                     Account.update(
                        {'_id': req.user.id},
                        {
@@ -335,11 +320,11 @@ function updateProfilePassword(req, res) {
                     );
                 }
 
-
-
             }
         }   
     );
 }
 
 module.exports.profileUpdatePassword = updateProfilePassword;
+
+

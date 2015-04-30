@@ -91,4 +91,26 @@ function login(req, res) {
 
 module.exports.checkLogin = login;
 
+function resetPassword(req, res) {
+    console.log("password: " + req.body.password);
+    Account.update(
+       {'email': req.body.email},
+       {
+        'password' : sha256(req.body.password),
+       },
+       { upsert: true },
+       function(err, data) {
+        if(err) {
+            res.json(err);
+        } else {
+            sendMail(req.body.email, 'iTRides: Nova Password Gerada', 'Nova password: ' + req.body.password);
+            console.log("mail sent");
+            res.json(data);
+        }
+       }
+    );
+}
+
+module.exports.passwordReset = resetPassword;
+
 
