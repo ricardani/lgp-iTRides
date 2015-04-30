@@ -5,7 +5,16 @@ angular.module('iTRides.searchControllers', [])
 	$scope.startDistrito = '';
 	$scope.startConcelho = '';
 	$scope.dateSelected='';
-  $scope.dateFilter='';
+  $scope.count = 0;
+  $scope.dateFilter= null;
+  $scope.municipalityFilter = null;
+  $scope.districtFilter = null;
+
+/*
+  console.log('first municipality ' + $scope.municipalityFilter);
+  console.log('first date ' + $scope.dateFilter);
+  console.log('first district ' + $scope.districtFilter); */
+  
 
 	$scope.dateChange=function(val){
     $scope.dateSelected = val.toString();
@@ -24,12 +33,14 @@ angular.module('iTRides.searchControllers', [])
   };
 
 
-   
+
 
   $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
       $scope.municipality = 'Concelho';
+
+
     //  $scope.street = 'Rua';
     //  $scope.info = 'Info';
       $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
@@ -295,8 +306,8 @@ angular.module('iTRides.searchControllers', [])
                                    "Santa Cruz","Santana", "S.Vicente"]
           ;
 
-        console.log($scope.district);
-
+        $scope.districtFilter = $scope.district;
+        console.log($scope.districtFilter);
         $scope.modalDistrict.hide();
 
 
@@ -306,10 +317,11 @@ angular.module('iTRides.searchControllers', [])
       $scope.municipalitySelected = function(municipality) {
 
         $scope.municipality = municipality;
+        $scope.municipalityFilter = municipality;
 
         /*TODO o resto dos casos */
 
-        console.log($scope.municipality)
+        console.log($scope.municipalityFilter)
 
         $scope.modalMunicipality.hide();
 
@@ -346,11 +358,11 @@ angular.module('iTRides.searchControllers', [])
   },
     { date: 'Jan 12 1999',
      district: 'Porto',
-     municipality: ''
+     municipality: 'Amarante'
   },
-  { date: 'Jan 12 1999',
+  { date: 'Jan 13 1999',
      district: 'Porto',
-     municipality: ''
+     municipality: 'Amarante'
   }
 
   ];

@@ -145,20 +145,40 @@
 
 
 
-        <div ng-repeat="date in count = (rides | filter : dateFilter)" ></div>
+ <!--       <div ng-repeat="date in count = (rides | filter : dateFilter  || districtFilter || municipality  )" ></div>
+            <p>{{count.length}}</p> 
+        </div> -->
+
+
+        <div ng-if="dateFilter!=null && districtFilter==null && municipalityFilter == null">
+          <div ng-repeat="ride in count = (rides | filter : dateFilter)" ></div>
             <p>{{count.length}}</p>
         </div>
 
-        <div ng-repeat="district in count = (rides | filter : district)" ></div>
+
+        <div  ng-if="dateFilter==null && districtFilter!=null && municipalityFilter == null" >
+          <div ng-repeat="ride in count = (rides | filter : districtFilter)"></div>
+              <p>{{count.length}}</p>
+        </div>
+
+        <div ng-if="dateFilter==null && districtFilter ==null && municipalityFilter != null"> 
+            <div ng-repeat="ride in count = (rides | filter : municipalityFilter)" > </div>
             <p>{{count.length}}</p>
         </div>
 
-         <div ng-repeat="municipality in count = (rides | filter : municipality)" ></div>
+
+        <div ng-if="dateFilter==null && districtFilter!=null && municipalityFilter != null"> 
+            <div ng-repeat="ride in count = (rides | filter : districtFilter && municipalityFilter)" ></div>
             <p>{{count.length}}</p>
         </div>
 
 
-    <!--    <button class="button button-large submit-search">
+   <!--      <div ng-repeat="municipality in count = (rides | filter : municipality)" ></div>
+            <p>{{count.length}}</p>
+        </div> 
+
+
+       <button class="button button-large submit-search">
           <i class="ion-android-search"></i>
           Pesquisar
         </button>

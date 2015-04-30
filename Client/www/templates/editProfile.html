@@ -31,10 +31,26 @@
 					  <span class="input_title">Contacto </span>
 					  <input type="text" placeholder="{{user.contact}}" name="name_profile" ng-model="new_contact"/>
 					</p>
+
+					<p>
+					  <span class="input_title">Password Antiga </span>
+					  <input type="text" name="name_profile" ng-model="old_password"/>
+					</p>
+
+					<p>
+					  <span class="input_title">Nova Password </span>
+					  <input type="text" name="name_profile" ng-model="new_password"/>
+					</p>
+
+					<p>
+					  <span class="input_title">Confirmar Nova Password </span>
+					  <input type="text" name="name_profile" ng-model="confirm_new_password"/>
+					</p>
+
 				</form>
 			</div>
 			
-			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);" ng-click="submitChanges(new_name, new_contact)">
+			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);" ng-click="submitChanges(new_name, new_contact, old_password, new_password, confirm_new_password)">
 				<i class="icon ion-checkmark #fff" style="font-size:150%;color:#fff"></i>
 				<a1 class="white" > Gravar </a1>
 			</a>
