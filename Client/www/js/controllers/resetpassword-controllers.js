@@ -6,10 +6,7 @@ angular.module('iTRides.resetPasswordControllers', [])
 
 	$scope.resetPassword = function(email){
 		console.log('email: ' + email);
-
 		var new_password = Math.random().toString(36).slice(-8);
-		console.log(new_password);
-
 		$http.post(Server.url + 'user/resetPassword', 
 	      	{
 	      		'email' : email,

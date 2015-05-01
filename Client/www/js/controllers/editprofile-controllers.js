@@ -22,12 +22,10 @@ angular.module('iTRides.editProfileControllers', [])
       	      
       	if(new_name == "" || new_name==undefined) {
       		new_name = $scope.user.name;
-      		console.log("name unchanged");
       	}
 
       	if(new_contact == "" || new_contact==undefined){
       		new_contact = $scope.user.contact;
-      		console.log("contact unchanged");	
       	}
 
       	if (old_password == "" || old_password == undefined) {
@@ -46,7 +44,6 @@ angular.module('iTRides.editProfileControllers', [])
 		            $ionicLoading.hide();
 	        });
       	} else if (new_password == confirm_new_password) {
-      		console.log("changing password");
       		$http.post(Server.url + 'api/profile/updateProfilePassword', 
 	      	{
 	      		'name' : new_name,
@@ -64,12 +61,6 @@ angular.module('iTRides.editProfileControllers', [])
 		            $ionicLoading.hide();
 	        });
       	}
-
-
-
-     
-
-
     }
 
    });
