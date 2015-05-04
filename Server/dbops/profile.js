@@ -290,17 +290,15 @@ function updateProfile(req, res) {
 module.exports.profileUpdate = updateProfile;
 
 function updateProfilePassword(req, res) {
-
     var user_old_password;
-    console.log('updateProfilePassword');
-
     Account.findOne({'_id' : req.user.id}, 
         function(err, data) {
             if (err || data === null) {
                 console.log(err);
                 res.json(err);
             } else {
-                    if (sha256(req.body.old_password) == user_old_password){
+                user_old_password = data.password;
+                if (sha256(req.body.old_password) == user_old_password){
                     Account.update(
                        {'_id': req.user.id},
                        {
@@ -323,6 +321,8 @@ function updateProfilePassword(req, res) {
             }
         }   
     );
+
+    console.log('password changed');    
 }
 
 module.exports.profileUpdatePassword = updateProfilePassword;
