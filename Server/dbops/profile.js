@@ -80,15 +80,36 @@ function getProfileInfo(req, res) {
             console.log(err);
             res.json(err);
         } else {
-            var information = {
-                name : data.name,
-                photo : data.photo,
-                contact : data.contact,
-                email: data.email
-            };
-            res.json(information);
+			//FAZER MEDIA FEEDBACK
+			var feedaverage = 0;
+			Ride.find({
+				'_owner': req.user.id
+			}, function(error, myrides) {
+			if (error || myrides === null) {
+				res.json(error);
+			} else {
+				var feedbacksum = 0;
+				var count = 0;
+				for (i = 0; i < myrides.length; i++) { 
+					for (j = 0; j < myrides[i].feedback.length; j++) { 
+						feedbacksum+=myrides[i].feedback[j].feedback;
+						count+=1;
+					}
+				}
+				feedaverage=feedbacksum/count;
+				
+				var information = {
+					name : data.name,
+					photo : data.photo,
+					contact : data.contact,
+					email: data.email,
+					feedaverage: feedaverage
+				};
+				res.json(information);
+			}});
         }});
 }
+
 
 module.exports.information = getProfileInfo;
 
