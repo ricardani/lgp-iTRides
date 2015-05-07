@@ -1,39 +1,49 @@
 <ion-view view-title="List Rides">
     <ion-content>
-    <br><br>
+        <br><br>
 
-    <div class="list card">
-        <ion-list>
-            <div class="item item-divider" style="white-space:normal">
-                <span style="font-weight: bold">As minhas boleias criadas</span>
+        <div class="list card" >
+
+            <div class="item item-divider">
+                As minhas boleias criadas
             </div>
-            <ion-item ng-if="createdRides.length > 0" ng-repeat="createdRide in createdRides" type="item-text-wrap">
-                <div class="text-wrap">
-                    <a href="#/rideDetails" style="text-decoration: none; color:black;">
-                        <h2> <i class="ion-home"> </i>  {{createdRide.start_street}} </h2> <h3 style="margin-left: 17px;"> {{createdRide.start_city}} </h3>
-                        <h2> <i class="ion-ios-location"> </i> <span  style="margin-left:1%;"> {{createdRide.destination_street}} </span></h2><h3 style="margin-left:6%;"> {{createdRide.destination_city}} </h3>
-                        <p> {{createdRide.day}} às {{createdRide.start_time}} <span style="float:right; margin-top:-20px;"> <i class="ion-person-stalker orange" style="font-size:135%"> </i> {{createdRide.passengers.length}} </span> </p>
+
+            <div ng-if="createdRides.length > 0" ng-repeat="createdRide in createdRides | orderBy:'date'" type="item-text-wrap" class="card">
+                    <a href="#/rideDetails/{{createdRide.id}}" style="text-decoration: none; color:black;">
+                        <div class="text-wrap">
+                            <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                            <p style="margin-left: 47px"> {{createdRide.date | date : 'dd/MM/yy HH:mm'}} </p>
+                            <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                            <p style="margin-left: 45px;"> {{createdRide.startLocation}}</p>
+                            <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                            <p style="margin-left: 47px;">  {{createdRide.destination}}</p>
+                            <i ng-if="defaultRide.type == 1" class="ion-android-arrow-back orange" style="font-size:200%; float:left;"> </i>
+                        </div>
+                    </a>
+            </div>
+
+            <div ng-if="createdRides.length == 0 || !createdRides"type="item-text-wrap">
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Não tem boleias criadas
+                    </div>
+                    <a class="item item-icon-left assertive" href="#/createRide/createNow">
+                        <i class="icon ion-map orange" style="bfont-size:150%"></i>
+                        <a1 class="orange"> Criar Boleia </a1>
                     </a>
                 </div>
-            </ion-item>
+            </div>
+        </div>
 
-            <ion-item ng-if="createdRides.length == 0"type="item-text-wrap">
-                <div class="text-wrap">
-                    <p> Não tem boleias criadas </p>
-                </div>
-            </ion-item> 
+        <div class="list card">
+            <a class="item item-icon-left assertive" href="#/profile">
+                <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
+                <a1 class="orange"> Regressar </a1>
+            </a>
+        </div>
 
-        </ion-list>
-    </div>
+        <br><br>
 
-    <div class="list card">
-        <a class="item item-icon-left assertive" href="#/profile">
-            <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
-            <a1 class="orange"> Regressar </a1>
-        </a>
-    </div>
-    
-    <br><br>
-    
     </ion-content>
 </ion-view>

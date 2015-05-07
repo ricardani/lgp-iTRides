@@ -19,4 +19,6 @@ router.get('/getWorkLocations', rides.workLocations);
 
 router.get('/getRide', rides.oneRide);
 
+router.get('/getMyRides', rides.myRides);
+
 module.exports = router;
