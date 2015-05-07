@@ -102,8 +102,7 @@ function rideCreation(req, res) {
                 }
             });
           }
-        });
-      }
+      });
     }
     else {
         res.json('Couldn`t determine the ride type');
@@ -188,6 +187,8 @@ function rideInfoCreation(req,res) {
               });
             }
         });
+      }
+  });
 }
 
 module.exports.createRideInfo = rideInfoCreation;
