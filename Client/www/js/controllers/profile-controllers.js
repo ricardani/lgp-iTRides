@@ -49,9 +49,24 @@ angular.module('iTRides.profileControllers', [])
         	start_time: '08:00'
         }];
 
-      //$scope.number = 5-$scope.user.rating;
-		$scope.getNumber = function(num) {
-		    return new Array(num);   
+		$scope.getNumberComplete = function(num) {
+			return new Array(Math.floor(num));   
+		}
+		
+		$scope.getNumberEmpty = function(num) {
+			return new Array(Math.floor(5-num));   
+		}
+		
+		$scope.getNumberHalf = function(num) {
+			if(num % 1 === 0){
+				//é inteiro
+				return new Array(0);
+			}   
+			else
+			{
+				//é float
+				return new Array(1);
+			}
 		}
 
         $scope.logout = function () {

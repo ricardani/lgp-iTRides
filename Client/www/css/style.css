@@ -273,14 +273,14 @@ p.change_profile_photo input[type="file"]:hover {
 	cursor:pointer;
 }
 
-.edit_profile p input[type="text"]{
+.edit_profile p input[type="text"], .edit_profile p input[type="password"]{
 	border:1px solid #DDD;
 	border-radius:3px;
 	width:100%;
 	padding:7px;
 }
 
-.edit_profile p input[type="text"]:focus{
+.edit_profile p input[type="text"]:focus, .edit_profile p input[type="password"]:focus{
 	border:1px solid rgb(243,121,38);
 }
 
