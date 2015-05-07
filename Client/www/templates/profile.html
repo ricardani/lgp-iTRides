@@ -5,7 +5,7 @@
         <div class="list card" ng-if="user.name != null">
 
             <div class="item item-divider">
-               <span style="font-weight: bold">  O meu perfil </span>
+                <span style="font-weight: bold">  O meu perfil </span>
             </div>
 
             <div class="item item-avatar item-text-wrap" href="#">
@@ -14,7 +14,7 @@
                 <p> {{user.email}} </p>
                 <p style="margin-top: 2%;"> {{user.contact}} </p>
                 <span ng-repeat="i in getNumberComplete(user.feedaverage) track by $index"> <i class="icon ion-android-star"></i></span>
-				<span ng-repeat="i in getNumberHalf(user.feedaverage) track by $index"><i class="icon ion-android-star-half"></i> </span>
+                <span ng-repeat="i in getNumberHalf(user.feedaverage) track by $index"><i class="icon ion-android-star-half"></i> </span>
                 <span ng-repeat="i in getNumberEmpty(user.feedaverage) track by $index"><i class="icon ion-android-star-outline"></i> </span>
             </div>
 
@@ -39,56 +39,57 @@
             </a>
         </div>
 
+        <!-- <div class="list card">
+             <ion-list>
+                 <div class="item item-divider" style="white-space:normal">
+                     <span style="font-weight: bold">As minhas boleias pré-definidas</span>
+                 </div>
+
+                 <ion-item ng-if="defaultRides.length > 0" ng-repeat="defaultRide in defaultRides | limitTo:3" type="item-text-wrap">
+                     <div class="text-wrap">
+                         <a href="#/rideDetails" style="text-decoration: none; color:black;">
+                             <i class="ion-android-bus" style="font-size:200%; float:left;"> </i>
+                             <h2 style="margin-left: 40px"> {{defaultRide.name}} </h2>
+                             <p style="margin-left: 40px"> {{defaultRide.day}} às {{defaultRide.start_time}} </p>
+                         </a>
+                     </div>
+                 </ion-item>
+
+                 <a ng-if="defaultRides.length > 0" class="item item-icon-left assertive" href="#/listRides">
+                     <i class="icon ion-plus-circled orange" style="font-size:150%"></i>
+                     <a1 class="orange"> Ver todas as boleias </a1>
+                 </a>
+                 <a ng-if="defaultRides.length == 0" class="item item-icon-left assertive" href="#/createRide">
+                     <i class="icon ion-plus-circled orange" style="font-size:150%"></i>
+                     <a1 class="orange"> Criar boleia pré-definida </a1>
+                 </a>
+             </ion-list>
+         </div>-->
+
         <div class="list card">
-        <ion-list>
-            <div class="item item-divider" style="white-space:normal">
-                <span style="font-weight: bold">As minhas boleias pré-definidas</span>
-            </div>
-
-            <ion-item ng-if="defaultRides.length > 0" ng-repeat="defaultRide in defaultRides | limitTo:3" type="item-text-wrap">
-                <div class="text-wrap">
-                    <a href="#/rideDetails" style="text-decoration: none; color:black;">
-                        <i class="ion-android-bus" style="font-size:200%; float:left;"> </i>
-                        <h2 style="margin-left: 40px"> {{defaultRide.name}} </h2>
-                        <p style="margin-left: 40px"> {{defaultRide.day}} às {{defaultRide.start_time}} </p>
-                    </a>
-                </div>
-            </ion-item>
-
-            <a ng-if="defaultRides.length > 0" class="item item-icon-left assertive" href="#/listRides">
-                <i class="icon ion-plus-circled orange" style="font-size:150%"></i>
-                <a1 class="orange"> Ver todas as boleias </a1>
+            <a class="item item-icon-left assertive" href="#/listDefaultRides">
+                <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
+                <a1 class="orange"> As minhas boleias pré-definidas </a1>
             </a>
-            <a ng-if="defaultRides.length == 0" class="item item-icon-left assertive" href="#/createRide">
-                <i class="icon ion-plus-circled orange" style="font-size:150%"></i>
-                <a1 class="orange"> Criar boleia pré-definida </a1>
+            <a class="item item-icon-left assertive" href="#/listCreatedRides">
+                <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
+                <a1 class="orange"> As minhas boleias criadas </a1>
             </a>
-        </ion-list>
-    </div>
+            <a class="item item-icon-left assertive" href="#/listRequestedRides">
+                <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
+                <a1 class="orange"> As minhas boleias solicitadas</a1>
+            </a>
+        </div>
 
 
-    <div class="list card">
-        <a class="item item-icon-left assertive" href="#/listCreatedRides">
-            <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
-            <a1 class="orange"> As minhas boleias criadas </a1>
-        </a>
-    </div>
+        <div class="list card">
+            <a class="item item-icon-left assertive" ng-click="logout()">
+                <i class="icon ion-power orange" style="font-size:150%"></i>
+                <a1 class="orange"> Logout </a1>
+            </a>
+        </div>
 
-    <div class="list card">
-        <a class="item item-icon-left assertive" href="#/listRequestedRides">
-            <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
-            <a1 class="orange"> As minhas boleias solicitadas</a1>
-        </a>
-    </div>
-
-    <div class="list card">
-        <a class="item item-icon-left assertive" ng-click="logout()">
-            <i class="icon ion-power orange" style="font-size:150%"></i>
-            <a1 class="orange"> Logout </a1>
-        </a>
-    </div>
-
-    <br><br>
+        <br><br>
 
     </ion-content>
 </ion-view>

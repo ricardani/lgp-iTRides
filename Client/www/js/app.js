@@ -1,6 +1,6 @@
 angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
-    'iTRides.loadingControllers', 'iTRides.listRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
+    'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
@@ -183,16 +183,16 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTR
                 }
             })
 
-            .state('listRides', {
-                url: "/listRides",
+            .state('listDefaultRides', {
+                url: "/listDefaultRides",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',
                         controller: ''
                     },
                     'content': {
-                        templateUrl: 'templates/listRides.html',
-                        controller: 'ListRidesCtrl'
+                        templateUrl: 'templates/listDefaultRides.html',
+                        controller: 'ListDefaultRidesCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

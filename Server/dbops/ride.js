@@ -603,3 +603,48 @@ function getRide(req, res) {
 }
 
 module.exports.oneRide = getRide;
+
+function getMyDefaultRides(req, res) {
+
+    RideInfo.find({
+        '_owner': req.user.id
+    }, function(err,data) {
+        if(err) {
+            console.log("Error GetMyDefaultRides -> " + err);
+            res.json(err);
+        }
+        else {
+
+            var allRides = [];
+
+            async.each(data, function(ride, callback) {
+                var rideInfo = {
+                    id : ride.id,
+                    seats : ride.seats,
+                    date : ride.time_start,
+                    type_cost : ride.type_cost,
+                    cost : ride.cost,
+                    name : ride.name,
+                    ride_type : ride.ride_type
+                };
+
+                allRides.push(rideInfo);
+                callback();
+
+            }, function(err){
+                // if any of the file processing produced an error, err would equal that error
+                if( err ) {
+                    console.log("Error GetMyDefaultRides -> " + err);
+                    res.json(err);
+                } else {
+                    res.json(allRides);
+                }
+            });
+
+        }
+    });
+
+
+}
+
+module.exports.myDefaultRides = getMyDefaultRides;
