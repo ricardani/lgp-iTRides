@@ -1,7 +1,6 @@
 angular.module('iTRides.rideDetailsControllers', [])
 
-    .controller('RideDetailsCtrl', function($scope, $ionicLoading, $timeout, $state, $stateParams, Server, $http) {
-        // Simple POST request example (passing data) :
+    .controller('RideDetailsCtrl', function($scope, $ionicLoading, $timeout, $state, $stateParams, Server, $http, $cordovaCalendar, $ionicPopup) {
         $http.get(Server.url + 'api/ride/getRide',  {
             params: {rideID : $stateParams.rideID}
         }).
@@ -19,6 +18,47 @@ angular.module('iTRides.rideDetailsControllers', [])
                 $state.go('home');
                 $ionicLoading.hide();
             });
+
+
+
+        $scope.addToCalendar = function(){
+            var rideDate = new Date(Date.parse($scope.ride.date));
+            rideDate.setMinutes(rideDate.getMinutes() - 15);
+            var startDate = {
+                year : rideDate.getFullYear(),
+                month : rideDate.getMonth(),
+                day : rideDate.getDate(),
+                hour : rideDate.getHours(),
+                minutes : rideDate.getMinutes()
+            };
+            rideDate.setMinutes(rideDate.getMinutes() + 60);
+            var endDate = {
+                year : rideDate.getFullYear(),
+                month : rideDate.getMonth(),
+                day : rideDate.getDate(),
+                hour : rideDate.getHours(),
+                minutes : rideDate.getMinutes()
+            };
+
+            $cordovaCalendar.createEvent({
+                title: 'Boleia de ' + $scope.ride.ownerName,
+                location: $scope.ride.startLocation,
+                notes: 'Não te atrases!',
+                startDate: new Date(startDate.year, startDate.month, startDate.day, startDate.hour, startDate.minutes, 0, 0, 0),
+                endDate: new Date(endDate.year, endDate.month, endDate.day, endDate.hour, endDate.minutes, 0, 0, 0)
+            }).then(function (result) {
+                console.log("Event created successfully");
+                $ionicPopup.alert({
+                    title: 'Adicionar Boleia ao Calendario',
+                    template: 'Boleia adicionada ao calendario com sucesso'
+                });
+            }, function (err) {
+                $ionicPopup.alert({
+                    title: 'Adicionar Boleia ao Calendario',
+                    template: 'Ocorreu um Erro! Tente mais tarde.'
+                });
+            });
+        }
 
     })
 

@@ -18,6 +18,11 @@
                 <br>
             </div>
 
+            <a class="item item-icon-left positive" href="#" ng-click="addToCalendar()">
+                <i class="icon ion-calendar"></i>
+                Adicionar ao Calendário
+            </a>
+
             <div class="item item-text-wrap item-icon-left">
                 <i class="icon ion-android-car"></i>
                 <div ng-if="ride.seats - ride.passengers.length > 1"> {{ride.seats - ride.passengers.length}} Lugares disponíveis </div>
@@ -48,8 +53,14 @@
 
             <div class="item item-text-wrap item-icon-left">
                 <i class="icon ion-social-euro"></i>
-                <div ng-if="!ride.typeCost"> {{ride.cost}}€ / pessoa</div>
-
+                <div ng-if="!ride.typeCost">
+                    <div ng-if="ride.cost > 0">
+                        {{ride.cost}}€ / pessoa
+                    </div>
+                    <div ng-if="ride.cost <= 0">
+                        Sem Custo
+                    </div>
+                </div>
             </div>
 
             <a ng-if="ride.myStatus === 'myRequest'" class="item item-icon-left assertive" href="#">

@@ -1,6 +1,6 @@
 angular.module('iTRides.homeControllers', [])
 
-    .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout, Server) {
+    .controller('HomeCtrl', function($scope, $http, $ionicLoading, $timeout, Server, $state) {
 
         $http.get(Server.url + 'api/profile/getNotifications').
             success(function(data, status, headers, config) {
