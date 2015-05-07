@@ -17,9 +17,14 @@ angular.module('iTRides.createRideControllers', [])
       $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
+      $scope.districtValidation = "";
       $scope.municipality = 'Concelho';
+      $scope.municipalityValidation = "";
       $scope.street = 'Rua';
+      $scope.streetValidation = "";
       $scope.info = 'Info';
+      $scope.infoValidation = "";
+
       $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
                           "Coimbra","Évora","Faro","Guarda","Leiria","Lisboa",
                           "Portalegre","Porto","Santarém","Setúbal","Viana do Castelo",
@@ -29,10 +34,12 @@ angular.module('iTRides.createRideControllers', [])
       $scope.streets = [];
 
       $scope.workLocation = "Local de trabalho";
+      $scope.workLocationValidation = "";
       $scope.workLocations = [];
 
       /*Occasional Ride variables */
       $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
+
 
       $http.get(Server.url + 'api/ride/getWorkLocations').
           success(function(data, status, headers, config) {
@@ -125,9 +132,83 @@ angular.module('iTRides.createRideControllers', [])
         $scope.selectedRideType = $index;
       };
 
+      $scope.checkForm = function(newRide, rideType) {
+
+        var noErrors = true;
+
+        if(newRide.seats == null) {
+          console.log('missing seats');
+          noErrors=false;
+        }
+        if(newRide.hour == null) {
+          console.log('missing hour');
+          noErrors=false;
+        }
+        if(newRide.typeCost == null) {
+          console.log('missing type of cost');
+          noErrors=false;
+        }
+        if(newRide.cost == null) {
+          console.log('missing cost');
+          noErrors=false;
+        }
+        if(newRide.date == null) {
+          console.log('missing date');
+          noErrors=false;
+        }
+        if($scope.workLocation == 'Local de trabalho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+          $scope.workLocationValidation = "error";
+          console.log('missing work location');
+          noErrors=false;
+        }
+        if($scope.district == 'Distrito' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+          $scope.districtValidation = "error";
+          console.log('missing district');
+          noErrors=false;
+        }
+        if($scope.municipality == 'Concelho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+          $scope.municipalityValidation = "error";
+          console.log('missing municipality');
+          noErrors=false;
+        }
+        if($scope.street == 'Rua' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+          $scope.streetValidation = "error";
+          console.log('missing street');
+          noErrors=false;
+        }
+        if($scope.info == 'Info' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+          $scope.infoValidation = "error";
+          console.log('missing street');
+          noErrors=false;
+        }
+
+        return noErrors;
+
+      }
+
       $scope.createRide = function (newRide) {
 
+        //TODO handle the error catched by this if
+          if(newRide == null)
+            var newRide={};
+
           var rideType = $scope.collection[$scope.selectedRideType];
+
+          console.log(newRide.hour);
+          console.log(newRide.date);
+
+          /*newRide.hour.setFullYear(newRide.date.getFullYear());
+          newRide.hour.setMonth(newRide.date.getMonth(),newRide.date.getDay());
+
+          console.log(newRide.hour);*/
+
+          newRide.date.setHours(newRide.hour.getHours());
+          newRide.date.setMinutes(newRide.hour.getMinutes());
+
+          console.log(newRide.date);
+
+          if(!$scope.checkForm(newRide, rideType))
+            return; //Se houver um campo nao preenchido, não fazer nada
 
           /*TODO verificar se local de trabalho e/ou localização foram especificados */
           /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
@@ -233,14 +314,25 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.createRideInfo = function (newRide) {
 
-        console.log($scope.workLocation);
+        var rideType = $scope.collection[$scope.selectedRideType];
+        var ride_type;
+        if(rideType == 'Casa>Trabalho')
+          ride_type = 'CT';
+        else if(rideType == 'Trabalho>Casa')
+          ride_type = 'TC';
+        else if(rideType == 'Ocasional')
+          ride_type = 'Ocasional';
+        else
+          console.log('Can`t identify ride type');
 
         $http.post(Server.url + 'api/ride/createRideInfo',
                 {
                   '_owner': $window.sessionStorage.token,
                   'seats': newRide.seats,
                   'time_start': newRide.hour,
+                  'ride_type': ride_type,
                   'type_cost': newRide.typeCost,
+                  'name': newRide.rideInfoName,
                   'cost': newRide.cost,
                   'workLocationName': $scope.workLocation,
                   'homeLocation' : {
@@ -270,6 +362,8 @@ angular.module('iTRides.createRideControllers', [])
 
         $scope.workLocation = workLocation;
 
+        $scope.workLocationValidation = "";
+
         /*TODO o resto dos casos */
 
         $scope.modalWorkLocation.hide();
@@ -277,13 +371,23 @@ angular.module('iTRides.createRideControllers', [])
       };
 
       $scope.streetSelected = function(street) {
-        $scope.street = street;
+        if(street != null) {
+          $scope.modalStreet.hide();
 
+          $scope.street = street;
+
+          $scope.streetValidation = "";
+        }
         $scope.modalStreet.hide();
       }
 
       $scope.infoSelected = function(info) {
-        $scope.info = info;
+        if(info != null)
+          $scope.info = info;
+        else
+          $scope.info = "";
+
+        $scope.infoValidation = "";
 
         $scope.modalInfo.hide();
       }
@@ -292,7 +396,10 @@ angular.module('iTRides.createRideControllers', [])
 
 
         $scope.municipality = 'Concelho';
+        $scope.municipalityValidation = "";
+
         $scope.district = district;
+        $scope.districtValidation = "";
 
         if(district == "Aveiro")
           $scope.municipalities = ["Águeda","Albergaria-a-velha", "Anadia","Arouca",
@@ -444,6 +551,7 @@ angular.module('iTRides.createRideControllers', [])
       $scope.municipalitySelected = function(municipality) {
 
         $scope.municipality = municipality;
+        $scope.municipalityValidation = "";
 
         /*TODO o resto dos casos */
 

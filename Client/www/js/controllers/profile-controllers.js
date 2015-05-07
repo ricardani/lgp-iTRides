@@ -49,19 +49,45 @@ angular.module('iTRides.profileControllers', [])
         	start_time: '08:00'
         }];
 
+    $scope.removeRideClicked = function() {
+      $http.post(Server.url + 'api/ride/deleteRequestedRide',
+              {
+                'ownerName': 'Pedro Santos',
+                'ride_type': 'CT',
+                'workLocationName': 'Escritório do Sr. Miguel',
+                'homeLocation' : {
+                    'district' : 'Aveiro',
+                    'municipality' : 'Arouca',
+                    'street' : 'Rua',
+                    'info' : 'Só para testar'
+                }
+              }
+      )
+      .success(function(data, status, headers, config) {
+          if(data){
+              /* TODO caso funcione */
+              $ionicLoading.hide();
+          }
+      }).
+      error(function(data, status, headers, config) {
+          /* TODO caso dê erro */
+          $ionicLoading.hide();
+      });
+    }
+
 		$scope.getNumberComplete = function(num) {
-			return new Array(Math.floor(num));   
+			return new Array(Math.floor(num));
 		}
-		
+
 		$scope.getNumberEmpty = function(num) {
-			return new Array(Math.floor(5-num));   
+			return new Array(Math.floor(5-num));
 		}
-		
+
 		$scope.getNumberHalf = function(num) {
 			if(num % 1 === 0){
 				//é inteiro
 				return new Array(0);
-			}   
+			}
 			else
 			{
 				//é float

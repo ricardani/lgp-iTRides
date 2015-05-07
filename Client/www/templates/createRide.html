@@ -2,7 +2,7 @@
     <ion-content>
         <br><br><br><br>
 
-        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="CreateRideTypeCtrl" ng-if= "createNew === 'createNow'">
+        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="CreateRideTypeCtrl" >
             <div class="button-bar">
                 <a ng-repeat="type in collection"
                    ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
@@ -12,7 +12,7 @@
                 </a>
             </div>
         </ion-scroll>
-        <form>
+        <form novalidate>
           <div class="row">
             <div class="card col search-ride" ng-if= "selectedRideType === 0">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
@@ -20,16 +20,16 @@
                     Partida
                 </div>
                 <button class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
-                    {{district}}
+                    <a ng-class="districtValidation">{{district}}</a>
                 </button>
                 <button class="button button-ride-search" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()">
-                    {{municipality}}
+                    <a ng-class="municipalityValidation">{{municipality}}</a>
                 </button>
                 <button class="button button-ride-search" ng-model="newRide.startStreet" ng-click="showModalStreet()">
-                    {{street}}
+                    <a ng-class="streetValidation">{{street}}</a>
                 </button>
                 <button class="button button-ride-search" ng-model="newRide.startLocationInfo" ng-click="showModalInfo()">
-                    {{info}}
+                    <a ng-class="infoValidation">{{info}}</a>
                 </button>
             </div>
             <div class="card col search-ride" ng-if= "selectedRideType === 1">
@@ -40,7 +40,7 @@
               <button class="button button-ride-search" ng-disabled="true">
               </button>
               <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
-                  {{workLocation}}
+                  <a ng-class="workLocationValidation">{{workLocation}}</a>
               </button>
 
             </div>
@@ -50,8 +50,8 @@
                     <i class="icon ion-home"></i>
                     Partida
                 </div>
-                <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.startAddress"></input>
-                <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.startIdentifier"></input>
+                <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.startAddress" required></input>
+                <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.startIdentifier" required></input>
               </div>
 
             <div class="card col search-ride" ng-if= "selectedRideType === 0">
@@ -62,7 +62,7 @@
                <button class="button button-ride-search" ng-disabled="true">
               </button>
               <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
-                  {{workLocation}}
+                  <a ng-class="workLocationValidation">{{workLocation}}</a>
               </button>
             </div>
 
@@ -72,16 +72,16 @@
                     Destino
                 </div>
                 <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
-                    {{district}}
+                    <a ng-class="districtValidation">{{district}}</a>
                 </button>
                 <button class="button button-ride-search" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()">
-                    {{municipality}}
+                    <a ng-class="municipalityValidation">{{municipality}}</a>
                 </button>
-                <button class="button button-ride-search" ng-model="newRide.destinationStreet" ng-click="showModalStreet()" >
-                    {{street}}
+                <button class="button button-ride-search" ng-model="newRide.destinationStreet" ng-click="showModalStreet()">
+                    <a ng-class="streetValidation">{{street}}</a>
                 </button>
-                <button class="button button-ride-search" ng-model="newRide.destinationInfo" ng-click="showModalInfo()">
-                    {{info}}
+                <button class="button button-ride-search" ng-model="newRide.destinationLocationInfo" ng-click="showModalInfo()">
+                    <a ng-class="infoValidation">{{info}}</a>
                 </button>
             </div>
 
@@ -90,8 +90,8 @@
                     <i class="icon ion-ios-location"></i>
                     Destino
                 </div>
-                <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.destinationAddress">
-                <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.destinationIdentifier">
+                <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.destinationAddress" required>
+                <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.destinationIdentifier" required>
             </div>
 
           </div>
@@ -99,7 +99,7 @@
           <div class="list" style="width:93%;margin-left:3.5%">
             <label class="item item-input item-stacked-label">
       		    <span class="input-label">Lugares</span>
-      		    <input type= "number" ng-model="newRide.seats">
+      		    <input type= "number" ng-model="newRide.seats" required>
       		  </label>
 
             <label class="item item-input item-stacked-label">
@@ -115,21 +115,21 @@
 
             <label class="item item-input item-stacked-label">
       		    <span class="input-label">Custo</span>
-              <!--<input class="button button-ride-search" placeholder="Location Name" ng-model="newRide.locationName">
-              <input class="button button-ride-search" placeholder="Distrito" ng-model="newRide.destinationDistrict">
-              <input class="button button-ride-search" placeholder="Concelho" ng-model="newRide.destinationMunicipality">
-              <input class="button button-ride-search" placeholder="info" ng-model="newRide.destinationLocationInfo"> -->
-      		    <input type= "number" ng-model="newRide.cost">
+              <input type= "number" ng-model="newRide.cost">
       		  </label>
 
       		  <label class="item item-input item-stacked-label" ng-if= "createNew === 'createNow'">
       		    <span class="input-label">Data</span>
-      		    <input type="date" ng-model="newRide.date">
+      		    <input type="date" placeholder="yyyy-MM-dd" ng-model="newRide.date" required>
       		  </label>
 
       		  <label class="item item-input item-stacked-label">
       		    <span class="input-label">Hora</span>
-      		    <input type="time" placeholder="hrs:mins" ng-model="newRide.hour">
+      		    <input type="time" placeholder="hrs:mins" ng-model="newRide.hour" required>
+      		  </label>
+            <label class="item item-input item-stacked-label" ng-if= "createNew === 'createInfo'">
+      		    <span class="input-label">Nome da boleia pré-definida</span>
+      		    <input type="text" ng-model="newRide.rideInfoName" required>
       		  </label>
       		</div>
 

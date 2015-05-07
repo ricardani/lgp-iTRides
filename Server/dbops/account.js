@@ -32,7 +32,6 @@ function register(req, res) {
     var person = new Account(temp);
     person.save(function(error, data) {
         if (error) {
-            console.log(error);
             res.json(error);
         } else {
             res.json(data);
@@ -52,9 +51,9 @@ function accountConfirmation(req, res) {
             user.activated = true;
             user.save(function(err) {
                 if (err) {
-                    console.log("oops");
+                    res.json(err);
                 } else {
-                    console.log("woohoo!");
+                    res.json('Account confirmed');
                 }
             });
         }
@@ -69,7 +68,6 @@ function login(req, res) {
         password: sha256(req.body.password)
     }, function(err, data) {
         if (err) {
-            console.log(err);
             res.json(err);
         } else if(data != null) {
             if (data.activated) {
@@ -112,5 +110,3 @@ function resetPassword(req, res) {
 }
 
 module.exports.passwordReset = resetPassword;
-
-

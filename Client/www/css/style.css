@@ -25,6 +25,10 @@
 	color:#fff;
 }
 
+.error {
+  color: red;
+}
+
 /* Search page */
 
 .card.col.search-ride {
@@ -290,7 +294,7 @@ p.change_profile_photo input[type="file"]:hover {
 	font-weight: bold;
 }
 
-/*PARA A APLICAÇÃO MÓVEL*/
+/*PARA A APLICAï¿½ï¿½O Mï¿½VEL*/
 
 @media all and (max-width: 600px) {
   .button-searchType-selected {
@@ -300,27 +304,27 @@ p.change_profile_photo input[type="file"]:hover {
   .button-searchType-inactive {
     font-size:3.5vw;
   }
-  
+
   /* Login page, SignUp page */
-  
+
   .loginBody form input[type="text"],.loginBody form input[type="password"], .signup_body form input[type="text"], .signup_body form input[type="password"], .signup_body form input[type="email"], .resetPasswordBody form input{
 	margin-left:auto;
 	margin-right:auto;
 	width:80%;
   }
-  
+
   .loginBody form input[type="submit"], .signup_body form input[type="submit"]{
 	width:80%;
   }
-  
+
   .loginBody .forgotPass{
 	width:100%;
   }
-  
+
   .loginBody .signupButtonLink, .signup_body .loginButton, .resetPasswordBody .resetPasswordButton{
 	width:80%;
   }
-  
+
   .loginBody .forgotPass .text{
 	margin-left:10%;
   }

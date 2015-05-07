@@ -45,7 +45,6 @@ mongoose.connect('mongodb://itrides:itridesadmin1@ds037581.mongolab.com:37581/it
 //load all files in models dir
 fs.readdirSync(__dirname + '/models').forEach(function(filename) {
     if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
-    console.log(filename);
 });
 
 var db = mongoose.connection;

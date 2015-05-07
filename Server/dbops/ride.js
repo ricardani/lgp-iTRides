@@ -16,7 +16,6 @@ function WorkLocationCreation(req, res) {
         var newWorkLocation = new WorkLocation(req.body);
         newWorkLocation.save(function(error, data) {
             if (error) {
-                console.log(error);
                 res.json(error);
             } else {
                 res.json(data);
@@ -64,7 +63,6 @@ function rideCreation(req, res) {
 
                 occasionalRide.save(function(error, data) {
                     if (error) {
-                        console.log(error);
                         res.json(error);
                     } else {
                         res.json(data);
@@ -80,7 +78,6 @@ function rideCreation(req, res) {
       .populate('_id')
       .exec( function(err,owner) {
           if(err) {
-            console.log(err);
             res.json(err);
           }
           else {
@@ -90,7 +87,6 @@ function rideCreation(req, res) {
             .populate('_id')
             .exec(function(error, workLocation) {
                 if(error) {
-                  console.log(error);
                   res.json(error);
                 }
                 else {
@@ -99,10 +95,8 @@ function rideCreation(req, res) {
                   defaultRide._workLocation = workLocation;
                   defaultRide.save(function(error, data) {
                       if (error) {
-                          console.log(error);
                           res.json(error);
                       } else {
-                          console.log(data);
                           res.json(data);
                       }
                   });
@@ -170,7 +164,6 @@ function rideInfoCreation(req,res) {
   .populate('_id')
   .exec( function(err,owner) {
       if(err) {
-        console.log(err);
         res.json(err);
       }
       else {
@@ -180,7 +173,6 @@ function rideInfoCreation(req,res) {
         .populate('_id')
         .exec(function(error, workLocation) {
             if(error) {
-              console.log(error);
               res.json(error);
             }
             else {
@@ -189,10 +181,8 @@ function rideInfoCreation(req,res) {
               rideInfo._workLocation = workLocation;
               rideInfo.save(function(error, data) {
                   if (error) {
-                      console.log(error);
                       res.json(error);
                   } else {
-                      console.log(data);
                       res.json(data);
                   }
               });
@@ -229,14 +219,21 @@ function requestRide(req, res) {
               Ride.findOne({
                 "ride_type": req.body.ride_type,
                 "homeLocation": req.body.homeLocation,
-                "_workLocation": workLocation,
-                "_owner": rideOwner
+                "_workLocation": workLocation._id,
+                "_owner": rideOwner._id
               }, function(err, data) {
                 if(err) {
                   res.json(err);
                 }
                 else {
                   data.passengers.push({"_user":req.user.id});
+                  data.save(function(error, addedPassenger) {
+                      if (error) {
+                          res.json(error);
+                      } else {
+                          res.json(addedPassenger);
+                      }
+                  });
                 }
               });
             }
@@ -254,6 +251,14 @@ function requestRide(req, res) {
             }
             else {
               data.passengers.push({"_user":req.user.id});
+              data.save(function(error, addedPassenger) {
+                  if (error) {
+                      res.json(error);
+                  } else {
+                      res.json(addedPassenger);
+                  }
+              });
+              res.json(data);
             }
           });
         }
@@ -266,15 +271,66 @@ module.exports.requestsRide = requestRide;
 
 
 function requestRideDeletion(req,res) {
-  Ride.findOne({
-    "_id": req.body.ride_id
-  }).remove(function(error, data) {
-        if (error) {
-            res.json(error);
-        } else {
+
+  Account.findOne({
+      "name": req.body.ownerName
+  })
+  .populate('_id')
+  .exec( function(error, rideOwner) {
+    if(error) {
+        res.json("Couldn't find that work location");
+    }
+    else {
+      if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
+        WorkLocation.findOne({
+            "name": req.body.workLocationName
+        })
+        .populate('_id')
+        .exec( function(error, workLocation) {
+          if(error) {
+              res.json("Couldn't find that work location");
+          }
+          else {
+
+            Ride.findOneAndUpdate({
+              "ride_type": req.body.ride_type,
+              "homeLocation": req.body.homeLocation,
+              "_workLocation": workLocation._id,
+              "_owner": rideOwner._id
+            },
+            {$pull:{passengers: {_user: req.user.id}}},
+            function(err, data) {
+              if(err) {
+                res.json(err);
+              }
+              else {
+                res.json(data);
+              }
+            });
+          }
+        });
+      }
+      else if(req.body.ride_type == 'Ocasional') {
+        Ride.update({
+          "ride_type": req.body.ride_type,
+          "startLocation": req.body.startLocation,
+          "destination": req.body.destination,
+          "_owner": rideOwner
+        },
+        { $pull: { passengers : {_user:req.user.id}}},
+        false,
+        function(err, data) {
+          if(err) {
+            res.json(err);
+          }
+          else
             res.json(data);
         }
+        );
+      }
+    }
   });
+
 }
 
 module.exports.deleteRequestedRide = requestRideDeletion;
@@ -306,7 +362,6 @@ function getRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
             var RideInfo = {
@@ -346,7 +401,6 @@ function getRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log(err);
                         callback('error');
                     }else{
                         var user = {
@@ -367,7 +421,6 @@ function getRide(req, res) {
                     // One of the iterations produced an error.
                     // All processing will now stop.
                     res.json(err);
-                    console.log(err);
                 } else {
 
                     var myID = JSON.stringify(req.user.id);
@@ -384,7 +437,6 @@ function getRide(req, res) {
                         '_id': ownerID
                     }, function(err, data) {
                         if (err || data === null) {
-                            console.log(err);
                             res.json(err);
                         } else {
                             RideInfo.ownerName = data.name;
@@ -396,7 +448,6 @@ function getRide(req, res) {
                                     '_id': wLocation
                                 }, function (err, data) {
                                     if (err || data === null) {
-                                        console.log(err);
                                         callback('error');
                                     } else {
                                         if (rideType === 'TC') {

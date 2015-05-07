@@ -10,7 +10,6 @@ function getNotifications(req, res) {
         '_id': req.user.id
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
             var notifications = data.notifications;
@@ -25,7 +24,6 @@ function getNotifications(req, res) {
                     '_id': senderID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log(err);
                         callback('error');
                     }else{
                         var notificationsData = {
@@ -40,7 +38,6 @@ function getNotifications(req, res) {
                             '_id': rideID
                         }, function(err, data) {
                             if (err || data === null) {
-                                console.log(err);
                                 callback('error');
                             }else{
                                 notificationsData.rideID = rideID;
@@ -59,9 +56,7 @@ function getNotifications(req, res) {
                     // One of the iterations produced an error.
                     // All processing will now stop.
                     res.json(err);
-                    console.log(err);
                 } else {
-                    //console.log(senderInfo);
                     res.json(senderInfo);
                 }
             });
@@ -77,7 +72,6 @@ function getProfileInfo(req, res) {
         '_id': req.user.id
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
 			//FAZER MEDIA FEEDBACK
@@ -90,14 +84,14 @@ function getProfileInfo(req, res) {
 			} else {
 				var feedbacksum = 0;
 				var count = 0;
-				for (i = 0; i < myrides.length; i++) { 
-					for (j = 0; j < myrides[i].feedback.length; j++) { 
+				for (i = 0; i < myrides.length; i++) {
+					for (j = 0; j < myrides[i].feedback.length; j++) {
 						feedbacksum+=myrides[i].feedback[j].feedback;
 						count+=1;
 					}
 				}
 				feedaverage=feedbacksum/count;
-				
+
 				var information = {
 					name : data.name,
 					photo : data.photo,
@@ -122,7 +116,6 @@ function getNextRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
 
@@ -155,7 +148,6 @@ function getNextRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log(err);
                         callback('error');
                     }else{
                         var user = {
@@ -175,7 +167,6 @@ function getNextRide(req, res) {
                     // One of the iterations produced an error.
                     // All processing will now stop.
                     res.json(err);
-                    console.log(err);
                 } else {
                     if (rideType != 'Ocasional') {
 
@@ -183,7 +174,6 @@ function getNextRide(req, res) {
                             '_id': wLocation
                         }, function (err, data) {
                             if (err || data === null) {
-                                console.log(err);
                                 callback('error');
                             } else {
                                 if (rideType === 'TC') {
@@ -222,7 +212,6 @@ function getNextRequestedRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
 
@@ -252,7 +241,6 @@ function getNextRequestedRide(req, res) {
                 '_id': ownerID
             }, function(err, data) {
                 if (err || data === null) {
-                    console.log(err);
                     res.json(err);
                 } else {
                     RideInfo.ownerName = data.name;
@@ -264,7 +252,6 @@ function getNextRequestedRide(req, res) {
                             '_id': wLocation
                         }, function (err, data) {
                             if (err || data === null) {
-                                console.log(err);
                                 callback('error');
                             } else {
                                 if (rideType === 'TC') {
@@ -312,10 +299,9 @@ module.exports.profileUpdate = updateProfile;
 
 function updateProfilePassword(req, res) {
     var user_old_password;
-    Account.findOne({'_id' : req.user.id}, 
+    Account.findOne({'_id' : req.user.id},
         function(err, data) {
             if (err || data === null) {
-                console.log(err);
                 res.json(err);
             } else {
                 user_old_password = data.password;
@@ -340,12 +326,10 @@ function updateProfilePassword(req, res) {
                 }
 
             }
-        }   
+        }
     );
 
-    console.log('password changed');    
+    console.log('password changed');
 }
 
 module.exports.profileUpdatePassword = updateProfilePassword;
-
-
