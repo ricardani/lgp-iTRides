@@ -149,28 +149,32 @@
             <p>{{count.length}}</p> 
         </div> -->
 
-
-        <div ng-if="dateFilter!=null && districtFilter==null && municipalityFilter == null">
+        <div ng-if="dateFilter!=null && districtFilter==null && municipalityFilter == null" style="position:absolute;
+bottom:-10%; width:100%; margin-left:-65%">
           <div ng-repeat="ride in count = (rides | filter : dateFilter)" ></div>
-            <p>{{count.length}}</p>
+            <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
         </div>
 
 
-        <div  ng-if="dateFilter==null && districtFilter!=null && municipalityFilter == null" >
+        <div  ng-if="dateFilter==null && districtFilter!=null && municipalityFilter == null" style="position:absolute;
+bottom:-10%; width:100%; margin-left:-65%">
           <div ng-repeat="ride in count = (rides | filter : districtFilter)"></div>
-              <p>{{count.length}}</p>
+              <a class="button icon-right ion-chevron-right button-energized" style:"background-color:orange">{{count.length}} resultados</a>
         </div>
 
-        <div ng-if="dateFilter==null && districtFilter ==null && municipalityFilter != null"> 
+        <div ng-if="dateFilter==null && districtFilter==null && municipalityFilter != null" style="position:absolute;
+bottom:-10%; width:100%; margin-left:-65%"> 
             <div ng-repeat="ride in count = (rides | filter : municipalityFilter)" > </div>
-            <p>{{count.length}}</p>
+            <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
         </div>
 
 
-        <div ng-if="dateFilter==null && districtFilter!=null && municipalityFilter != null"> 
+        <div ng-if="dateFilter==null && districtFilter!=null && municipalityFilter != null" style="position:absolute;
+bottom:-10%; width:100%; margin-left:-65%"> 
             <div ng-repeat="ride in count = (rides | filter : districtFilter && municipalityFilter)" ></div>
-            <p>{{count.length}}</p>
+           <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
         </div>
+     
 
 
    <!--      <div ng-repeat="municipality in count = (rides | filter : municipality)" ></div>
@@ -240,5 +244,5 @@
         
     </script>
 
-  
+   </ion-content>
 </ion-view>
