@@ -118,30 +118,11 @@ function rideCreation(req, res) {
 
 module.exports.createRide = rideCreation;
 
-/* TODO update to the new HomeToWork WorkToHome WorkLocation OccasionalRide sintax*/
+/* TODO update to the new HomeAndWorkRide WorkLocation OccasionalRide sintax*/
 
 function removeRide(req, res) {
 
-    if(req.body.startLocation.district) {
-
-        WorkLocation.findOne({
-            "name": req.body.rideName
-        })
-        .populate('_id')
-        .exec(function(err, rideInfo) {
-            HomeAndWorkRide.findOne({
-                "_owner": req.user.id,
-                "_workLocation": rideInfo
-            }).remove(function(error, data) {
-                if (error) {
-                    res.json(error);
-                } else
-                    res.json(data);
-            });
-        });
-
-    }
-    else if(req.body.destination.district) {
+    if(req.body.ride_type == "CT" || req.body.ride_type == "TC") {
         WorkLocation.findOne({
             "name": req.body.rideName
         })
@@ -149,7 +130,8 @@ function removeRide(req, res) {
             .exec(function(err, rideInfo) {
                 HomeAndWorkRide.findOne({
                     "_owner": req.user.id,
-                    "_workLocation": rideInfo
+                    "_workLocation": rideInfo,
+                    "homeLocation": req.body.homeLocation
                 }).remove(function(error, data) {
                     if (error) {
                         res.json(error);
@@ -158,7 +140,7 @@ function removeRide(req, res) {
                 });
             });
     }
-    else if(req.body.destination.address) {
+    else if(req.body.ride_type == "Ocasional") {
 
         OccasionalRide.findOne({
             "_owner": req.user.id,
@@ -172,6 +154,8 @@ function removeRide(req, res) {
                 res.json(data);
         });
     }
+    else
+      res.json('Couldn`t determine the ride type');
 
 }
 
@@ -279,6 +263,21 @@ function requestRide(req, res) {
 }
 
 module.exports.requestsRide = requestRide;
+
+
+function requestRideDeletion(req,res) {
+  Ride.findOne({
+    "_id": req.body.ride_id
+  }).remove(function(error, data) {
+        if (error) {
+            res.json(error);
+        } else {
+            res.json(data);
+        }
+  });
+}
+
+module.exports.deleteRequestedRide = requestRideDeletion;
 
 
 function getWorkLocations(req, res) {

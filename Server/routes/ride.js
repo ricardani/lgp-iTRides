@@ -15,6 +15,8 @@ router.post('/createRideInfo', rides.createRideInfo);
 
 router.post('/requestRide', rides.requestsRide);
 
+router.post('/deleteRequestedRide', rides.deleteRequestedRide);
+
 router.get('/getWorkLocations', rides.workLocations);
 
 router.get('/getRide', rides.oneRide);
