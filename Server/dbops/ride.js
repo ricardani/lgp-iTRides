@@ -302,15 +302,14 @@ function getMyRides(req, res) {
     Ride.find({
         $and: [
             { '_owner': req.user.id },
-             { state: 'active' },
-             { time_start: { $gte: Date.now() } }
+            { state: 'active' },
+            { time_start: { $gte: Date.now() } }
         ]
     }, function(err, data) {
         if (err || data === null) {
             console.log(err);
             res.json(err);
         }else{
-            //res.json(data);
             var myRides = [];
 
             async.each(data, function(ride, callback) {
@@ -342,6 +341,7 @@ function getMyRides(req, res) {
                         '_id': wLocation
                     }, function (err, data) {
                         if (err || data === null) {
+                            callback('error');
                             console.log(err);
                         } else {
                             if (rideType === 'TC') {
@@ -349,14 +349,12 @@ function getMyRides(req, res) {
                             } else {
                                 RideInfo.destination = data.name;
                             }
-                            //res.json(RideInfo);
                             myRides.push(RideInfo);
                             callback();
                         }
                     });
 
                 }else{
-                    //res.json(RideInfo);
                     myRides.push(RideInfo);
                     callback();
                 }
@@ -368,17 +366,105 @@ function getMyRides(req, res) {
                     res.json(myRides);
                 }
             });
-            /*
-
-
-             */
-
         }
     });
 
 }
 
 module.exports.myRides = getMyRides;
+
+
+function getMyRequestedRides(req, res) {
+
+    Ride.find({
+        $and: [
+            { passengers: {
+                $elemMatch: {
+                    _user: req.user.id
+                }
+            }},
+            { state: 'active' },
+            { time_start: { $gte: Date.now() } }
+        ]
+    }, function(err, data) {
+        if (err || data === null) {
+            console.log(err);
+            res.json(err);
+        } else {
+
+            var myRequestedRides = [];
+
+            async.each(data, function(ride, callback) {
+                var RideInfo = {
+                    id : ride._id,
+                    date : ride.time_start,
+                    startLocation : '',
+                    destination : '',
+                    ownerName : '',
+                    ownerPhoto : ''
+                };
+
+                var wLocation = ride._workLocation;
+                var rideType = ride.ride_type;
+                var ownerID = ride._owner;
+
+                if(rideType === 'CT'){
+                    RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'TC'){
+                    RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'Ocasional'){
+                    RideInfo.startLocation = ride.startLocation.identifier;
+                    RideInfo.destination = ride.destination.identifier;
+                }
+
+                Account.findOne({
+                    '_id': ownerID
+                }, function(err, data) {
+                    if (err || data === null) {
+                        console.log(err);
+                        callback('error');
+                    } else {
+                        RideInfo.ownerName = data.name;
+                        RideInfo.ownerPhoto = data.photo;
+
+                        if (rideType != 'Ocasional') {
+
+                            WorkLocation.findOne({
+                                '_id': wLocation
+                            }, function (err, data) {
+                                if (err || data === null) {
+                                    console.log(err);
+                                    callback('error');
+                                } else {
+                                    if (rideType === 'TC') {
+                                        RideInfo.startLocation = data.name;
+                                    } else {
+                                        RideInfo.destination = data.name;
+                                    }
+                                    myRequestedRides.push(RideInfo);
+                                    callback();
+                                }
+                            });
+
+                        }else{
+                            myRequestedRides.push(RideInfo);
+                            callback();
+                        }
+                    }});
+
+            }, function(err){
+                if( err ) {
+                    console.log('Get My Requested Rides error -> ' + err);
+                } else {
+                    res.json(myRequestedRides);
+                }
+            });
+        }
+    });
+
+}
+
+module.exports.myRequestedRides = getMyRequestedRides;
 
 
 function getRide(req, res) {

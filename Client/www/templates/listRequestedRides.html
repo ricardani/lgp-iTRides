@@ -3,49 +3,49 @@
         <br><br>
 
         <div class="list card">
-        <ion-list>
             <div class="item item-divider" style="white-space:normal">
                 <span style="font-weight: bold">As minhas boleias solicitadas</span>
             </div>
 
-            <ion-item ng-if="requestedRides.length > 0" ng-repeat="requestedRide in requestedRides" type="item-text-wrap">
-                <div class="text-wrap">
-                    <a href="#/rideDetails" style="text-decoration: none; color:black;">
-                    	<img ng-src="{{requestedRide.owner_photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';" style="border-radius: 100%"> </img> 
-                        <h2 style="margin-left: 17%; margin-top:-10%; margin-bottom:2%;">Boleia de {{requestedRide.owner}} </h2>
-                        <div style="margin-left: 9%;">
+            <div ng-if="requestedRides.length > 0" ng-repeat="requestedRide in requestedRides | orderBy:'date'" type="item-text-wrap" class="card">
+                <a href="#/rideDetails/{{requestedRide.id}}" style="text-decoration: none; color:black;">
+                    <div class="text-wrap">
+                        <i class="ion-model-s orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                        <p style="margin-left: 47px"> Boleia de {{requestedRide.ownerName}} </p>
                         <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-	                    <p style="margin-left: 47px"> {{requestedRide.day}} às {{requestedRide.start_time}} </p>
+                        <p style="margin-left: 47px"> {{requestedRide.date | date : 'dd/MM/yy HH:mm'}} </p>
                         <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-                        <p style="margin-left: 45px;"> {{requestedRide.start_street}}, {{requestedRide.start_city }}</p>
+                        <p style="margin-left: 45px;"> {{requestedRide.startLocation}}</p>
                         <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
-                        <p style="margin-left: 47px;">  {{requestedRide.destination_street}}, {{requestedRide.destination_city }}</p>
-                        <i ng-if="defaultRide.type == 1" class="ion-android-arrow-back orange" style="font-size:200%; float:left;"> </i>
+                        <p style="margin-left: 47px;">  {{requestedRide.destination}}</p>
                     </div>
+                </a>
+            </div>
+
+            <div ng-if="requestedRides.length == 0 || !requestedRides"type="item-text-wrap">
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Não tem boleias solicitadas
+                    </div>
+                    <a class="item item-icon-left assertive" href="#/search">
+                        <i class="icon ion-search orange" style="bfont-size:150%"></i>
+                        <a1 class="orange"> Pesquisar Boleias </a1>
                     </a>
                 </div>
-            </ion-item> 
+            </div>
+
+        </div>
 
 
-            <ion-item ng-if="requestedRides.length == 0"type="item-text-wrap">
-                <div class="text-wrap">
-                    <p> Não tem boleias solicitadas </p>
-                </div>
-            </ion-item> 
+        <div class="list card">
+            <a class="item item-icon-left assertive" href="#/profile">
+                <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
+                <a1 class="orange"> Regressar </a1>
+            </a>
+        </div>
 
+        <br><br>
 
-        </ion-list>
-    </div>
-
-
-    <div class="list card">
-        <a class="item item-icon-left assertive" href="#/profile">
-            <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
-            <a1 class="orange"> Regressar </a1>
-        </a>
-    </div>
-    
-    <br><br>
-    
     </ion-content>
 </ion-view>

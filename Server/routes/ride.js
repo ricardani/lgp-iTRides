@@ -21,4 +21,6 @@ router.get('/getRide', rides.oneRide);
 
 router.get('/getMyRides', rides.myRides);
 
+router.get('/getMyRequestedRides', rides.myRequestedRides);
+
 module.exports = router;
