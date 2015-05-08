@@ -1,15 +1,19 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
+    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server) {
       //var creatRideCtrl = this; e remover $scope
+      $scope.costTypeOptions = [
+        { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
+        { id: 'Pagar ao condutor', name: 'Pagar ao condutor', value: 'Pagar ao condutor' }
+      ];
+
+      $scope.newRide = {type : $scope.costTypeOptions[0].value};
 
       $scope.createNew = $stateParams.createNew;
 
       if($scope.createNew == 'createNow') {
-        console.log('create ride now');
       }
       else if($scope.createNew == 'createInfo') {
-        console.log('create ride info');
       }
       else
         ;//TODO enviar para uma pagina com erro 500
@@ -37,7 +41,9 @@ angular.module('iTRides.createRideControllers', [])
       $scope.workLocationValidation = "";
       $scope.workLocations = [];
 
-      /*Occasional Ride variables */
+      $scope.ownRideInfos = [];
+
+      /*Occasional Ride variable */
       $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
 
 
@@ -46,6 +52,16 @@ angular.module('iTRides.createRideControllers', [])
               for(i=0; i < data.length; i++) {
                 $scope.workLocations.push(data[i].name);
               }
+              $ionicLoading.hide();
+          }).
+          error(function(data, status, headers, config) {
+              console.log(JSON.stringify(data));
+              $ionicLoading.hide();
+      });
+
+      $http.get(Server.url + 'api/ride/getRideInfos').
+          success(function(data, status, headers, config) {
+              $scope.ownRideInfos = data;
               $ionicLoading.hide();
           }).
           error(function(data, status, headers, config) {
@@ -89,6 +105,13 @@ angular.module('iTRides.createRideControllers', [])
         $scope.modalWorkLocation = modalWL;
       });
 
+      $ionicModal.fromTemplateUrl('extractRideInfo.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modalRI) {
+        $scope.modalRideInfo = modalRI;
+      });
+
       $scope.showModalDistrict = function() {
         $scope.modalDistrict.show();
       };
@@ -107,6 +130,10 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.showModalWorkLocation = function() {
         $scope.modalWorkLocation.show();
+      };
+
+      $scope.showModalRideInfo = function() {
+        $scope.modalRideInfo.show();
       };
 
       //Cleanup the modal when we're done with it!
@@ -194,21 +221,10 @@ angular.module('iTRides.createRideControllers', [])
 
           var rideType = $scope.collection[$scope.selectedRideType];
 
-          console.log(newRide.hour);
-          console.log(newRide.date);
-
-          /*newRide.hour.setFullYear(newRide.date.getFullYear());
-          newRide.hour.setMonth(newRide.date.getMonth(),newRide.date.getDay());
-
-          console.log(newRide.hour);*/
-
-          newRide.date.setHours(newRide.hour.getHours());
-          newRide.date.setMinutes(newRide.hour.getMinutes());
-
-          console.log(newRide.date);
-
           if(!$scope.checkForm(newRide, rideType))
             return; //Se houver um campo nao preenchido, não fazer nada
+
+          newRide.date.setHours(newRide.hour.getHours(),newRide.hour.getMinutes());
 
           /*TODO verificar se local de trabalho e/ou localização foram especificados */
           /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
@@ -217,11 +233,10 @@ angular.module('iTRides.createRideControllers', [])
                       {
                         '_owner': $window.sessionStorage.token,
                         'seats': newRide.seats,
-                        'time_start': newRide.hour,
+                        'time_start': newRide.date,
                         'ride_type': 'TC',
                         'type_cost': newRide.typeCost,
                         'cost': newRide.cost,
-                        'date': newRide.date,
                         'locationName': $scope.workLocation,
                         'homeLocation' : {
                             "district": $scope.district,
@@ -248,11 +263,10 @@ angular.module('iTRides.createRideControllers', [])
                     {
                       '_owner': $window.sessionStorage.token,
                       'seats': newRide.seats,
-                      'time_start': newRide.hour,
+                      'time_start': newRide.date,
                       'ride_type': 'CT',
                       'type_cost': newRide.typeCost,
                       'cost': newRide.cost,
-                      'date': newRide.date,
                       'locationName': $scope.workLocation,
                       'homeLocation' : {
                           "district": $scope.district,
@@ -277,11 +291,10 @@ angular.module('iTRides.createRideControllers', [])
               $http.post(Server.url + 'api/ride/createRide',
                   {
                     'seats': newRide.seats,
-                    'time_start': newRide.hour,
+                    'time_start': newRide.date,
                     'ride_type': 'Ocasional',
                     'type_cost': newRide.typeCost,
                     'cost': newRide.cost,
-                    'date': newRide.date,
                     'startLocation' : {
                       "address": $scope.occasional.startAddress,
                       "identifier": $scope.occasional.startIdentifier
@@ -357,6 +370,38 @@ angular.module('iTRides.createRideControllers', [])
 
       };
       /*------------------------------------------------------*/
+
+      $scope.rideInfoSelected = function(rideInfo) {
+
+        $scope.district = rideInfo.homeLocation.district;
+        $scope.municipality = rideInfo.homeLocation.municipality;
+        $scope.street = rideInfo.homeLocation.street;
+        $scope.info = rideInfo.homeLocation.info;
+        $scope.newRide.seats = rideInfo.seats;
+        $scope.newRide.hour = new Date(rideInfo.time_start);
+        $scope.newRide.typeCost = rideInfo.type_cost;
+        $scope.newRide.cost = rideInfo.cost;
+
+        $http.post(Server.url + "api/ride/getWorkLocation",{
+          "_workLocation": rideInfo._workLocation
+        })
+        .success(function(data, status, headers, config) {
+            $scope.workLocation = data.name;
+            $ionicLoading.hide();
+        }).
+        error(function(data, status, headers, config) {
+            console.log(JSON.stringify(data));
+            $ionicLoading.hide();
+        });
+
+        $scope.districtValidation = "";
+        $scope.municipalityValidation = "";
+        $scope.streetValidation = "";
+        $scope.infoValidation = "";
+        $scope.workLocationValidation = "";
+
+        $scope.modalRideInfo.hide();
+      }
 
       $scope.workLocationSelected = function(workLocation) {
 

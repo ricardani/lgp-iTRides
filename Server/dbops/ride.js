@@ -316,6 +316,22 @@ function getWorkLocations(req, res) {
 module.exports.workLocations = getWorkLocations;
 
 
+function getWorkLocation(req,res) {
+  WorkLocation.findOne({
+    "_id": req.body._workLocation
+  },function(err,data) {
+    if(err) {
+      res.json(err);
+    }
+    else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports.oneWorkLocation = getWorkLocation;
+
+
 function getMyRides(req, res) {
 
     Ride.find({
@@ -648,3 +664,22 @@ function getMyDefaultRides(req, res) {
 }
 
 module.exports.myDefaultRides = getMyDefaultRides;
+
+function UserRideInfos(req,res) {
+
+  var error ="";
+  var rideInfo = {};
+
+  RideInfo.find({
+    "_owner":req.user.id
+  },function(err,data) {
+    if(err) {
+      res.json(err);
+    }
+    else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports.getRideInfos = UserRideInfos;

@@ -29,6 +29,80 @@
   color: red;
 }
 
+/* create ride form */
+
+#seats {
+  padding-left:10px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#seats:focus,
+#seats.focus {
+  border: solid 2px #969696;
+}
+
+#infoName{
+  padding: 10px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#infoName:focus,
+#infoName.focus {
+  border: solid 2px #969696;
+}
+
+#date {
+  padding: 10px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#date:focus,
+#date.focus {
+  border: solid 2px #969696;
+}
+
+#cost {
+  padding-left:10px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#cost:focus,
+#cost.focus {
+  border: solid 2px #969696;
+}
+
+#time {
+  padding: 10px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#time:focus,
+#time.focus {
+  border: solid 2px #969696;
+}
+
+#typeCost{
+  padding: 6px;
+  width:50%;
+  border: none;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+#typeCost:focus,
+#typeCost.focus {
+  border: solid 2px #969696;
+}
+
 /* Search page */
 
 .card.col.search-ride {
@@ -45,6 +119,16 @@
   position:center;
   width:50%;
   left:25%;
+  background-color: rgb(243,121,38);
+  color:white;
+}
+
+.rideInfo {
+  position:absolute;
+  width:40%;
+  left:55%;
+  bottom:35%;
+  line-height: 120%;
   background-color: rgb(243,121,38);
   color:white;
 }

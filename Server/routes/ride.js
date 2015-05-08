@@ -19,6 +19,8 @@ router.post('/deleteRequestedRide', rides.deleteRequestedRide);
 
 router.get('/getWorkLocations', rides.workLocations);
 
+router.post('/getWorkLocation', rides.oneWorkLocation);
+
 router.get('/getRide', rides.oneRide);
 
 router.get('/getMyRides', rides.myRides);
@@ -26,5 +28,7 @@ router.get('/getMyRides', rides.myRides);
 router.get('/getMyRequestedRides', rides.myRequestedRides);
 
 router.get('/getMyDefaultRides', rides.myDefaultRides);
+
+router.get('/getRideInfos', rides.getRideInfos);
 
 module.exports = router;

@@ -12,7 +12,7 @@
                 </a>
             </div>
         </ion-scroll>
-        <form novalidate>
+        <form novalidate name="createRideForm">
           <div class="row">
             <div class="card col search-ride" ng-if= "selectedRideType === 0">
                 <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
@@ -96,57 +96,66 @@
 
           </div>
 
-          <div class="list" style="width:93%;margin-left:3.5%">
-            <label class="item item-input item-stacked-label">
+          <div style="width:93%;margin-left:3.5%">
+
+            <button class="button button-large rideInfo" ng-if= "createNew === 'createNow'" ng-click="showModalRideInfo()">
+              Extrair boleia pré-definida
+            </button>
+
+            <label>
       		    <span class="input-label">Lugares</span>
-      		    <input type= "number" ng-model="newRide.seats" required>
+      		    <input type= "number" id="seats" name="seats" ng-model="newRide.seats" required>
+              <span style="color:red" ng-show="createRideForm.seats.$dirty">
+                <span ng-show="createRideForm.seats.$error.number">Não colocou um número válido</span>
+                <span ng-show="createRideForm.seats.$error.required">Número de lugares tem que ser especificado</span>
+              </span>
       		  </label>
 
-            <label class="item item-input item-stacked-label">
-              <div class="input-label">
+            <label>
+              <span class="input-label">
       		      Tipo de custo
-      		    </div>
-              <br>
-      		    <select ng-model="newRide.typeCost">
-      		      <option>Pago pela empresa</option>
-      		      <option selected>Pagar ao condutor</option>
+      		    </span>
+      		    <select id="typeCost" ng-init="newRide.typeCost='Pago pela empresa'" ng-model="newRide.typeCost" required
+                      ng-options='option.value as option.name for option in costTypeOptions'>
       		    </select>
       		  </label>
 
-            <label class="item item-input item-stacked-label">
+            <label>
       		    <span class="input-label">Custo</span>
-              <input type= "number" ng-model="newRide.cost">
+              <input type= "number" id="cost" name="cost" ng-model="newRide.cost" required>
+              <span style="color:red" ng-show="createRideForm.cost.$dirty">
+                <span ng-show="createRideForm.cost.$error.number">Não colocou um número válido</span>
+                <span ng-show="createRideForm.cost.$error.required">O custo de cada passageiro tem que ser especificado</span>
+              </span>
       		  </label>
 
-      		  <label class="item item-input item-stacked-label" ng-if= "createNew === 'createNow'">
+      		  <label ng-if= "createNew === 'createNow'">
       		    <span class="input-label">Data</span>
-      		    <input type="date" placeholder="yyyy-MM-dd" ng-model="newRide.date" required>
+      		    <input type="date" id="date" name="date" placeholder="yyyy-mm-dd" ng-model="newRide.date" required>
+              <span style="color:red" ng-show="createRideForm.date.$dirty">
+                <span ng-show="createRideForm.date.$error.date">Não colocou uma data válida</span>
+                <span ng-show="createRideForm.date.$error.required">A data do começo da boleia tem que ser especificada</span>
+              </span>
       		  </label>
 
-      		  <label class="item item-input item-stacked-label">
+      		  <label>
       		    <span class="input-label">Hora</span>
-      		    <input type="time" placeholder="hrs:mins" ng-model="newRide.hour" required>
+      		    <input type="time" id="time" name="time" placeholder="hrs:mins" ng-model="newRide.hour" required>
+              <span style="color:red" ng-show="createRideForm.time.$dirty">
+                <span ng-show="createRideForm.time.$error.time">Não colocou um tempo válido</span>
+                <span ng-show="createRideForm.time.$error.required">O tempo de partida tem que ser especificado</span>
+              </span>
       		  </label>
-            <label class="item item-input item-stacked-label" ng-if= "createNew === 'createInfo'">
-      		    <span class="input-label">Nome da boleia pré-definida</span>
-      		    <input type="text" ng-model="newRide.rideInfoName" required>
-      		  </label>
-      		</div>
 
-  <!--
-          <div class="list" style="width:93%;margin-left:3.5%">
-      		  <label class="item item-input item-select">
-      		    <div class="input-label">
-      		      Tipo
-      		    </div>
-      		    <select ng-model="newRide.type">
-      		      <option>Casa->Trabalho</option>
-      		      <option selected>Trabalho->Casa</option>
-      		      <option>Ocasional</option>
-      		    </select>
+            <label ng-if= "createNew === 'createInfo'">
+      		    <span class="input-label">Nome da boleia pré-definida</span>
+      		    <input type="text" id="infoName" name="infoName" ng-model="newRide.rideInfoName" required>
+              <span style="color:red" ng-show="createRideForm.infoName.$dirty">
+                <span ng-show="createRideForm.infoName.$error.required">O nome desta boleia pré-definida tem que ser especificada</span>
+              </span>
       		  </label>
       		</div>
-  -->
+          <br>
           <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)" ng-if= "createNew === 'createNow'">
           <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRideInfo(newRide)" ng-if= "createNew === 'createInfo'">
         </form>
@@ -238,6 +247,27 @@
               class="item item-icon-left"
               ng-repeat="workLocation in workLocations">
             {{workLocation}}
+          </a>
+
+        </div>
+
+        </ion-content>
+      </ion-modal-view>
+    </script>
+
+    <script id="extractRideInfo.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">Escolha as informações da boleia que pré-definiu</h1>
+        </ion-header-bar>
+        <ion-content>
+
+        <div class="list" >
+
+          <a ng-click="rideInfoSelected(ownRideInfo)"
+              class="item item-icon-left"
+              ng-repeat="ownRideInfo in ownRideInfos">
+            {{ownRideInfo.name}}
           </a>
 
         </div>
