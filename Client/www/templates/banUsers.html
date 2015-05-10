@@ -1,0 +1,22 @@
+<ion-view view-title="Ban users">
+    <ion-content>
+    <br><br>
+
+    <ion-list>
+        <div class="item item-divider" style="white-space:normal">
+            <span style="font-weight: bold">Utilizadores </span>
+        </div>
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in users" type="item-text-wrap">
+            <i class="ion-person orange" style="font-size:200%; float:left;"> </i>
+
+            <h2 style="margin-left: 40px; margin-top: 10px">{{user.name}}</h2>
+
+            <ion-option-button class="button-assertive" ng-click="removeUser($index)">
+                <i class="icon ion-trash-b" style="color:white"> </i>
+            </ion-option-button>
+        </ion-item>
+    </ion-list>
+
+    <br><br>
+    </ion-content>
+</ion-view>

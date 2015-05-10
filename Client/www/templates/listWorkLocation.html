@@ -4,9 +4,13 @@
     <br><br>
 
     <ion-list>
+        <div class="item item-divider" style="white-space:normal">
+            <span style="font-weight: bold">Locais de trabalho </span>
+        </div>
         <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="workLocation in workLocations" type="item-text-wrap">
+            <i class="ion-briefcase orange" style="font-size:200%; float:left;"> </i>
 
-            <h2>{{workLocation.name}}</h2>
+            <h2 style="margin-left: 40px; margin-top: 10px">{{workLocation.name}}</h2>
 
             <ion-option-button class="button-assertive" ng-click="removeWorkLocation($index)">
                 <i class="icon ion-trash-b" style="color:white"> </i>

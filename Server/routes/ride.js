@@ -3,10 +3,6 @@ var mongoose= require('mongoose');
 var router = express.Router();
 rides = require('../dbops/ride');
 
-router.post('/createWorkLocation', rides.createWorkLocations);
-
-router.post('/deleteWorkLocation', rides.deleteWorkLocations);
-
 router.post('/createRide', rides.createRide);
 
 router.post('/deleteRide', rides.deleteRide);

@@ -6,45 +6,6 @@ var Ride = require('../models/ride').rideModel;
 var RideInfo = require('../models/rideInfo');
 var async = require('async');
 
-function WorkLocationCreation(req, res) {
-
-    //TODO Verifica se existe um local de trabalho com o nome pedido contando o numero de locais de trabalho com esse nome
-    WorkLocation.count({
-        "name": req.body.name
-    }, function(err,count) {
-      if(count==0) {
-        var newWorkLocation = new WorkLocation(req.body);
-        newWorkLocation.save(function(error, data) {
-            if (error) {
-                res.json(error);
-            } else {
-                res.json(data);
-            }
-        });
-      }
-      else
-        res.json('Já existe um local de trabalho com esse nome');
-
-    });
-}
-module.exports.createWorkLocations = WorkLocationCreation;
-
-
-function WorkLocationDeletion(req, res) {
-    WorkLocation.findOne({
-        "name": req.body.workLocationName
-    }).remove(function(error, data) {
-        if (error) {
-            res.json(error);
-        } else {
-            res.json(data);
-        }
-    });
-}
-
-module.exports.deleteWorkLocations = WorkLocationDeletion;
-
-
 //TODO verificar senao esta a criar uma boleia igual a uma que ele proprio ja criou
 function rideCreation(req, res) {
 

@@ -1,4 +1,4 @@
-angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
+angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers' , 'iTRides.banUsersControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
@@ -201,7 +201,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTR
                 }
             })
 
-			.state('listRequestedRides', {
+			      .state('listRequestedRides', {
                 url: "/listRequestedRides",
                 views: {
                     'header': {
@@ -218,7 +218,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTR
                     }
                 }
             })
-			.state('editProfile', {
+			      .state('editProfile', {
                 url: "/editProfile",
                 views: {
                     'header': {
@@ -236,7 +236,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTR
                 }
             })
 
-			.state('listCreatedRides', {
+			      .state('listCreatedRides', {
                 url: "/listCreatedRides",
                 views: {
                     'header': {
@@ -246,6 +246,24 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'iTRides.homeControllers', 'iTR
                     'content': {
                         templateUrl: 'templates/listCreatedRides.html',
                         controller: 'listCreatedRidesCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+
+            .state('banUsers', {
+                url: "/banUsers",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/banUsers.html',
+                        controller: 'BanUsersCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',
