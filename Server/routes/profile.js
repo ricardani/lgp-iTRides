@@ -13,9 +13,9 @@ router.get('/getNextRequestedRide', profiles.nextRequestedRide);
 
 router.post('/updateProfile', profiles.profileUpdate);
 
+router.post('/updateImg', profiles.updateImg);
+
 router.post('/updateProfilePassword', profiles.profileUpdatePassword);
-
-
 
 
 /*

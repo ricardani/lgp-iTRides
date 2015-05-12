@@ -12,6 +12,16 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var secret_key = 'shhhhhhared-secret';
 
+//Upload Img
+var cloudinary = require('cloudinary');
+var multipart = require('connect-multiparty');
+
+cloudinary.config({
+    cloud_name: 'itrides',
+    api_key: '762121457153785',
+    api_secret: 'BqGaghi1-90xbwtoHeALi7cJVyk'
+});
+
 var app = express();
 
 app.use(bodyParser());
@@ -55,6 +65,10 @@ db.once('open', function (callback) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(multipart({
+    uploadDir: './tmp'
+}));
 
 app.use('/user', accountRoutes);
 // We are going to protect /api routes with JWT
