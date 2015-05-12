@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <a ng-if="ride.myStatus === 'myRequest'" class="item item-icon-left assertive" href="#">
+            <a ng-if="ride.myStatus === 'myRequest'" class="item item-icon-left assertive" ng-click="removeRideRequest()">
                 <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
                 Cancelar pedido de boleia //TODO
             </a>
@@ -71,7 +71,7 @@
                 <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
                 Partilhar Boleia //TODO
             </a>
-            <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" href="#">
+            <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" ng-click="requestRide()">
                 <i class="icon ion-close-round" style="color:green; font-size:150%"></i>
                 Solicitar Boleia //TODO
             </a>

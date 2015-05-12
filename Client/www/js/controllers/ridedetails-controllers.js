@@ -1,6 +1,6 @@
 angular.module('iTRides.rideDetailsControllers', [])
 
-    .controller('RideDetailsCtrl', function($scope, $ionicLoading, $timeout, $state, $stateParams, Server, $http, $cordovaCalendar, $ionicPopup) {
+    .controller('RideDetailsCtrl', function($scope, $ionicLoading, $ionicPopup, $timeout, $state, $stateParams, Server, $http, $cordovaCalendar, $ionicPopup) {
         $http.get(Server.url + 'api/ride/getRide',  {
             params: {rideID : $stateParams.rideID}
         }).
@@ -19,7 +19,60 @@ angular.module('iTRides.rideDetailsControllers', [])
                 $ionicLoading.hide();
             });
 
+        $scope.removeRideRequest = function() {
+          if($scope.ride.myStatus === 'myRequest') {
+            $http.post(Server.url + 'api/ride/deleteRequestedRide',
+                {
+                  'rideID': $stateParams.rideID
+                }
+            )
+            .success(function(data, status, headers, config) {
+                if(data){
+                    var alertPopup = $ionicPopup.alert({
+                      title: 'Cancelar pedido de boleia',
+                      template: 'O seu pedido foi cancelado com sucesso'
+                    });
+                    alertPopup.then(function(res) {
+                    });
+                    /* TODO caso funcione */
+                    //$state.go($state.current, {}, {reload: true});
+                    $ionicLoading.hide();
+                }
+            }).
+            error(function(data, status, headers, config) {
+                /* TODO caso dê erro */
+                $ionicLoading.hide();
+            });
+          }
+        }
 
+        $scope.requestRide = function() {
+          if($scope.ride.myStatus === 'other') {
+            $http.post(Server.url + 'api/ride/requestRide',
+                {
+                  'rideID': $stateParams.rideID
+                }
+            )
+            .success(function(data, status, headers, config) {
+                if(data){
+
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Solicitar boleia',
+                    template: 'O seu pedido foi aceite'
+                  });
+                  alertPopup.then(function(res) {
+                  });
+                  /* TODO caso funcione */
+                  //$state.go($state.current, {}, {reload: true});
+                  $ionicLoading.hide();
+                }
+            }).
+            error(function(data, status, headers, config) {
+                /* TODO caso dê erro */
+                $ionicLoading.hide();
+            });
+          }
+        }
 
         $scope.addToCalendar = function(){
             var rideDate = new Date(Date.parse($scope.ride.date));

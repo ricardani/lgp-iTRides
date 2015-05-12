@@ -9,8 +9,8 @@
                     <span style="font-weight: bold">As minhas boleias pré-definidas </span>
                 </div>
                 <ion-item ng-if="defaultRides.length > 0" ng-repeat="defaultRide in defaultRides" type="item-text-wrap">
-                    <div class="text-wrap">
-                        <a href="#/rideDetails" style="text-decoration: none; color:black;">
+                    <div class="text-wrap" ng-click="showPopup(defaultRide)">
+                        <a href="#" style="text-decoration: none; color:black;">
                             <i ng-if="defaultRide.type == 'CT'" class="ion-android-arrow-forward orange" style="font-size:200%; float:left;"> </i>
                             <i ng-if="defaultRide.type == 'TC'" class="ion-android-arrow-back orange" style="font-size:200%; float:left;"> </i>
                             <i ng-if="!defaultRide.type " class="ion-android-car orange" style="font-size:200%; float:left;"> </i>

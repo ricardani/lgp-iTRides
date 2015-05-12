@@ -157,37 +157,22 @@ module.exports.createRideInfo = rideInfoCreation;
 //TODO verificar o problema de haver 2 donos com o mesmo nome
 function requestRide(req, res) {
 
-    Account.findOne({
-        "name": req.body.ownerName
-    })
-    .populate('_id')
-    .exec( function(error, rideOwner) {
-        if(error) {
-            res.json("Couldn't find that work location");
-        }
-        else {
-          Ride.findOne({
-            "ride_type": req.body.ride_type,
-            "homeLocation": req.body.homeLocation,
-            "_workLocation": workLocation._id,
-            "_owner": rideOwner._id
-          }, function(err, data) {
-            if(err) {
-              res.json(err);
-            }
-            else {
-              data.passengers.push({"_user":req.user.id});
-              data.save(function(error, addedPassenger) {
-                  if (error) {
-                      res.json(error);
-                  } else {
-                      res.json(addedPassenger);
-                  }
-              });
+    Ride.findOne({
+      "_id": req.body.rideID
+    }, function(err, data) {
+      if(err) {
+        res.json(err);
+      }
+      else {
+        data.passengers.push({"_user":req.user.id});
+        data.save(function(error, addedPassenger) {
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(addedPassenger);
             }
         });
       }
-
     });
 
 }
@@ -197,64 +182,18 @@ module.exports.requestsRide = requestRide;
 
 function requestRideDeletion(req,res) {
 
-  Account.findOne({
-      "name": req.body.ownerName
-  })
-  .populate('_id')
-  .exec( function(error, rideOwner) {
-    if(error) {
-        res.json("Couldn't find that work location");
-    }
-    else {
-      if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
-        WorkLocation.findOne({
-            "name": req.body.workLocationName
-        })
-        .populate('_id')
-        .exec( function(error, workLocation) {
-          if(error) {
-              res.json("Couldn't find that work location");
-          }
-          else {
-
-            Ride.findOneAndUpdate({
-              "ride_type": req.body.ride_type,
-              "homeLocation": req.body.homeLocation,
-              "_workLocation": workLocation._id,
-              "_owner": rideOwner._id
-            },
-            {$pull:{passengers: {_user: req.user.id}}},
-            function(err, data) {
-              if(err) {
-                res.json(err);
-              }
-              else {
-                res.json(data);
-              }
-            });
-          }
-        });
+    Ride.findOneAndUpdate({
+      "_id": req.body.rideID
+    },
+    {$pull:{passengers: {_user: req.user.id}}},
+    function(err, data) {
+      if(err) {
+        res.json(err);
       }
-      else if(req.body.ride_type == 'Ocasional') {
-        Ride.update({
-          "ride_type": req.body.ride_type,
-          "startLocation": req.body.startLocation,
-          "destination": req.body.destination,
-          "_owner": rideOwner
-        },
-        { $pull: { passengers : {_user:req.user.id}}},
-        false,
-        function(err, data) {
-          if(err) {
-            res.json(err);
-          }
-          else
-            res.json(data);
-        }
-        );
+      else {
+        res.json(data);
       }
-    }
-  });
+    });
 
 }
 
@@ -596,13 +535,15 @@ function getMyDefaultRides(req, res) {
 
             async.each(data, function(ride, callback) {
                 var rideInfo = {
-                    id : ride.id,
+                    _id : ride.id,
                     seats : ride.seats,
                     date : ride.time_start,
                     type_cost : ride.type_cost,
                     cost : ride.cost,
                     name : ride.name,
-                    ride_type : ride.ride_type
+                    ride_type : ride.ride_type,
+                    _workLocation : ride._workLocation,
+                    homeLocation : ride.homeLocation
                 };
 
                 allRides.push(rideInfo);
@@ -627,9 +568,6 @@ function getMyDefaultRides(req, res) {
 module.exports.myDefaultRides = getMyDefaultRides;
 
 function UserRideInfos(req,res) {
-
-  var error ="";
-  var rideInfo = {};
 
   RideInfo.find({
     "_owner":req.user.id
