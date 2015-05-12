@@ -5,6 +5,9 @@ var WorkLocation = require('../models/workLocation');
 var async = require('async');
 var sha256 = require('sha256');
 
+var cloudinary = require('cloudinary');
+var fs = require('fs');
+
 function getNotifications(req, res) {
     Account.findOne({
         '_id': req.user.id
@@ -74,33 +77,33 @@ function getProfileInfo(req, res) {
         if (err || data === null) {
             res.json(err);
         } else {
-			//FAZER MEDIA FEEDBACK
-			var feedaverage = 0;
-			Ride.find({
-				'_owner': req.user.id
-			}, function(error, myrides) {
-			if (error || myrides === null) {
-				res.json(error);
-			} else {
-				var feedbacksum = 0;
-				var count = 0;
-				for (i = 0; i < myrides.length; i++) {
-					for (j = 0; j < myrides[i].feedback.length; j++) {
-						feedbacksum+=myrides[i].feedback[j].feedback;
-						count+=1;
-					}
-				}
-				feedaverage=feedbacksum/count;
+            var feedaverage = 0;
+            Ride.find({
+                '_owner': req.user.id
+            }, function(error, myrides) {
+                if (error || myrides === null) {
+                    res.json(error);
+                } else {
+                    var feedbacksum = 0;
+                    var count = 0;
+                    for (i = 0; i < myrides.length; i++) {
+                        for (j = 0; j < myrides[i].feedback.length; j++) {
+                            feedbacksum+=myrides[i].feedback[j].feedback;
+                            count+=1;
+                        }
+                    }
+                    feedaverage=feedbacksum/count;
 
-				var information = {
-					name : data.name,
-					photo : data.photo,
-					contact : data.contact,
-					email: data.email,
-					feedaverage: feedaverage
-				};
-				res.json(information);
-			}});
+                    var information = {
+                        id : data._id,
+                        name : data.name,
+                        photo : data.photo,
+                        contact : data.contact,
+                        email: data.email,
+                        feedaverage: feedaverage
+                    };
+                    res.json(information);
+                }});
         }});
 }
 
@@ -278,20 +281,20 @@ module.exports.nextRequestedRide = getNextRequestedRide;
 
 function updateProfile(req, res) {
     Account.update(
-       {'_id': req.user.id},
-       {
-        'name' : req.body.name,
-        'contact' : req.body.contact,
-        //photo: req.body.photo,
-       },
-       { upsert: true },
-       function(err, data) {
-        if(err) {
-            res.json(err);
-        } else {
-            res.json(data);
+        {'_id': req.user.id},
+        {
+            'name' : req.body.name,
+            'contact' : req.body.contact,
+            //photo: req.body.photo,
+        },
+        { upsert: true },
+        function(err, data) {
+            if(err) {
+                res.json(err);
+            } else {
+                res.json(data);
+            }
         }
-       }
     );
 }
 
@@ -307,21 +310,21 @@ function updateProfilePassword(req, res) {
                 user_old_password = data.password;
                 if (sha256(req.body.old_password) == user_old_password){
                     Account.update(
-                       {'_id': req.user.id},
-                       {
-                        'name' : req.body.name,
-                        'contact' : req.body.contact,
-                        'password' : sha256(req.body.new_password)
-                        //photo: req.body.photo,
-                       },
-                       { upsert: true },
-                       function(err, data) {
-                        if(err) {
-                            res.json(err);
-                        } else {
-                            res.json(data);
+                        {'_id': req.user.id},
+                        {
+                            'name' : req.body.name,
+                            'contact' : req.body.contact,
+                            'password' : sha256(req.body.new_password)
+                            //photo: req.body.photo,
+                        },
+                        { upsert: true },
+                        function(err, data) {
+                            if(err) {
+                                res.json(err);
+                            } else {
+                                res.json(data);
+                            }
                         }
-                       }
                     );
                 }
 
@@ -333,3 +336,34 @@ function updateProfilePassword(req, res) {
 }
 
 module.exports.profileUpdatePassword = updateProfilePassword;
+
+
+function updateImg(req, res) {
+
+    var file = req.files.file;
+    var userID = req.user.id;
+
+    cloudinary.uploader.upload(file.path, function(result) {
+        fs.unlink(file.path, function (err) {
+            if (err) console.log(err);
+        });
+
+        Account.update(
+            {'_id': userID},
+            {
+                photo: result.url
+            },
+            { upsert: true },
+            function(err, data) {
+                if(err) {
+                    res.json(err);
+                } else {
+                    res.sendStatus(200);
+                }
+            }
+        );
+    });
+
+}
+
+module.exports.updateImg = updateImg;
