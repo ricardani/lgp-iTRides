@@ -13,6 +13,8 @@ router.post('/requestRide', rides.requestsRide);
 
 router.post('/deleteRequestedRide', rides.deleteRequestedRide);
 
+router.post('/rideFeedback', rides.rideFeedback);
+
 router.get('/getWorkLocations', rides.workLocations);
 
 router.post('/getWorkLocation', rides.oneWorkLocation);

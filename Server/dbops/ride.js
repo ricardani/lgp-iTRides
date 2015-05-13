@@ -200,6 +200,47 @@ function requestRideDeletion(req,res) {
 module.exports.deleteRequestedRide = requestRideDeletion;
 
 
+function feedbackRide(req,res) {
+
+  var alreadyGaveFeedback = false;
+  var userInRide = false;
+
+  Ride.findOne({
+    "_id": req.body.rideID
+  }, function(err, data) {
+    if(err) {
+      res.json(err);
+    }
+    else {
+
+      for(var i =0; i < data.passengers.length; i++) {
+        if(data.passengers[i]._user == req.user.id) {
+          notInRide = true;
+        }
+      }
+      for(var i =0; i < data.feedback.length; i++) {
+        if(data.feedback[i]._user == req.user.id) {
+          alreadyGaveFeedback = true;
+        }
+      }
+      if(!alreadyGaveFeedback && userInRide) {
+        data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
+        data.save(function(error, addedFeedback) {
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(addedFeedback);
+            }
+        });
+      }
+    }
+  });
+
+}
+
+module.exports.rideFeedback = feedbackRide
+
+
 function getWorkLocations(req, res) {
 
     WorkLocation.find({}, function(err,workLocations) {

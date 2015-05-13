@@ -14,7 +14,7 @@ angular.module('iTRides.searchControllers', [])
   console.log('first municipality ' + $scope.municipalityFilter);
   console.log('first date ' + $scope.dateFilter);
   console.log('first district ' + $scope.districtFilter); */
-  
+
 
 	$scope.dateChange=function(val){
     $scope.dateSelected = val.toString();
@@ -22,7 +22,7 @@ angular.module('iTRides.searchControllers', [])
     $scope.day = $scope.dateSelected.substr(8,2);
     $scope.year = $scope.dateSelected.substr(11,4);
     $scope.dateFilter = $scope.month + " " + $scope.day + " " + $scope.year;
-   
+
    /* console.log("date: ", $scope.dateSelected);
     console.log("filtered: ", $scope.dateFilter);
     console.log("Dia: " + $scope.day );
@@ -327,18 +327,18 @@ angular.module('iTRides.searchControllers', [])
 
       };
 
-    
+
 
    $scope.rides = [
    { date: 'Apr 24 2015',
      district: 'Aveiro',
      municipality: ''
-  }, 
+  },
   { date: 'Apr 24 2015',
     district: 'Braga',
     municipality: 'Amares'
-  } , 
-  { 
+  } ,
+  {
     date: 'Apr 20 2015',
      district: 'Braga',
      municipality: ''
