@@ -5,6 +5,8 @@ rides = require('../dbops/ride');
 
 router.post('/createRide', rides.createRide);
 
+router.post('/getRides', rides.getallRides);
+
 router.post('/deleteRide', rides.deleteRide);
 
 router.post('/createRideInfo', rides.createRideInfo);
