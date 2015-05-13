@@ -21,55 +21,80 @@ angular.module('iTRides.rideDetailsControllers', [])
 
         $scope.removeRideRequest = function() {
           if($scope.ride.myStatus === 'myRequest') {
-            $http.post(Server.url + 'api/ride/deleteRequestedRide',
-                {
-                  'rideID': $stateParams.rideID
-                }
-            )
-            .success(function(data, status, headers, config) {
-                if(data){
-                    var alertPopup = $ionicPopup.alert({
-                      title: 'Cancelar pedido de boleia',
-                      template: 'O seu pedido foi cancelado com sucesso'
-                    });
-                    alertPopup.then(function(res) {
-                    });
-                    /* TODO caso funcione */
-                    //$state.go($state.current, {}, {reload: true});
+
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Cancelar pedido de boleia',
+              template: 'Confirme o seu pedido'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                $http.post(Server.url + 'api/ride/deleteRequestedRide',
+                    {
+                      'rideID': $stateParams.rideID
+                    }
+                )
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        var alertPopup = $ionicPopup.alert({
+                          title: 'Cancelar pedido de boleia',
+                          template: 'O seu pedido foi cancelado com sucesso'
+                        });
+                        alertPopup.then(function(res) {
+                        });
+                        /* TODO caso funcione */
+                        $state.go('home');
+                        $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
                     $ionicLoading.hide();
-                }
-            }).
-            error(function(data, status, headers, config) {
-                /* TODO caso dê erro */
-                $ionicLoading.hide();
+                });
+              } else {
+
+              }
+              $ionicLoading.hide();
             });
           }
         }
 
         $scope.requestRide = function() {
           if($scope.ride.myStatus === 'other') {
-            $http.post(Server.url + 'api/ride/requestRide',
-                {
-                  'rideID': $stateParams.rideID
-                }
-            )
-            .success(function(data, status, headers, config) {
-                if(data){
 
-                  var alertPopup = $ionicPopup.alert({
-                    title: 'Solicitar boleia',
-                    template: 'O seu pedido foi aceite'
-                  });
-                  alertPopup.then(function(res) {
-                  });
-                  /* TODO caso funcione */
-                  //$state.go($state.current, {}, {reload: true});
-                  $ionicLoading.hide();
-                }
-            }).
-            error(function(data, status, headers, config) {
-                /* TODO caso dê erro */
-                $ionicLoading.hide();
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Solicitar boleia',
+              template: 'Confirme o seu pedido'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+
+                $http.post(Server.url + 'api/ride/requestRide',
+                    {
+                      'rideID': $stateParams.rideID
+                    }
+                )
+                .success(function(data, status, headers, config) {
+                    if(data){
+
+                      var alertPopup = $ionicPopup.alert({
+                        title: 'Solicitar boleia',
+                        template: 'O seu pedido foi aceite'
+                      });
+                      alertPopup.then(function(res) {
+                      });
+                      /* TODO caso funcione */
+                      $state.go('home');
+                      $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    $ionicLoading.hide();
+                });
+              }
+              else {
+
+              }
             });
           }
         }
