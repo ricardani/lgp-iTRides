@@ -10,10 +10,26 @@ angular.module('iTRides.searchControllers', [])
   $scope.municipalityFilter = null;
   $scope.districtFilter = null;
 
+
+
+
 /*
   console.log('first municipality ' + $scope.municipalityFilter);
   console.log('first date ' + $scope.dateFilter);
   console.log('first district ' + $scope.districtFilter); */
+
+  $http.post(Server.url + 'api/ride/getRides').
+    success(function(data,status,headers,config) {
+      if (data) {
+        $scope.rides = data;
+        $ionicLoading.hide();
+          console.log($scope.rides);
+      }
+
+    })
+    .error(function(data,status,headers,config) {
+      $ionicLoading.hide();
+    } );
 
 
 	$scope.dateChange=function(val){
@@ -163,6 +179,7 @@ angular.module('iTRides.searchControllers', [])
 
 
         $scope.municipality = 'Concelho';
+        $scope.municipalityFilter = null;
         $scope.district = district;
 
         if(district == "Aveiro")
@@ -327,8 +344,7 @@ angular.module('iTRides.searchControllers', [])
 
       };
 
-
-
+/*
    $scope.rides = [
    { date: 'Apr 24 2015',
      district: 'Aveiro',
@@ -364,8 +380,8 @@ angular.module('iTRides.searchControllers', [])
      district: 'Porto',
      municipality: 'Amarante'
   }
-
   ];
+*/
 
 
 	$scope.rides2 = [{

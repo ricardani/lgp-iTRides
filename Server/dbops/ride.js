@@ -70,8 +70,79 @@ function rideCreation(req, res) {
     }
 }
 
+
 module.exports.createRide = rideCreation;
 
+function allRides(req, res) {
+
+    Ride.find({}, function(error, rides) { 
+            if (error) {
+                res.json(error);
+            }
+            else {
+                res.json(rides);
+            }
+        });
+}
+
+module.exports.getallRides = allRides;
+
+
+function rideSearch(req, res) {
+
+    if(req.body.ride_type == "CT" || req.body.ride_type == "TC") {
+        WorkLocation.findOne({
+            "name": req.body.rideName
+        })
+            .populate('_id')
+            .exec(function(err, WorkLocation) {
+
+                HomeAndWorkRide.find(
+                    {   
+                        "homeLocation" : { "district": req.body.district,
+                                           "municipality" : req.body.municipality } ,
+                        "time_start" : req.body.time_start,
+                        "_workLocation" : WorkLocation._id
+                    } ,
+
+                   function(error, rides) {
+                       if (error) {
+                        res.json(error);
+                       }
+                       else {
+                         res.json(rides);
+                       }
+                   }
+                ); 
+            } 
+        );
+    }
+    else if(req.body.ride_type == "Ocasional") {
+            OcasionalRide.find(
+            {   
+                "startLocation" : { "address": req.body.startAddress,
+                                   "identifier" : req.body.startIndentifier } ,
+                "destinationLocation" : { "address": req.body.destinationAddress,
+                                   "identifier" : req.body.destinationIndentifier } ,
+                "time_start" : req.body.time_start
+            } ,
+
+           function(error, rides) {
+               if (error) {
+                res.json(error);
+               }
+               else {
+                 res.json(rides);
+               }
+           }
+        );
+
+    }
+    else res.json("Wrong ride type"); 
+
+}
+
+module.exports.searchRide = rideSearch;
 /* TODO update to the new HomeAndWorkRide WorkLocation OccasionalRide sintax*/
 
 function removeRide(req, res) {
