@@ -5,6 +5,7 @@ angular.module('iTRides.banUsersControllers', [])
     $http.post(Server.url + 'api/admin/getUsers').
         success(function(data, status, headers, config) {
             $scope.users = data;
+			$scope.usersTemp = data;
             $ionicLoading.hide();
         }).
         error(function(data, status, headers, config) {
@@ -33,4 +34,15 @@ angular.module('iTRides.banUsersControllers', [])
                 $ionicLoading.hide();
             });
     };
+	
+	$scope.filter = function (string) {
+		$scope.users = $scope.usersTemp;
+		var temp = [];
+		for (i = 0; i < $scope.users.length; i++) { 
+			if (($scope.users[i].name.toLowerCase().indexOf(string.toLowerCase()) !=-1) || ($scope.users[i].email.toLowerCase().indexOf(string.toLowerCase())!=-1)) {
+				temp.push($scope.users[i]);
+			}
+		}
+		$scope.users = temp;
+	};
 });

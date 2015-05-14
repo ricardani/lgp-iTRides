@@ -448,3 +448,10 @@ p.change_profile_photo input[type="file"]:hover {
 
 .loginButton > button
 {	margin-bottom: 25%; }
+
+
+/*---------------------------------BANUSERS PAGE---------------------------------*/
+.search-bar{
+	border:1px solid #B2B2B2;
+	border-radius:5px;
+}

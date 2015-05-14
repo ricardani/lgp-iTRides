@@ -8,241 +8,191 @@
                 <input type="date" style="margin-left:20%; padding:0" placeholder="dd/mm/aa" ng-change="dateChange(date)" ng-model="date">
             </label>
         </div>
-        <ion-scroll delegate-handle="taskScroll" direction="x" ng-controller="RideTypeCtrl">
-            <div class="button-bar">
-                <a ng-repeat="type in collection"
-                   ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
-                   ng-click="itemClicked($index)"
-                   class="button button-searchType-selected">
-                    {{type}}
-                </a>
-            </div>
-        </ion-scroll>
-
-   
-
-
-<!--        <div class="row">
-            <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType !== 1">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-home"></i>
-                    Partida
-                </div>
-                <button class="button button-ride-search" ng-click="toggleLeft()">
-                    Distrito
-                </button>
-                <button class="button button-ride-search">
-                    Concelho
-                </button>
-                <button class="button button-ride-search">
-                    Freguesia
-                </button>
-            </div>
-
-
-            <div class="card col search-ride" ng-controller="StartAddressCtrl"  ng-if= "selectedRideType === 1">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-home"></i>
-                    Partida
-                </div>
-                <button class="button button-ride-search" ng-disabled="true">
-                </button>
-                <button class="button button-ride-search">
-                    Escritório
-                </button>
-            </div>
-
-            <div class="card col search-ride" ng-if= "selectedRideType !== 0">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-ios-location"></i>
-                    Destino
-                </div>
-                <button class="button button-ride-search">
-                    Distrito
-                </button>
-                <button class="button button-ride-search">
-                    Concelho
-                </button>
-                <button class="button button-ride-search">
-                    Freguesia
-                </button>
-            </div>
-
-
-            <div class="card col search-ride" ng-if= "selectedRideType === 0">
-              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                  <i class="icon ion-ios-location"></i>
-                  Destino
-              </div>
-               <button class="button button-ride-search" ng-disabled="true">
-              </button>
-              <button class="button button-ride-search">
-                  Escritório
-              </button>
-            </div>
+        <div class="button-bar">
+            <a ng-repeat="type in collection"
+               ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
+               ng-disabled="!hasDate"
+               ng-click="itemClicked($index)"
+               class="button button-searchType-selected">
+                {{type}}
+            </a>
         </div>
--->
 
-
- <form>
-          <div class="row">
-            <div class="card col search-ride" ng-if= "selectedRideType !== 1">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-home"></i>
-                    Partida
+        <form>
+            <div ng-if="resultRides.length > 0" class="row">
+                <div class="card col search-ride" ng-if= "selectedRideType === 0">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-home"></i>
+                        Partida
+                    </div>
+                    <button class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
+                        {{district}}
+                    </button>
+                    <button class="button button-ride-search" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()"
+                            ng-disabled="!hasDistrict">
+                        {{municipality}}
+                    </button>
                 </div>
-                <button class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
-                    {{district}}
-                </button>
-                <button class="button button-ride-search" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()">
-                    {{municipality}}
-                </button>
-
-               
-            </div>
-            <div class="card col search-ride" ng-if= "selectedRideType === 1">
-              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                  <i class="icon ion-home"></i>
-                  Partida
-              </div>
-              <button class="button button-ride-search" ng-disabled="true">
-              </button>
-              <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
-                  {{workLocation}}
-              </button>
-
-            </div>
-
-    
-
-            <div class="card col search-ride" ng-if= "selectedRideType === 0">
-              <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                  <i class="icon ion-ios-location"></i>
-                  Destino
-              </div>
-               <button class="button button-ride-search" ng-disabled="true">
-              </button>
-              <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
-                  {{workLocation}}
-              </button>
-            </div>
-
-            <div class="card col search-ride" ng-if= "selectedRideType !== 0">
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-ios-location"></i>
-                    Destino
+                <div class="card col search-ride" ng-if= "selectedRideType === 0">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-ios-location"></i>
+                        Destino
+                    </div>
+                    <button class="button button-ride-search" ng-disabled="true">
+                    </button>
+                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                        {{workLocation}}
+                    </button>
                 </div>
-                <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
-                    {{district}}
-                </button>
-                <button class="button button-ride-search" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()">
-                    {{municipality}}
-                </button>
-            
+
+
+                <div class="card col search-ride" ng-if= "selectedRideType === 1">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-home"></i>
+                        Partida
+                    </div>
+                    <button class="button button-ride-search" ng-disabled="true">
+                    </button>
+                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                        {{workLocation}}
+                    </button>
+
+                </div>
+                <div class="card col search-ride" ng-if= "selectedRideType === 1">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-ios-location"></i>
+                        Destino
+                    </div>
+                    <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
+                        {{district}}
+                    </button>
+                    <button class="button button-ride-search" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()"
+                            ng-disabled="!hasDistrict">
+                        {{municipality}}
+                    </button>
+                </div>
+
+
+                <div class="card col search-ride" ng-if= "selectedRideType === 2">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-home"></i>
+                        Partida
+                    </div>
+                    </button>
+                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalStartOcasional()">
+                        {{ocasionalStart}}
+                    </button>
+
+                </div>
+                <div class="card col search-ride" ng-if= "selectedRideType === 2">
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-ios-location"></i>
+                        Destino
+                    </div>
+                    <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalEndOcasional()">
+                        {{ocasionalEnd}}
+                    </button>
+                </div>
             </div>
 
         </form>
 
-
-
- <!--       <div ng-repeat="date in count = (rides | filter : dateFilter  || districtFilter || municipality  )" ></div>
-            <p>{{count.length}}</p> 
-        </div> -->
-
-        <div ng-if="dateFilter!=null && districtFilter==null && municipalityFilter == null" style="position:absolute;
-bottom:-10%; width:100%; margin-left:-65%">
-          <div ng-repeat="ride in count = (rides | filter : dateFilter)" ></div>
-            <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
+        <div ng-if="hasDate" class="list card">
+            <a ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
+                <i class="icon ion-map" style="color: white"></i>
+                <div style="color: white"> Ver Resultados </div>
+                <span class="badge badge-stable">{{resultRides.length}}</span>
+            </a>
+            <a ng-if="resultRides.length <= 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
+                <i class="icon ion-map" style="color: white"></i>
+                <div style="color: white"> Sem Resultados </div>
+            </a>
         </div>
 
+        <script id="districts.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar>
+                    <h1 class="title">Escolha o distrito</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="list" >
+                        <a ng-click="districtSelected(ride.district)"
+                           class="item item-icon-left"
+                           ng-repeat="ride in filteredRides | unique : 'district'">
+                            {{ride.district}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
 
-        <div  ng-if="dateFilter==null && districtFilter!=null && municipalityFilter == null" style="position:absolute;
-bottom:-10%; width:100%; margin-left:-65%">
-          <div ng-repeat="ride in count = (rides | filter : districtFilter)"></div>
-              <a class="button icon-right ion-chevron-right button-energized" style:"background-color:orange">{{count.length}} resultados</a>
-        </div>
+        <script id="municipalities.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar>
+                    <h1 class="title">Escolha o concelho</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="list" >
+                        <a ng-click="municipalitySelected(ride.municipality)"
+                           class="item item-icon-left"
+                           ng-repeat="ride in filteredRidesWithDistrict | unique : 'municipality'">
+                            {{ride.municipality}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
 
-        <div ng-if="dateFilter==null && districtFilter==null && municipalityFilter != null" style="position:absolute;
-bottom:-10%; width:100%; margin-left:-65%"> 
-            <div ng-repeat="ride in count = (rides | filter : municipalityFilter)" > </div>
-            <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
-        </div>
+        <script id="workLocations.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar>
+                    <h1 class="title">Escolha o local de trabalho</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="list" >
+                        <a ng-click="workLocationSelected(ride.workLocation)"
+                           class="item item-icon-left"
+                           ng-repeat="ride in resultRides | unique : 'workLocation'">
+                            {{ride.workLocation}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
 
+        <script id="startOcasional.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar>
+                    <h1 class="title">Escolha o local de Partida</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="list" >
+                        <a ng-click="startOcasionalSelected(ride.startLocation)"
+                           class="item item-icon-left"
+                           ng-repeat="ride in resultRides | unique : 'startLocation'">
+                            {{ride.startLocation}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
 
-        <div ng-if="dateFilter==null && districtFilter!=null && municipalityFilter != null" style="position:absolute;
-bottom:-10%; width:100%; margin-left:-65%"> 
-            <div ng-repeat="ride in count = (rides | filter : districtFilter && municipalityFilter)" ></div>
-           <a class="button icon-right ion-chevron-right button-energized">{{count.length}} resultados</a>
-        </div>
-     
+        <script id="endOcasional.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar>
+                    <h1 class="title">Escolha o local de Chegada</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="list" >
+                        <a ng-click="endOcasionalSelected(ride.destination)"
+                           class="item item-icon-left"
+                           ng-repeat="ride in resultRides | unique : 'destination'">
+                            {{ride.destination}}
+                        </a>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
 
-
-   <!--      <div ng-repeat="municipality in count = (rides | filter : municipality)" ></div>
-            <p>{{count.length}}</p>
-        </div> 
-
-
-       <button class="button button-large submit-search">
-          <i class="ion-android-search"></i>
-          Pesquisar
-        </button>
-        <br><br>
-    </ion-content> -->
-
-    <script id="districts.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Escolha o distrito</h1>
-        </ion-header-bar>
-        <ion-content>
-
-        <div class="list" >
-
-          <a ng-click="districtSelected(district)"
-              class="item item-icon-left"
-              ng-repeat="district in districts">
-            {{district}}
-          </a>
-
-        </div>
-
-        </ion-content>
-      </ion-modal-view>
-    </script>
-
-    <script id="municipalities.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Escolha o concelho</h1>
-        </ion-header-bar>
-        <ion-content>
-
-        <div class="list" >
-
-          <a ng-click="municipalitySelected(municipality)"
-              class="item item-icon-left"
-              ng-repeat="municipality in municipalities">
-            {{municipality}}
-          </a>
-
-        </div>
-
-        </ion-content>
-      </ion-modal-view>
-    </script>
-
-
-
-
-    <script id="workLocations.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Escolha o local de trabalho</h1>
-        </ion-header-bar>
-        <ion-content>
-
-        
-    </script>
-
-   </ion-content>
+    </ion-content>
 </ion-view>
