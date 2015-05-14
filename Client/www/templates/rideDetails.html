@@ -40,7 +40,7 @@
                 <div class="item item-avatar" ng-repeat="p in ride.passengers">
                     <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{p.name}}</h2>
-                    <p ng-if="$index === 0" style = "color: red">
+                    <p ng-if="$index === 0" style = "color: #aaa;">
                         Riding shotgun
                     </p>
                 </div>
@@ -64,16 +64,16 @@
             </div>
 
             <a ng-if="ride.myStatus === 'myRequest'" class="item item-icon-left assertive" ng-click="removeRideRequest()">
-                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
-                Cancelar pedido de boleia //TODO
+                <i class="icon ion-close-round" style="color:red; font-size:150%;"></i>
+                Cancelar pedido de boleia
             </a>
             <a ng-if="ride.myStatus === 'myRide'" class="item item-icon-left assertive" href="#">
-                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
+                <i class="icon ion-share" style="color:red; font-size:150%"></i>
                 Partilhar Boleia //TODO
             </a>
-            <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" ng-click="requestRide()">
-                <i class="icon ion-close-round" style="color:green; font-size:150%"></i>
-                Solicitar Boleia //TODO
+            <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" ng-click="requestRide()" style="color:green">
+                <i class="icon ion-checkmark" style="color:green; font-size:150%"></i>
+                Solicitar Boleia
             </a>
 
         </div>
