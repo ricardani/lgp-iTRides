@@ -84,7 +84,7 @@ angular.module('iTRides.editProfileControllers', [])
 				Upload.upload({
 					url: Server.url + 'api/profile/updateImg',
 					method: 'POST',
-					fields: {serverURL: Server.url},
+					fields: {},
 					file: file
 				}).progress(function (evt) {
 					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);

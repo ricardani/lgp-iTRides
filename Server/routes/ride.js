@@ -29,6 +29,6 @@ router.get('/getMyRequestedRides', rides.myRequestedRides);
 
 router.get('/getMyDefaultRides', rides.myDefaultRides);
 
-router.get('/getRideInfos', rides.getRideInfos);
+router.get('/getRideForDay', rides.getRideForDay);
 
 module.exports = router;
