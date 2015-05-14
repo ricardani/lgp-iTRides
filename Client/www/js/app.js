@@ -1,7 +1,7 @@
 angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'iTRides.homeControllers' , 'iTRides.banUsersControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
-    'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
+    'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -140,6 +140,24 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'iTRides.homeCo
                         templateUrl: 'templates/createRide.html',
                         controller: 'CreateRideCtrl'
                         //controller: 'CreateRideCtrl as creatRideCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+
+            .state('editRide', {
+                url: "/editRide/:rideID",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/editRide.html',
+                        controller: 'EditRideCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',
