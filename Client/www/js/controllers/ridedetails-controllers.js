@@ -19,6 +19,44 @@ angular.module('iTRides.rideDetailsControllers', [])
                 $ionicLoading.hide();
             });
 
+        $scope.deleteRide = function() {
+          if($scope.ride.myStatus === 'myRide') {
+            var confirmPopup = $ionicPopup.confirm({
+              title: 'Apagar boleia',
+              template: 'Confirme o seu pedido'
+            });
+            confirmPopup.then(function(res) {
+              if(res) {
+                $http.post(Server.url + 'api/ride/deleteRide',
+                    {
+                      'rideID': $stateParams.rideID
+                    }
+                )
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        var alertPopup = $ionicPopup.alert({
+                          title: 'Apagar boleia',
+                          template: 'A sua boleia foi apagada com sucesso'
+                        });
+                        alertPopup.then(function(res) {
+                        });
+                        /* TODO caso funcione */
+                        $state.go('home');
+                        $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    $ionicLoading.hide();
+                });
+              } else {
+
+              }
+              $ionicLoading.hide();
+            });
+          }
+        }
+
         $scope.removeRideRequest = function() {
           if($scope.ride.myStatus === 'myRequest') {
 

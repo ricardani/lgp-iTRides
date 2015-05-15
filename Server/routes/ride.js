@@ -21,15 +21,19 @@ router.get('/getWorkLocations', rides.workLocations);
 
 router.post('/getWorkLocation', rides.oneWorkLocation);
 
+router.get('/getRideToEdit', rides.rideToEdit);
+
 router.get('/getRide', rides.oneRide);
 
 router.get('/getMyRides', rides.myRides);
+
+router.post('/editRide', rides.editRide);
 
 router.get('/getMyRequestedRides', rides.myRequestedRides);
 
 router.get('/getMyDefaultRides', rides.myDefaultRides);
 
-router.get('/getRideInfos', rides.getRideInfos);
+router.get('/getRideForDay', rides.getRideForDay);
 
 router.get('/getMyPastRides', rides.myPastRides);
 

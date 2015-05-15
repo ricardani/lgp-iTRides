@@ -1,27 +1,18 @@
-angular.module('iTRides.createRideControllers', [])
+angular.module('iTRides.editRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server) {
-      //var creatRideCtrl = this; e remover $scope
+    .controller('EditRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
+
       $scope.costTypeOptions = [
         { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
         { id: 'Pagar ao condutor', name: 'Pagar ao condutor', value: 'Pagar ao condutor' }
       ];
-
-      $scope.newRide = {type : $scope.costTypeOptions[0].value};
-
-      $scope.createNew = $stateParams.createNew;
-
-      if($scope.createNew == 'createNow') {
-      }
-      else if($scope.createNew == 'createInfo') {
-      }
-      else
-        ;//TODO enviar para uma pagina com erro 500
+      $scope.ride = {};
 
       $scope.selectedRideType = 0;
       $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
       $scope.district = 'Distrito';
       $scope.districtValidation = "";
+      $scope.changeDistrict = false;
       $scope.municipality = 'Concelho';
       $scope.municipalityValidation = "";
       $scope.street = 'Rua';
@@ -45,17 +36,135 @@ angular.module('iTRides.createRideControllers', [])
       $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
 
 
-      $http.get(Server.url + 'api/ride/getWorkLocations').
-          success(function(data, status, headers, config) {
-              for(i=0; i < data.length; i++) {
-                $scope.workLocations.push(data[i].name);
-              }
-              $ionicLoading.hide();
-          }).
-          error(function(data, status, headers, config) {
-              console.log(JSON.stringify(data));
-              $ionicLoading.hide();
+      $http.get(Server.url + "api/ride/getRideToEdit", {
+        params: {rideID : $stateParams.rideID}
+      }).
+      success(function(data, status, headers, config) {
+          if(data == null) {
+            console.log('Não exite boleia com esse id');
+          }
+          else {
+            $scope.ride = data;
+            console.log($scope.ride);
+            var startDate = new Date(data.time_start);
+
+            $scope.ride.date = startDate;
+            $scope.ride.hour = startDate;
+            console.log($scope.ride);
+
+            if($scope.ride.ride_type == 'CT' || $scope.ride.ride_type == 'TC') {
+              if($scope.ride.ride_type == 'CT')
+                $scope.selectedRideType = 0;
+              else if($scope.ride.ride_type == 'TC')
+                $scope.selectedRideType = 1;
+
+              $scope.districtSelected($scope.ride.homeLocation.district);
+              $scope.changeDistrict= true;
+              $scope.municipality = $scope.ride.homeLocation.municipality;
+              $scope.street = $scope.ride.homeLocation.street;
+              $scope.info = $scope.ride.homeLocation.info;
+
+              $http.post(Server.url + "api/ride/getWorkLocation", {
+                '_workLocation': $scope.ride._workLocation
+              })
+              .success(function(data, status, headers, config) {
+                $scope.workLocation = data.name;
+              })
+              .error(function(data, status, headers, config) {
+                $ionicLoading.hide();
+              });
+
+            }
+            else if($scope.ride.ride_type == 'Ocasional') {
+              $scope.selectedRideType = 2;
+
+              $scope.occasional = {"startAddress": $scope.ride.startLocation.address, "startIdentifier": $scope.ride.startLocation.identifier, "destinationAddress": $scope.ride.destination.address, "destinationIdentifier": $scope.ride.destination.identifier};
+
+            }
+            else {
+              console.log('Wrong ride_type');
+            }
+
+          }
+
+          $ionicLoading.hide();
+      }).
+      error(function(data, status, headers, config) {
+          $ionicLoading.hide();
       });
+
+      $scope.editRide = function (ride) {
+
+        console.log(ride);
+        
+
+        ride.date.setHours(ride.hour.getHours(), ride.hour.getMinutes());
+
+        if(ride.ride_type == "CT" || ride.ride_type == "TC") {
+            $http.post(Server.url + 'api/ride/editRide',
+                    {
+                      'rideID': ride._id,
+                      'seats': ride.seats,
+                      'time_start': ride.date,
+                      'ride_type': ride.ride_type,
+                      'type_cost': ride.type_cost,
+                      'cost': ride.cost,
+                      'locationName': $scope.workLocation,
+                      'homeLocation' : {
+                          "district": $scope.district,
+                          "municipality": $scope.municipality,
+                          "street": $scope.street,
+                          "info": $scope.info
+                      }
+                    }
+            )
+            .success(function(data, status, headers, config) {
+                if(data){
+                    /* TODO caso funcione */
+                    $ionicLoading.hide();
+                }
+            }).
+            error(function(data, status, headers, config) {
+                /* TODO caso dê erro */
+                $ionicLoading.hide();
+            });
+
+        }
+        else if(ride.ride_type == "Ocasional") {
+
+          console.log($scope.occasional);
+
+            $http.post(Server.url + 'api/ride/editRide',
+                {
+                  'rideID': ride._id,
+                  'seats': ride.seats,
+                  'time_start': ride.date,
+                  'ride_type': ride.ride_type,
+                  'type_cost': ride.type_cost,
+                  'cost': ride.cost,
+                  'startLocation' : {
+                    "address": $scope.occasional.startAddress,
+                    "identifier": $scope.occasional.startIdentifier
+                  },
+                  'destination' : {
+                    "address": $scope.occasional.destinationAddress,
+                    "identifier": $scope.occasional.destinationIdentifier
+                  }
+                }
+            ).
+            success(function(data, status, headers, config) {
+                if(data){
+                    /* TODO caso funcione */
+                    $ionicLoading.hide();
+                }
+            }).
+            error(function(data, status, headers, config) {
+                /* TODO caso dê erro */
+                $ionicLoading.hide();
+            });
+        }
+      };
+
 
       /*--------------------- Modals ---------------------*/
       $ionicModal.fromTemplateUrl('districts.html', {
@@ -98,7 +207,8 @@ angular.module('iTRides.createRideControllers', [])
       };
 
       $scope.showModalMunicipality = function() {
-        $scope.modalMunicipality.show();
+        if($scope.district != 'Distrito')
+          $scope.modalMunicipality.show();
       };
 
       $scope.showModalStreet = function() {
@@ -134,219 +244,8 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.itemClicked = function ($index) {
         $scope.selectedRideType = $index;
+        console.log($scope.selectedRideType);
       };
-
-      $scope.checkForm = function(newRide, rideType) {
-
-        var noErrors = true;
-
-        if(newRide.seats == null) {
-          console.log('missing seats');
-          noErrors=false;
-        }
-        if(newRide.hour == null) {
-          console.log('missing hour');
-          noErrors=false;
-        }
-        if(newRide.typeCost == null) {
-          console.log('missing type of cost');
-          noErrors=false;
-        }
-        if(newRide.cost == null) {
-          console.log('missing cost');
-          noErrors=false;
-        }
-        if(newRide.date == null) {
-          console.log('missing date');
-          noErrors=false;
-        }
-        if($scope.workLocation == 'Local de trabalho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
-          $scope.workLocationValidation = "error";
-          console.log('missing work location');
-          noErrors=false;
-        }
-        if($scope.district == 'Distrito' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
-          $scope.districtValidation = "error";
-          console.log('missing district');
-          noErrors=false;
-        }
-        if($scope.municipality == 'Concelho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
-          $scope.municipalityValidation = "error";
-          console.log('missing municipality');
-          noErrors=false;
-        }
-        if($scope.street == 'Rua' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
-          $scope.streetValidation = "error";
-          console.log('missing street');
-          noErrors=false;
-        }
-        if($scope.info == 'Info' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
-          $scope.infoValidation = "error";
-          console.log('missing street');
-          noErrors=false;
-        }
-
-        return noErrors;
-
-      }
-
-      $scope.createRide = function (newRide) {
-
-        //TODO handle the error catched by this if
-          if(newRide == null)
-            var newRide={};
-
-          var rideType = $scope.collection[$scope.selectedRideType];
-
-          if(!$scope.checkForm(newRide, rideType))
-            return; //Se houver um campo nao preenchido, não fazer nada
-
-          newRide.date.setHours(newRide.hour.getHours(),newRide.hour.getMinutes());
-
-          /*TODO verificar se local de trabalho e/ou localização foram especificados */
-          /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
-          if(rideType == "Trabalho>Casa") {
-              $http.post(Server.url + 'api/ride/createRide',
-                      {
-                        '_owner': $window.sessionStorage.token,
-                        'seats': newRide.seats,
-                        'time_start': newRide.date,
-                        'ride_type': 'TC',
-                        'type_cost': newRide.typeCost,
-                        'cost': newRide.cost,
-                        'locationName': $scope.workLocation,
-                        'homeLocation' : {
-                            "district": $scope.district,
-                            "municipality": $scope.municipality,
-                            "street": $scope.street,
-                            "info": $scope.info
-                        }
-                      }
-              )
-              .success(function(data, status, headers, config) {
-                  if(data){
-                      /* TODO caso funcione */
-                      $ionicLoading.hide();
-                  }
-              }).
-              error(function(data, status, headers, config) {
-                  /* TODO caso dê erro */
-                  $ionicLoading.hide();
-              });
-
-          }
-          else if(rideType == "Casa>Trabalho") {
-            $http.post(Server.url + 'api/ride/createRide',
-                    {
-                      '_owner': $window.sessionStorage.token,
-                      'seats': newRide.seats,
-                      'time_start': newRide.date,
-                      'ride_type': 'CT',
-                      'type_cost': newRide.typeCost,
-                      'cost': newRide.cost,
-                      'locationName': $scope.workLocation,
-                      'homeLocation' : {
-                          "district": $scope.district,
-                          "municipality": $scope.municipality,
-                          "street": $scope.street,
-                          "info": $scope.info
-                      }
-                    }
-            )
-            .success(function(data, status, headers, config) {
-                if(data){
-                    /* TODO caso funcione */
-                    $ionicLoading.hide();
-                }
-            }).
-            error(function(data, status, headers, config) {
-                /* TODO caso dê erro */
-                $ionicLoading.hide();
-            });
-          }
-          else if(rideType == "Ocasional") {
-              $http.post(Server.url + 'api/ride/createRide',
-                  {
-                    'seats': newRide.seats,
-                    'time_start': newRide.date,
-                    'ride_type': 'Ocasional',
-                    'type_cost': newRide.typeCost,
-                    'cost': newRide.cost,
-                    'startLocation' : {
-                      "address": $scope.occasional.startAddress,
-                      "identifier": $scope.occasional.startIdentifier
-                    },
-                    'destination' : {
-                      "address": $scope.occasional.destinationAddress,
-                      "identifier": $scope.occasional.destinationIdentifier
-                    }
-                  }
-              ).
-                  success(function(data, status, headers, config) {
-                      if(data){
-                          /* TODO caso funcione */
-                          $ionicLoading.hide();
-                      }
-                  }).
-                  error(function(data, status, headers, config) {
-                      /* TODO caso dê erro */
-                      $ionicLoading.hide();
-                  });
-          }
-          else {
-              /* TODO caso dê erro ao definir o tipo da boleia */
-              $ionicLoading.hide();
-          }
-
-      };
-
-      /*------------------Create Ride Info--------------------*/
-
-      $scope.createRideInfo = function (newRide) {
-
-        var rideType = $scope.collection[$scope.selectedRideType];
-        var ride_type;
-        if(rideType == 'Casa>Trabalho')
-          ride_type = 'CT';
-        else if(rideType == 'Trabalho>Casa')
-          ride_type = 'TC';
-        else if(rideType == 'Ocasional')
-          ride_type = 'Ocasional';
-        else
-          console.log('Can`t identify ride type');
-
-        $http.post(Server.url + 'api/ride/createRideInfo',
-                {
-                  '_owner': $window.sessionStorage.token,
-                  'seats': newRide.seats,
-                  'time_start': newRide.hour,
-                  'ride_type': ride_type,
-                  'type_cost': newRide.typeCost,
-                  'name': newRide.rideInfoName,
-                  'cost': newRide.cost,
-                  'workLocationName': $scope.workLocation,
-                  'homeLocation' : {
-                      "district": $scope.district,
-                      "municipality": $scope.municipality,
-                      "street": $scope.street,
-                      "info": $scope.info
-                  }
-                }
-        )
-        .success(function(data, status, headers, config) {
-            if(data){
-                /* TODO caso funcione */
-                console.log(data);
-                $ionicLoading.hide();
-            }
-        }).
-        error(function(data, status, headers, config) {
-            /* TODO caso dê erro */
-            $ionicLoading.hide();
-        });
-
-      };
-      /*------------------------------------------------------*/
 
       $scope.workLocationSelected = function(workLocation) {
 
@@ -384,10 +283,10 @@ angular.module('iTRides.createRideControllers', [])
 
       $scope.districtSelected = function(district) {
 
-
-        $scope.municipality = 'Concelho';
-        $scope.municipalityValidation = "";
-
+        if($scope.changeDistrict) {
+          $scope.municipality = 'Concelho';
+          $scope.municipalityValidation = "";
+        }
         $scope.district = district;
         $scope.districtValidation = "";
 
@@ -551,8 +450,6 @@ angular.module('iTRides.createRideControllers', [])
 
     })
 
-    .controller('CreateRideTypeCtrl', function($scope) {
+    .controller('editRideTypeCtrl', function($scope) {
 
-    })
-
-;
+    });

@@ -67,10 +67,22 @@
                 <i class="icon ion-close-round" style="color:red; font-size:150%;"></i>
                 Cancelar pedido de boleia
             </a>
+
             <a ng-if="ride.myStatus === 'myRide'" class="item item-icon-left assertive" href="#">
                 <i class="icon ion-share" style="color:red; font-size:150%"></i>
                 Partilhar Boleia //TODO
             </a>
+
+            <a ng-if="ride.myStatus === 'myRide'" class="item item-icon-left assertive" href="#/editRide/{{ride.id}}" >
+                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
+                Editar Boleia //TODO
+            </a>
+
+            <a ng-if="ride.myStatus === 'myRide'" class="item item-icon-left assertive" href="#" ng-click="deleteRide()">
+                <i class="icon ion-close-round" style="color:red; font-size:150%"></i>
+                Apagar Boleia //TODO
+            </a>
+
             <a ng-if="ride.myStatus === 'other' && ride.seats - ride.passengers.length > 0" class="item item-icon-left assertive" ng-click="requestRide()" style="color:green">
                 <i class="icon ion-checkmark" style="color:green; font-size:150%"></i>
                 Solicitar Boleia
