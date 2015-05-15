@@ -2,7 +2,7 @@ angular.module('iTRides.profileControllers', [])
 
 
 
-.controller('ProfileCtrl', function($scope,$http,$ionicLoading, $timeout, Server, $window, $state) {
+.controller('ProfileCtrl', function($scope,$http,$ionicLoading,$ionicPopup, $timeout, Server, $window, $state) {
 
     $http.get(Server.url + 'api/profile/getProfileInfo').
         success(function(data, status, headers, config) {
@@ -38,6 +38,21 @@ angular.module('iTRides.profileControllers', [])
 				return new Array(1);
 			}
 		};
+
+         $scope.showConfirm = function() {
+           var confirmPopup = $ionicPopup.confirm({
+             title: 'Consume Ice Cream',
+             template: 'Are you sure you want to eat this ice cream?'
+           });
+           confirmPopup.then(function(res) {
+             if(res) {
+               console.log('You are sure');
+             } else {
+               console.log('You are not sure');
+             }
+           });
+         };
+
 
     $scope.logout = function () {
         localStorage.removeItem('SessionToken');

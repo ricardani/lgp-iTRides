@@ -248,7 +248,6 @@ module.exports.deleteRequestedRide = requestRideDeletion;
 
 function feedbackRide(req,res) {
 
-<<<<<<< HEAD
   console.log(req);
   console.log('--------------');
 
@@ -287,23 +286,6 @@ function feedbackRide(req,res) {
             } else {
               console.log('SUCCESS giving feedback')
                 res.json(addedFeedback);
-=======
-    var alreadyGaveFeedback = false;
-    var userInRide = false;
-
-    Ride.findOne({
-        "_id": req.body.rideID
-    }, function(err, data) {
-        if(err) {
-            res.json(err);
-        }
-        else {
-
-            for(var i =0; i < data.passengers.length; i++) {
-                if(data.passengers[i]._user == req.user.id) {
-                    notInRide = true;
-                }
->>>>>>> origin/master
             }
             for(var i =0; i < data.feedback.length; i++) {
                 if(data.feedback[i]._user == req.user.id) {
@@ -321,7 +303,9 @@ function feedbackRide(req,res) {
                 });
             }
         }
-    });
+    
+    );
+      }}});
 
 }
 
@@ -716,7 +700,8 @@ function getRide(req, res) {
                         }});
                 }
             });
-        }});
+        
+      }});
 }
 
 module.exports.oneRide = getRide;
@@ -849,8 +834,7 @@ function getRideForDay(req,res) {
 
 }
 
-<<<<<<< HEAD
-module.exports.getRideInfos = UserRideInfos;
+module.exports.getRideForDay = getRideForDay;
 
 
 
@@ -954,6 +938,3 @@ function getMyPastRides(req, res) {
 }
 
 module.exports.myPastRides = getMyPastRides;
-=======
-module.exports.getRideForDay = getRideForDay;
->>>>>>> origin/master
