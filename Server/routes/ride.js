@@ -31,4 +31,6 @@ router.get('/getMyDefaultRides', rides.myDefaultRides);
 
 router.get('/getRideInfos', rides.getRideInfos);
 
+router.get('/getMyPastRides', rides.myPastRides);
+
 module.exports = router;

@@ -49,9 +49,8 @@
                 {{myNextRide.startLocation}}
             </div>
 
-            <div class="item">
-                <div class="item item-avatar" ng-repeat="p in myNextRide.passengers | orderBy:'date'">
-
+            <div class="item" ng-if="myNextRide.passengers.length > 0">
+                <div class="item item-avatar"  ng-repeat="p in myNextRide.passengers | orderBy:'date'">
                     <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{p.name}}</h2>
                     <p ng-if="$index === 0" style = "color: red">
@@ -73,7 +72,6 @@
         </div>
 
         <div class="list card" ng-if="myNextRequest.id != null">
-			
             <div class="item item-divider">
                 Próxima boleia Solicitada
             </div>
@@ -99,8 +97,28 @@
                 <i class="icon ion-information-circled orange"></i>
                 <a1 class="orange"> Ver detalhes </a1>
             </a>
+        </div>
+
+
+        <div class="list card" ng-if="pastRides.length > 0">
+
+            <div class="item item-divider">
+                Feedback das minhas boleias
+            </div>
+            
+            <div class="item">
+                <div class="item item-icon-left assertive" ng-repeat="pr in pastRides | orderBy:'date'" ng-click="showPopup(pr.id)">
+                   <!-- <i class="ion-android-car orange car_icon_past_rides"> </i>  -->
+                    <h2>Boleia de {{pr.ownerName}}</h2>
+                    <p> De {{pr.startLocation}}  para {{pr.destination}}</p>
+                    <p> Em {{pr.date | limitTo:dateLimit }} </p>
+                </div>
+            </div>
 
         </div>
+
+
+
         <br><br>
     </ion-content>
 </ion-view>

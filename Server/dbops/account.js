@@ -89,8 +89,9 @@ function login(req, res) {
 
 module.exports.checkLogin = login;
 
+
 function resetPassword(req, res) {
-    console.log("password: " + req.body.password);
+
     Account.update(
        {'email': req.body.email},
        {
@@ -101,8 +102,7 @@ function resetPassword(req, res) {
         if(err) {
             res.json(err);
         } else {
-            sendMail(req.body.email, 'iTRides: Nova Password Gerada', 'Nova password: ' + req.body.password);
-            console.log("mail sent");
+            sendMail(req.body.email,'iTRides: Nova Password Gerada', req.body.password);
             res.json(data);
         }
        }

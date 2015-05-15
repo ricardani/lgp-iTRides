@@ -273,6 +273,9 @@ module.exports.deleteRequestedRide = requestRideDeletion;
 
 function feedbackRide(req,res) {
 
+  console.log(req);
+  console.log('--------------');
+
   var alreadyGaveFeedback = false;
   var userInRide = false;
 
@@ -286,20 +289,27 @@ function feedbackRide(req,res) {
 
       for(var i =0; i < data.passengers.length; i++) {
         if(data.passengers[i]._user == req.user.id) {
-          notInRide = true;
+          userInRide = true;
+        } else {
+
+          console.log('passenger not in ride');
         }
       }
       for(var i =0; i < data.feedback.length; i++) {
         if(data.feedback[i]._user == req.user.id) {
           alreadyGaveFeedback = true;
+          console.log('already gave feedback');
         }
       }
       if(!alreadyGaveFeedback && userInRide) {
         data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
         data.save(function(error, addedFeedback) {
             if (error) {
+                console.log("ERRORRR");
+                console.log(error);
                 res.json(error);
             } else {
+              console.log('SUCCESS giving feedback')
                 res.json(addedFeedback);
             }
         });
@@ -694,3 +704,106 @@ function UserRideInfos(req,res) {
 }
 
 module.exports.getRideInfos = UserRideInfos;
+
+
+
+
+function getMyPastRides(req, res) {
+
+    Ride.find({
+        $and: [
+            { passengers: {
+                $elemMatch: {
+                    _user: req.user.id
+                }
+            }},
+            { state: 'active' },
+            { time_start: { $lt: Date.now() } }
+        ]
+    }, function(err, data) {
+        if (err || data === null) {
+            res.json(err);
+        } else {
+            var myPastRides = [];
+
+            async.each(data, function(ride, callback) {
+                var RideInfo = {
+                    id : ride._id,
+                    date : ride.time_start,
+                    startLocation : '',
+                    destination : '',
+                    ownerName : '',
+                };
+
+                var wLocation = ride._workLocation;
+                var rideType = ride.ride_type;
+                var ownerID = ride._owner;
+                var alreadyGaveFeedback = false;
+
+                
+                for (var i = 0; i < ride.feedback.length; i++) {
+                  console.log('----------------------------------');  
+                  if(ride.feedback[i]._user == req.user.id) {
+                    alreadyGaveFeedback = true;
+                    console.log("already gave feedback");
+                  }
+
+                }
+
+
+                if(rideType === 'CT'){
+                    RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'TC'){
+                    RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'Ocasional'){
+                    RideInfo.startLocation = ride.startLocation.identifier;
+                    RideInfo.destination = ride.destination.identifier;
+                }
+                Account.findOne({
+                    '_id': ownerID
+                }, function(err, data) {
+                    if (err || data === null) {
+                      //  console.log(err);
+                        callback('error');
+                    } else {
+                        RideInfo.ownerName = data.name;
+                        if (rideType != 'Ocasional') {
+
+                            WorkLocation.findOne({
+                                '_id': wLocation
+                            }, function (err, data) {
+                                if (err || data === null) {
+                                 //   console.log(err);
+                                    callback('error');
+                                } else {
+                                    if (rideType === 'TC') {
+                                        RideInfo.startLocation = data.name;
+                                    } else {
+                                        RideInfo.destination = data.name;
+                                    }
+                                    if (!alreadyGaveFeedback) {
+                                      myPastRides.push(RideInfo);
+                                    
+                                    }
+                                    callback();
+                                }
+                            });
+                        } else{
+                            myPastRides.push(RideInfo);
+                            callback();
+                        }
+                    }});
+
+            }, function(err){
+                if( err ) {
+                 //   console.log('Get My Past Rides error -> ' + err);
+                } else {
+                    res.json(myPastRides);
+                }
+            });
+        }
+    });
+
+}
+
+module.exports.myPastRides = getMyPastRides;
