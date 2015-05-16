@@ -367,3 +367,5 @@ function updateImg(req, res) {
 }
 
 module.exports.updateImg = updateImg;
+
+
