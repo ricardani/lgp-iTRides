@@ -1,6 +1,15 @@
 <ion-view view-title="Home">
     <ion-content>
         <br><br>
+		
+		<div class="list card" ng-if="notifications.length == 0">
+			<div class="item item-divider">
+                <i class="icon ion-email-unread orange"></i>
+                Notificações
+				<span class="badge badge-assertive orange">0</span>
+            </div>
+		</div>
+		
         <div class="list card" ng-if="notifications.length > 0">
 
             <div class="item item-divider">
@@ -37,6 +46,24 @@
 
         </div>
 
+		
+		<div class="list card" ng-if="myNextRide.id == null">
+			<div class="item item-divider">
+                A minha Próxima Boleia
+            </div>
+			<div class="item">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-sad-outline"></i>
+                    Ainda não criou boleias
+                </div>
+            </div>
+			<a class="item item-icon-left assertive" href="#/createRide/createNow">
+                <i class="icon ion-map orange" style="bfont-size:150%"></i>
+                <a1 class="orange"> Criar Boleia </a1>
+            </a>
+		</div>
+		
+		
         <div class="list card" ng-if="myNextRide.id != null">
 
             <div class="item item-divider">
@@ -72,6 +99,26 @@
 
         </div>
 
+		
+		
+		
+		<div class="list card" ng-if="myNextRequest.id == null">
+			<div class="item item-divider">
+                Próxima boleia Solicitada
+            </div>
+			<div class="item">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-sad-outline"></i>
+                    Ainda não tem boleia
+                </div>
+            </div>
+			<a class="item item-icon-left assertive" href="#/createRide/createNow">
+                <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
+                <a1 class="orange"> Procurar Boleias </a1>
+            </a>
+		</div>
+		
+		
         <div class="list card" ng-if="myNextRequest.id != null">
 			
             <div class="item item-divider">
