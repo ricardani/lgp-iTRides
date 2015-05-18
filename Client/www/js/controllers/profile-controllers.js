@@ -39,19 +39,32 @@ angular.module('iTRides.profileControllers', [])
 			}
 		};
 
-         $scope.showConfirm = function() {
-           var confirmPopup = $ionicPopup.confirm({
-             title: 'Consume Ice Cream',
-             template: 'Are you sure you want to eat this ice cream?'
-           });
-           confirmPopup.then(function(res) {
-             if(res) {
-               console.log('You are sure');
-             } else {
-               console.log('You are not sure');
-             }
-           });
-         };
+   $scope.showConfirm = function() {
+
+     var myPopup = $ionicPopup.show({
+      template: 'Deseja especificar já a data da boleia ou criar uma boleia pré-definida?',
+      title: 'Criar Boleia',
+      scope: $scope,
+      buttons: [
+        { text: 'Boleia',
+          type: 'button-positive',
+          onTap: function(e) {
+            $state.go('createRide', {'createNew': 'createNow'});
+          }
+        },
+        {
+          text: '<b>Boleia pré-definida</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            $state.go('createRide', {'createNew': 'createInfo'});
+          }
+        }
+      ]
+    });
+    myPopup.then(function(res) {
+      console.log('Tapped!', res);
+    });
+   };
 
 
     $scope.logout = function () {

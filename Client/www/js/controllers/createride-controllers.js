@@ -148,7 +148,7 @@ angular.module('iTRides.createRideControllers', [])
           console.log('missing hour');
           noErrors=false;
         }
-        if(newRide.typeCost == null) {
+        if(newRide.typeCost == null && rideType == 'Ocasional') {
           console.log('missing type of cost');
           noErrors=false;
         }
