@@ -2,6 +2,71 @@
     <ion-content>
         <br><br>
 		
+<div ng-if= "notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0" >
+
+      <div class="card">  
+         <div class="item item-text-wrap">        
+            Bem vindo ao iTRides. Este é o layout da sua homepage, com os principais elementos para começar desde já a usufruir da aplicação
+         </div>
+      </div>
+
+
+        <div class="list card">
+            <div class="item item-divider">
+                <i class="icon ion-email-unread orange"></i>
+                Notificações
+                <span class="badge badge-assertive orange">0</span>
+            </div>
+        </div>
+
+        <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+                    <img ng-src="img/default_profile_photo.png">
+                    <h2>Notificações de minhas boleias</h2>
+                  
+
+                    <ion-option-button class="button-assertive">
+                        <i class="icon ion-trash-b" style="color:white"> </i>
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
+
+
+        <div class="list card">
+            <div class="item item-divider">
+                A minha Próxima Boleia
+            </div>
+            <div class="item">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-merge"></i>
+                   Listagem de boleias criadas
+                </div>
+            </div>
+            <a class="item item-icon-left assertive" href="#/createRide/createNow">
+                <i class="icon ion-map orange" style="bfont-size:150%"></i>
+                <a1 class="orange"> Criar Boleia </a1>
+            </a>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">
+                Próxima boleia Solicitada
+            </div>
+            <div class="item">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-fork-repo"></i>
+                    Listagem das boleias a que se inscreveu como passageiro
+                </div>
+            </div>
+            <a class="item item-icon-left assertive" href="#/search">
+                <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
+                <a1 class="orange"> Procurar Boleias </a1>
+            </a>
+        </div>
+</div>
+
+
+<div ng-if= "!(notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0)">
 		<div class="list card" ng-if="notifications.length == 0">
 			<div class="item item-divider">
                 <i class="icon ion-email-unread orange"></i>
@@ -111,7 +176,7 @@
                     Ainda não tem boleia
                 </div>
             </div>
-			<a class="item item-icon-left assertive" href="#/createRide/createNow">
+			<a class="item item-icon-left assertive" href="#/search">
                 <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
                 <a1 class="orange"> Procurar Boleias </a1>
             </a>
@@ -163,8 +228,8 @@
             </div>
 
         </div>
-
-
+</div>
+    
 
         <br><br>
     </ion-content>
