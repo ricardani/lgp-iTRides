@@ -23,7 +23,7 @@ angular.module('iTRides.editProfileControllers', [])
 			});
 
 
-		$scope.submitChanges = function(new_name, new_contact, old_password, new_password, confirm_new_password) {
+		$scope.submitChanges = function(new_name, new_contact, new_residency,old_password, new_password, confirm_new_password) {
 
 			if(new_name == "" || new_name==undefined) {
 				new_name = $scope.user.name;
@@ -33,11 +33,16 @@ angular.module('iTRides.editProfileControllers', [])
 				new_contact = $scope.user.contact;
 			}
 
+			if(new_residency == "" || new_residency==undefined){
+				new_residency = $scope.user.residency;
+			}
+
 			if (old_password == "" || old_password == undefined) {
 				$http.post(Server.url + 'api/profile/updateProfile',
 					{
 						'name' : new_name,
-						'contact': new_contact
+						'contact': new_contact,
+						'residency' : new_residency
 					})
 					.success(function(data, status, headers, config) {
 						if(data)
@@ -53,6 +58,7 @@ angular.module('iTRides.editProfileControllers', [])
 					{
 						'name' : new_name,
 						'contact': new_contact,
+						'residency' : new_residency,
 						'old_password' : old_password,
 						'new_password' : new_password
 					})

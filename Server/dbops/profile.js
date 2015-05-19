@@ -108,6 +108,7 @@ function getProfileInfo(req, res) {
                         photo : data.photo,
                         contact : data.contact,
                         email: data.email,
+                        residency: data.residency,
                         feedaverage: feedaverage
                     };
                     res.json(information);
@@ -394,7 +395,7 @@ function updateProfile(req, res) {
         {
             'name' : req.body.name,
             'contact' : req.body.contact,
-            //photo: req.body.photo,
+            'residency' : req.body.residency
         },
         { upsert: true },
         function(err, data) {
@@ -423,8 +424,8 @@ function updateProfilePassword(req, res) {
                         {
                             'name' : req.body.name,
                             'contact' : req.body.contact,
-                            'password' : sha256(req.body.new_password)
-                            //photo: req.body.photo,
+                            'password' : sha256(req.body.new_password),
+                            'residency' : req.body.residency
                         },
                         { upsert: true },
                         function(err, data) {

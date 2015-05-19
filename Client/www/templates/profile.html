@@ -12,7 +12,7 @@
                 <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                 <h2> {{user.name}} </h2>
                 <p> {{user.email}} </p>
-                <p style="margin-top: 2%;"> {{user.contact}} </p>
+                <p style="margin-top: 2%;"> {{user.contact}} | {{user.residency}} </p>
                 <span ng-repeat="i in getNumberComplete(user.feedaverage) track by $index"> <i class="icon ion-android-star"></i></span>
                 <span ng-repeat="i in getNumberHalf(user.feedaverage) track by $index"><i class="icon ion-android-star-half"></i> </span>
                 <span ng-repeat="i in getNumberEmpty(user.feedaverage) track by $index"><i class="icon ion-android-star-outline"></i> </span>

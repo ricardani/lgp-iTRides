@@ -18,6 +18,7 @@ var Account = new Schema({
   email: String,
   password: String,
   contact: String,
+  residency: String,
   photo: String,
   activated: {
     type: Boolean,
