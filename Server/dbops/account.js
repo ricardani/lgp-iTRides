@@ -68,7 +68,7 @@ function login(req, res) {
         password: sha256(req.body.password)
     }, function(err, data) {
         if (err) {
-            res.json(err);
+            res.sendStatus(404);
         } else if(data != null) {
             if (data.activated) {
                 var profile = {
@@ -77,12 +77,10 @@ function login(req, res) {
                 var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60*24});
                 res.json({activated: data.activated, token: token});
             }else{
-                res.json("Account Not activated");
+                res.sendStatus(400);
             }
-        }
-        else
-        {
-            res.json("Wrong Email/Password");
+        }else{
+            res.sendStatus(404);
         }
     });
 }
