@@ -100,22 +100,42 @@
         <div ng-if="hasDate">
 
 
-            <a ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
+            <a ng-show="seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
                 <i class="icon ion-map" style="color: white"></i>
-                <div style="color: white"> Ver Resultados </div>
+                <div style="color: white" ng-click="showResults()" > Ver Resultados </div>
                 <span class="badge badge-stable">{{resultRides.length}}</span>
             </a>
 
+            <a ng-show="!seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
+                <i class="icon ion-map" style="color: white"></i>
+                <div style="color: white" ng-click="hideResults()" > Esconder resultados </div>
+            </a>
 
-            <div class="text-wrap list card" ng-repeat="resultRide in resultRides" >
-                <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-                <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
-                <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-                <p style="margin-left: 45px;"> {{resultRide.startLocation}}</p>
-                <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
-                <p style="margin-left: 47px;">  {{resultRide.destination}}</p>
-                <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}">Ver detalhes</a>
+
+            <div class="text-wrap list card" ng-repeat="resultRide in resultRides" ng-show="seeResults">       
+                 <div ng-if="resultRide.rideType == 'Ocasional' ">   
+                    <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                    <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
+                    <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                    <p style="margin-left: 45px;"> {{resultRide.startLocation}}</p>
+                    <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                    <p style="margin-left: 47px;">  {{resultRide.destination}}</p>
+                    <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}">Ver detalhes</a>
+                </div>
+
+                <div ng-if="resultRide.rideType == 'CT' ">   
+                    <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                    <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
+                    <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                    <p style="margin-left: 45px;"> {{resultRide.district}}</p>
+                    <p style="margin-left: 45px;"> {{resultRide.municipality}}</p>
+                    <p style="margin-left: 45px;"> {{resultRide.street}}</p>
+                    <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                    <p style="margin-left: 47px;">  {{resultRide.workLocation}}</p>
+                    <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}">Ver detalhes</a>
+              </div>
             </div>
+
 
 
             <a ng-if="resultRides.length <= 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
@@ -123,6 +143,7 @@
                 <div style="color: white"> Sem Resultados </div>
             </a>
         </div>
+        
 
         <script id="districts.html" type="text/ng-template">
             <ion-modal-view>

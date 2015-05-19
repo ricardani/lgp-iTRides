@@ -5,6 +5,7 @@ angular.module('iTRides.searchControllers', [])
         $scope.hasDistrict = false;
         $scope.hasMunicipality = false;
         $scope.hasWorkLocation = false;
+         $scope.seeCounter = true;
         $scope.selectedRideType = -1;
         $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
         $scope.district = 'Distrito';
@@ -57,6 +58,16 @@ angular.module('iTRides.searchControllers', [])
 
 
         };
+
+        $scope.showResults = function() {
+            $scope.seeResults = true;
+            $scope.seeCounter = false;
+        }
+
+        $scope.hideResults = function() {
+            $scope.seeResults = false;
+            $scope.seeCounter = true;
+        }
 
         $scope.itemClicked = function (index) {
             $scope.selectedRideType = index;
