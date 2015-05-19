@@ -112,7 +112,7 @@
             </a>
 
 
-            <div class="text-wrap list card" ng-repeat="resultRide in resultRides" ng-show="seeResults">       
+            <div class="text-wrap list card" ng-repeat="resultRide in resultRides | orderBy:'cost'" ng-show="seeResults">       
                  <div ng-if="resultRide.rideType == 'Ocasional' ">   
                     <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
                     <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
@@ -120,6 +120,8 @@
                     <p style="margin-left: 45px;"> {{resultRide.startLocation}}</p>
                     <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
                     <p style="margin-left: 47px;">  {{resultRide.destination}}</p>
+                    <i class="ion-social-euro orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                    <p style="margin-left: 47px;">  {{resultRide.cost}}</p>
                     <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}">Ver detalhes</a>
                 </div>
 
@@ -132,6 +134,8 @@
                     <p style="margin-left: 45px;"> {{resultRide.street}}</p>
                     <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
                     <p style="margin-left: 47px;">  {{resultRide.workLocation}}</p>
+                    <i class="ion-social-euro orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                    <p style="margin-left: 47px;">  {{resultRide.cost}}</p>
                     <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}">Ver detalhes</a>
               </div>
             </div>
@@ -143,7 +147,7 @@
                 <div style="color: white"> Sem Resultados </div>
             </a>
         </div>
-        
+
 
         <script id="districts.html" type="text/ng-template">
             <ion-modal-view>
