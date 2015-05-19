@@ -1,7 +1,8 @@
 angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'iTRides.homeControllers' , 'iTRides.banUsersControllers', 'iTRides.searchControllers', 'iTRides.profileControllers',
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
-    'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers', 'iTRides.services'])
+    'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers',
+    'iTRides.userInfoControllers', 'iTRides.services'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -229,6 +230,23 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     'content': {
                         templateUrl: 'templates/listRequestedRides.html',
                         controller: 'listRequestedRidesCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+            .state('userInfo', {
+                url: "/userInfo/:userID",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/userInfo.html',
+                        controller: 'UserProfileCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

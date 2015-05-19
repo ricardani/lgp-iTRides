@@ -5,7 +5,11 @@ profiles = require('../dbops/profile');
 
 router.get('/getNotifications', profiles.notifications);
 
+//Request GET that responds with the current user's profile data
 router.get('/getProfileInfo', profiles.information);
+
+//Request GET that responds with the requested user's profile data
+router.post('/getUserInfo', profiles.userInfo);
 
 router.get('/getNextRide', profiles.nextRide);
 

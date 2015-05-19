@@ -118,6 +118,104 @@ function getProfileInfo(req, res) {
 
 module.exports.information = getProfileInfo;
 
+
+function getUserInfo(req, res) {
+
+  Account.findOne({
+      '_id': req.body.userID
+  }, function(err, requestedUser) {
+    if (err || requestedUser === null) {
+        res.json(err);
+    } else {
+      var feedaverage = 0;
+      Ride.find({
+          '_owner': req.body.userID
+      }, function(error, requestedRides) {
+        if (error || requestedRides === null) {
+            res.json(error);
+        } else {
+            var myRides = [];
+
+            async.each(requestedRides, function(ride, callback) {
+                var RideInfo = {
+                    id : ride._id,
+                    date : ride.time_start,
+                    feedback : ride.feedback,
+                    startLocation : '',
+                    destination : ''
+                };
+
+                var wLocation = ride._workLocation;
+                var rideType = ride.ride_type;
+
+                if(rideType === 'CT'){
+                    RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'TC'){
+                    RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'Ocasional'){
+                    RideInfo.startLocation = ride.startLocation.identifier;
+                    RideInfo.destination = ride.destination.identifier;
+                }
+
+                if (rideType != 'Ocasional') {
+
+                    WorkLocation.findOne({
+                        '_id': wLocation
+                    }, function (err, data) {
+                        if (err || data === null) {
+                            callback('error');
+                            console.log(err);
+                        } else {
+                            if (rideType === 'TC') {
+                                RideInfo.startLocation = data.name;
+                            } else {
+                                RideInfo.destination = data.name;
+                            }
+                            myRides.push(RideInfo);
+                            callback();
+                        }
+                    });
+
+                }else{
+                    myRides.push(RideInfo);
+                    callback();
+                }
+
+            }, function(err){
+                if( err ) {
+                    console.log('GetMyRides error -> ' + err);
+                } else {
+                  var feedbacksum = 0;
+                  var count = 0;
+                  for (i = 0; i < myRides.length; i++) {
+                      for (j = 0; j < myRides[i].feedback.length; j++) {
+                          feedbacksum+=myRides[i].feedback[j].feedback;
+                          count+=1;
+                      }
+                  }
+                  feedaverage=feedbacksum/count;
+
+                  var information = {
+                      id : requestedUser._id,
+                      name : requestedUser.name,
+                      photo : requestedUser.photo,
+                      contact : requestedUser.contact,
+                      email: requestedUser.email,
+                      feedaverage: feedaverage,
+                      requestedUserRides: myRides
+                  };
+                  res.json(information);
+                }
+            });
+        }
+      });
+    }
+  });
+}
+
+module.exports.userInfo = getUserInfo;
+
+
 function getNextRide(req, res) {
     Ride.findOne({
         $and: [
@@ -127,7 +225,7 @@ function getNextRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log("Nao encontrou a próxima boleia");
+            console.log("Nao encontrou a prï¿½xima boleia");
             res.json(err);
         } else {
 
@@ -378,5 +476,3 @@ function updateImg(req, res) {
 }
 
 module.exports.updateImg = updateImg;
-
-

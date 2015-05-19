@@ -1,0 +1,88 @@
+<ion-view view-title="userProfile">
+	<ion-content>
+		<br><br>
+		<div class="list card" ng-if="user.name != null">
+
+      <div class="item item-divider">
+          <span style="font-weight: bold">  O meu perfil </span>
+      </div>
+
+      <div class="item item-avatar item-text-wrap" href="#">
+          <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+          <h2> {{user.name}} </h2>
+          <p style="margin-top: 2%;"> {{user.contact}} </p>
+          <span ng-repeat="i in getNumberComplete(user.feedaverage) track by $index"> <i class="icon ion-android-star"></i></span>
+          <span ng-repeat="i in getNumberHalf(user.feedaverage) track by $index"><i class="icon ion-android-star-half"></i> </span>
+          <span ng-repeat="i in getNumberEmpty(user.feedaverage) track by $index"><i class="icon ion-android-star-outline"></i> </span>
+      </div>
+      <a class="item item-icon-left " ng-click="seeRideFeedback()">
+          <i class="icon ion-information-circled orange"></i>
+          <a1 class="orange"> Ver feedback </a1>
+      </a>
+    </div>
+    <div class="list card" ng-if="user.name != null">
+      <div class="item item-divider">
+        <span style="font-weight: bold"> Boleias criadas </span>
+      </div>
+      <div ng-if="user.requestedUserRides.length > 0" ng-repeat="userRides in user.requestedUserRides | orderBy:'-date'" type="item-text-wrap" class="card">
+          <a href="#/rideDetails/{{userRides.id}}" style="text-decoration: none; color:black;">
+              <div class="text-wrap">
+                  <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                  <p style="margin-left: 47px"> {{userRides.date | date : 'dd/MM/yy HH:mm'}} </p>
+                  <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
+                  <p style="margin-left: 45px;"> {{userRides.startLocation}}</p>
+                  <i class="ion-ios-location orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
+                  <p style="margin-left: 47px;">  {{userRides.destination}}</p>
+              </div>
+          </a>
+      </div>
+
+<!--
+			<div class="item item-avatar">
+				<i class="icon ion-edit orange edit_profile_icon"></i>
+				<h2 class="up35">{{user.name}}</h2>
+				<p>{{user.email}}</p>
+			</div>
+
+			<div class="item item-body">
+				<center><img class="full-imageEdited" id="previewImage" src="{{user.photo}}" style="border-radius:50%"></center>
+				<p>
+					<span class="input_title">Nome </span>
+          <h1> {{user.name}} </h1>
+				</p>
+				<p ng-if="user.contact != null">
+					<span class="input_title">Contacto </span>
+					<h1> {{user.contact}} </h1>
+				</p>
+        <div>
+
+        </div>
+			</div>-->
+		</div>
+		<br><br>
+	</ion-content>
+
+  <script id="rideFeedback.html" type="text/ng-template">
+      <ion-modal-view>
+          <ion-header-bar>
+            <h1 class="title">Feedback das boleias de {{user.name}}</h1>
+            <button class="button" ng-click="hideRideFeedbackModal()">Voltar</button>
+          </ion-header-bar>
+          <ion-content>
+              <div class="list" >
+
+                  <div class="item item-icon"
+                    ng-repeat="message in rideMessages">
+                    <div class="text-wrap">
+                      <span style="font-size:150%" class="orange">{{message.feedback}}<i class="icon ion-android-star orange"></i></span>
+                      <span style="margin-left: 5%;">{{message.message}} </span>
+                     </div>
+                  </div>
+
+              </div>
+
+          </ion-content>
+      </ion-modal-view>
+  </script>
+
+</ion-view>
