@@ -18,6 +18,8 @@ angular.module('iTRides.searchControllers', [])
             $scope.district = 'Distrito';
             $scope.municipality = 'Concelho';
             $scope.workLocation = 'Local de Trabalho';
+            $scope.ocasionalStart = 'Local de Partida';
+            $scope.ocasionalEnd = 'Local de Chegada';
             $scope.hasDistrict = false;
             $scope.hasMunicipality = false;
             $scope.hasWorkLocation = false;

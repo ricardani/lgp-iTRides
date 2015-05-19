@@ -6,10 +6,10 @@ angular.module('iTRides.editProfileControllers', [])
 			success(function(data, status, headers, config) {
 				$scope.user = data;
 				/*if($scope.user.photo || $scope.user.photo.indexOf('http') === -1)
-				{
-					$scope.user.photo = Server.url + 'img?imgID=' + $scope.user.id + '.png';
-					console.log($scope.user.photo);
-				}*/
+				 {
+				 $scope.user.photo = Server.url + 'img?imgID=' + $scope.user.id + '.png';
+				 console.log($scope.user.photo);
+				 }*/
 				$ionicLoading.hide();
 			}).
 			error(function(data, status, headers, config) {

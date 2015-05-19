@@ -1,29 +1,29 @@
 <ion-view view-title="Home">
     <ion-content>
         <br><br>
-		
-<div ng-if= "notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0" >
 
-      <div class="card">  
-         <div class="item item-text-wrap">        
-            Bem vindo ao iTRides. Este é o layout da sua homepage, com os principais elementos para começar desde já a usufruir da aplicação
-         </div>
-      </div>
+        <div ng-if= "notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0" >
 
-
-        <div class="list card">
-            <div class="item item-divider">
-                <i class="icon ion-email-unread orange"></i>
-                Notificações
-                <span class="badge badge-assertive orange">0</span>
+            <div class="card">
+                <div class="item item-text-wrap">
+                    Bem vindo ao iTRides. Este é o layout da sua homepage, com os principais elementos para começar desde já a usufruir da aplicação
+                </div>
             </div>
-        </div>
 
-        <ion-list>
+
+            <div class="list card">
+                <div class="item item-divider">
+                    <i class="icon ion-email-unread orange"></i>
+                    Notificações
+                    <span class="badge badge-assertive orange">0</span>
+                </div>
+            </div>
+
+            <ion-list>
                 <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
                     <img ng-src="img/default_profile_photo.png">
                     <h2>Notificações de minhas boleias</h2>
-                  
+
 
                     <ion-option-button class="button-assertive">
                         <i class="icon ion-trash-b" style="color:white"> </i>
@@ -32,204 +32,211 @@
             </ion-list>
 
 
-        <div class="list card">
-            <div class="item item-divider">
-                A minha Próxima Boleia
-            </div>
-            <div class="item">
-                <div class="item item-text-wrap item-icon-left">
-                    <i class="icon ion-merge"></i>
-                   Boleia mais próxima por mim criada
+            <div class="list card">
+                <div class="item item-divider">
+                    A minha Próxima Boleia
                 </div>
-            </div>
-            <a class="item item-icon-left assertive" href="#/createRide/createNow">
-                <i class="icon ion-map orange" style="bfont-size:150%"></i>
-                <a1 class="orange"> Criar Boleia </a1>
-            </a>
-        </div>
-
-        <div class="list card">
-            <div class="item item-divider">
-                Próxima boleia Solicitada
-            </div>
-            <div class="item">
-                <div class="item item-text-wrap item-icon-left">
-                    <i class="icon ion-fork-repo"></i>
-                    Listagem das boleias a que se inscreveu como passageiro
-                </div>
-            </div>
-            <a class="item item-icon-left assertive" href="#/search">
-                <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
-                <a1 class="orange"> Procurar Boleias </a1>
-            </a>
-        </div>
-</div>
-
-
-<div ng-if= "!(notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0)">
-		<div class="list card" ng-if="notifications.length == 0">
-			<div class="item item-divider">
-                <i class="icon ion-email-unread orange"></i>
-                Notificações
-				<span class="badge badge-assertive orange">0</span>
-            </div>
-		</div>
-		
-        <div class="list card" ng-if="notifications.length > 0">
-
-            <div class="item item-divider">
-                <i class="icon ion-email-unread orange"></i>
-                Notificações
-                <span ng-if="notifications.length > 3" class="badge badge-assertive orange">+{{notifications.length - 3}}</span>
-                <!-- <i class="ion-checkmark ion-trash-b" style="color:red;float:right" ng-click="removeAllNotification()"></i> -->
-            </div>
-
-            <ion-list>
-                <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap" href="#/rideDetails/{{notification.rideID}}">
-                    <img ng-src="{{notification.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
-                    <h2>{{notification.name}}</h2>
-                    <div ng-switch on="notification.msgType" class=" item-text-wrap">
-                        <p ng-switch-when="Enter">
-                            <i class="ion-checkmark" style="color:green"> </i>
-                            Aderiu à sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
-                        </p>
-                        <p ng-switch-when="Exit">
-                            <i class="ion-information-circled" style="color:blue"> </i>
-                            Desistiu da sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
-                        </p>
-                        <p ng-switch-when="Cancel">
-                            <i class="ion-close" style="color:red"> </i>
-                            Cancelou a Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
-                        </p>
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-merge"></i>
+                        Boleia mais próxima por mim criada
                     </div>
+                </div>
+                <a class="item item-icon-left assertive" href="#/createRide/createNow">
+                    <i class="icon ion-map orange" style="bfont-size:150%"></i>
+                    <a1 class="orange"> Criar Boleia </a1>
+                </a>
+            </div>
 
-                    <ion-option-button class="button-assertive" ng-click="removeNotification($index)">
-                        <i class="icon ion-trash-b" style="color:white"> </i>
-                    </ion-option-button>
-                </ion-item>
-            </ion-list>
-
+            <div class="list card">
+                <div class="item item-divider">
+                    Próxima boleia Solicitada
+                </div>
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-fork-repo"></i>
+                        Listagem das boleias a que se inscreveu como passageiro
+                    </div>
+                </div>
+                <a class="item item-icon-left assertive" href="#/search">
+                    <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
+                    <a1 class="orange"> Procurar Boleias </a1>
+                </a>
+            </div>
         </div>
 
-		
-		<div class="list card" ng-if="myNextRide.id == null">
-			<div class="item item-divider">
-                A minha Próxima Boleia
-            </div>
-			<div class="item">
-                <div class="item item-text-wrap item-icon-left">
-                    <i class="icon ion-sad-outline"></i>
-                    Ainda não criou boleias
-                </div>
-            </div>
-			<a class="item item-icon-left assertive" href="#/createRide/createNow">
-                <i class="icon ion-map orange" style="bfont-size:150%"></i>
-                <a1 class="orange"> Criar Boleia </a1>
-            </a>
-		</div>
-		
-		
-        <div class="list card" ng-if="myNextRide.id != null">
 
-            <div class="item item-divider">
-                A minha Próxima Boleia
-                <p>{{myNextRide.date | date : 'dd/MM/yy HH:mm' }}</p>
-            </div>
-
-            <div class="item item-text-wrap item-icon-left">
-                <i class="icon ion-home"></i>
-                {{myNextRide.startLocation}}
-            </div>
-
-            <div class="item" ng-if="myNextRide.passengers.length > 0">
-                <div class="item item-avatar"  ng-repeat="p in myNextRide.passengers | orderBy:'date'">
-                    <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
-                    <h2>{{p.name}}</h2>
-                    <p ng-if="$index === 0" style = "color: red">
-                        Riding shotgun
-                    </p>
+        <div ng-if= "!(notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0)">
+            <div class="list card" ng-if="notifications.length == 0">
+                <div class="item item-divider">
+                    <i class="icon ion-email-unread orange"></i>
+                    Notificações
+                    <span class="badge badge-assertive orange">0</span>
                 </div>
             </div>
 
-            <div class="item item-text-wrap item-icon-left">
-                <i class="icon ion-ios-location"></i>
-                {{myNextRide.destination}}
-            </div>
+            <div class="list card" ng-if="notifications.length > 0">
 
-            <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRide.id}}">
-                <i class="icon ion-information-circled orange"></i>
-                <a1 class="orange"> Ver detalhes </a1>
-            </a>
-
-        </div>
-
-		
-		
-		
-		<div class="list card" ng-if="myNextRequest.id == null">
-			<div class="item item-divider">
-                Próxima boleia Solicitada
-            </div>
-			<div class="item">
-                <div class="item item-text-wrap item-icon-left">
-                    <i class="icon ion-sad-outline"></i>
-                    Ainda não tem boleia
+                <div class="item item-divider">
+                    <i class="icon ion-email-unread orange"></i>
+                    Notificações
+                    <span ng-if="notifications.length > 3" class="badge badge-assertive orange">+{{notifications.length - 3}}</span>
+                    <!-- <i class="ion-checkmark ion-trash-b" style="color:red;float:right" ng-click="removeAllNotification()"></i> -->
                 </div>
-            </div>
-			<a class="item item-icon-left assertive" href="#/search">
-                <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
-                <a1 class="orange"> Procurar Boleias </a1>
-            </a>
-		</div>
-		
-		
-        <div class="list card" ng-if="myNextRequest.id != null">
-            <div class="item item-divider">
-                Próxima boleia Solicitada
+
+                <ion-list>
+                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap" href="#/rideDetails/{{notification.rideID}}">
+                        <img ng-src="{{notification.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                        <h2>{{notification.name}}</h2>
+                        <div ng-switch on="notification.msgType" class=" item-text-wrap">
+                            <p ng-switch-when="Enter">
+                                <i class="ion-checkmark" style="color:green"> </i>
+                                Aderiu à sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                            </p>
+                            <p ng-switch-when="Exit">
+                                <i class="ion-information-circled" style="color:blue"> </i>
+                                Desistiu da sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                            </p>
+                            <p ng-switch-when="Cancel">
+                                <i class="ion-close" style="color:red"> </i>
+                                Cancelou a Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                            </p>
+                        </div>
+
+                        <ion-option-button class="button-assertive" ng-click="removeNotification($index)">
+                            <i class="icon ion-trash-b" style="color:white"> </i>
+                        </ion-option-button>
+                    </ion-item>
+                </ion-list>
+
             </div>
 
-            <div class="item item-avatar">
-                <img ng-src="{{myNextRequest.ownerPhoto}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
-                <h2>Boleia de {{myNextRequest.ownerName}}</h2>
-                <p>{{myNextRequest.date | date : 'dd/MM/yy HH:mm' }}</p>
+
+            <div class="list card" ng-if="myNextRide.id == null">
+                <div class="item item-divider">
+                    A minha Próxima Boleia
+                </div>
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Ainda não criou boleias
+                    </div>
+                </div>
+                <a class="item item-icon-left assertive" href="#/createRide/createNow">
+                    <i class="icon ion-map orange" style="bfont-size:150%"></i>
+                    <a1 class="orange"> Criar Boleia </a1>
+                </a>
             </div>
 
-            <div class="item">
+
+            <div class="list card" ng-if="myNextRide.id != null">
+
+                <div class="item item-divider">
+                    A minha Próxima Boleia
+                    <p>{{myNextRide.date | date : 'dd/MM/yy HH:mm' }}</p>
+                </div>
+
                 <div class="item item-text-wrap item-icon-left">
                     <i class="icon ion-home"></i>
-                    {{myNextRequest.startLocation}}
+                    {{myNextRide.startLocation}}
                 </div>
+
+                <div class="item" ng-if="myNextRide.passengers.length > 0">
+                    <div class="item item-avatar"  ng-repeat="p in myNextRide.passengers | orderBy:'date'">
+                        <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                        <h2>{{p.name}}</h2>
+                        <p ng-if="$index === 0" style = "color: red">
+                            Riding shotgun
+                        </p>
+                    </div>
+                </div>
+
+                <div class="item" ng-if="myNextRide.passengers.length <= 0">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Ainda não há passageiros
+                    </div>
+                </div>
+
                 <div class="item item-text-wrap item-icon-left">
                     <i class="icon ion-ios-location"></i>
-                    {{myNextRequest.destination}}
+                    {{myNextRide.destination}}
                 </div>
+
+                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRide.id}}">
+                    <i class="icon ion-information-circled orange"></i>
+                    <a1 class="orange"> Ver detalhes </a1>
+                </a>
+
             </div>
 
-            <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRequest.id}}">
-                <i class="icon ion-information-circled orange"></i>
-                <a1 class="orange"> Ver detalhes </a1>
-            </a>
+
+
+
+            <div class="list card" ng-if="myNextRequest.id == null">
+                <div class="item item-divider">
+                    Próxima boleia Solicitada
+                </div>
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Ainda não tem boleia
+                    </div>
+                </div>
+                <a class="item item-icon-left assertive" href="#/search">
+                    <i class="icon ion-android-search orange" style="bfont-size:150%"></i>
+                    <a1 class="orange"> Procurar Boleias </a1>
+                </a>
+            </div>
+
+
+            <div class="list card" ng-if="myNextRequest.id != null">
+                <div class="item item-divider">
+                    Próxima boleia Solicitada
+                </div>
+
+                <div class="item item-avatar">
+                    <img ng-src="{{myNextRequest.ownerPhoto}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                    <h2>Boleia de {{myNextRequest.ownerName}}</h2>
+                    <p>{{myNextRequest.date | date : 'dd/MM/yy HH:mm' }}</p>
+                </div>
+
+                <div class="item">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-home"></i>
+                        {{myNextRequest.startLocation}}
+                    </div>
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-ios-location"></i>
+                        {{myNextRequest.destination}}
+                    </div>
+                </div>
+
+                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRequest.id}}">
+                    <i class="icon ion-information-circled orange"></i>
+                    <a1 class="orange"> Ver detalhes </a1>
+                </a>
+            </div>
+
+
+            <div class="list card" ng-if="pastRides.length > 0">
+
+                <div class="item item-divider">
+                    Feedback das minhas boleias
+                </div>
+
+                <div class="item">
+                    <div class="item item-icon-left assertive" ng-repeat="pr in pastRides | orderBy:'date'" ng-click="showPopup(pr.id)">
+                        <i class="icon ion-android-car orange"> </i>
+                        <h2>Boleia de {{pr.ownerName}}</h2>
+                        <p> De {{pr.startLocation}}  para {{pr.destination}}</p>
+                        <p> Em {{pr.date | limitTo:dateLimit }} </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-
-        <div class="list card" ng-if="pastRides.length > 0">
-
-            <div class="item item-divider">
-                Feedback das minhas boleias
-            </div>
-            
-            <div class="item">
-                <div class="item item-icon-left assertive" ng-repeat="pr in pastRides | orderBy:'date'" ng-click="showPopup(pr.id)">
-                   <!-- <i class="ion-android-car orange car_icon_past_rides"> </i>  -->
-                    <h2>Boleia de {{pr.ownerName}}</h2>
-                    <p> De {{pr.startLocation}}  para {{pr.destination}}</p>
-                    <p> Em {{pr.date | limitTo:dateLimit }} </p>
-                </div>
-            </div>
-
-        </div>
-</div>
-    
 
         <br><br>
     </ion-content>

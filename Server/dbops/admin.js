@@ -20,18 +20,18 @@ function WorkLocationCreation(req, res) {
     WorkLocation.count({
         "name": req.body.name
     }, function(err,count) {
-      if(count==0) {
-        var newWorkLocation = new WorkLocation(req.body);
-        newWorkLocation.save(function(error, data) {
-            if (error) {
-                res.json(error);
-            } else {
-                res.json(data);
-            }
-        });
-      }
-      else
-        res.json('Já existe um local de trabalho com esse nome');
+        if(count==0) {
+            var newWorkLocation = new WorkLocation(req.body);
+            newWorkLocation.save(function(error, data) {
+                if (error) {
+                    res.json(error);
+                } else {
+                    res.json(data);
+                }
+            });
+        }
+        else
+            res.json('Já existe um local de trabalho com esse nome');
 
     });
 }
@@ -54,29 +54,29 @@ module.exports.deleteWorkLocations = WorkLocationDeletion;
 
 
 function banAccount(req, res) {
-  Account.findOne({
-    "_id": req.body.userID
-  }).remove(function(error, data) {
-      if (error) {
-          res.json(error);
-      } else {
-          res.json(data);
-      }
-  });
+    Account.findOne({
+        "_id": req.body.userID
+    }).remove(function(error, data) {
+        if (error) {
+            res.json(error);
+        } else {
+            res.json(data);
+        }
+    });
 }
 
 module.exports.banUser = banAccount;
 
 
 function getAccounts(req, res) {
-  Account.find({}, function(err,data) {
-    if (err || data === null) {
-        console.log('Can`t find accounts');
-        res.json(err);
-    } else {
-        res.json(data);
-    }
-  });
+    Account.find({}, function(err,data) {
+        if (err || data === null) {
+            console.log('Can`t find accounts');
+            res.json(err);
+        } else {
+            res.json(data);
+        }
+    });
 }
 
 module.exports.getUsers = getAccounts;

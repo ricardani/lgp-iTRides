@@ -37,27 +37,35 @@ function getNotifications(req, res) {
                             rideDate : ''
                         };
 
-                        Ride.findOne({
-                            '_id': rideID
-                        }, function(err, data) {
-                            if (err || data === null) {
-                                callback('error');
-                            }else{
-                                notificationsData.rideID = rideID;
-                                notificationsData.rideDate = data.time_start;
+                        if(notificationsData.msgType !== 'Cancel'){
 
-                                senderInfo.push(notificationsData);
-                                callback();
-                            }
-                        });
+                            Ride.findOne({
+                                '_id': rideID
+                            }, function(err, data) {
+                                if (err || data === null) {
+                                    senderInfo.push(notificationsData);
+                                    callback();
+                                }else{
+                                    notificationsData.rideID = rideID;
+                                    notificationsData.rideDate = data.time_start;
+
+                                    senderInfo.push(notificationsData);
+                                    callback();
+                                }
+                            });
+
+                        }else{
+
+                            senderInfo.push(notificationsData);
+                            callback();
+
+                        }
                     }
                 });
 
             }, function(err){
                 // if any of the file processing produced an error, err would equal that error
                 if( err ) {
-                    // One of the iterations produced an error.
-                    // All processing will now stop.
                     res.json(err);
                 } else {
                     res.json(senderInfo);
@@ -119,6 +127,7 @@ function getNextRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
+            console.log("Nao encontrou a próxima boleia");
             res.json(err);
         } else {
 
@@ -151,7 +160,8 @@ function getNextRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        callback('error');
+                        console.log("Nao encontrou o passageiro -> " + userID);
+                        callback();
                     }else{
                         var user = {
                             name : data.name,
@@ -177,7 +187,8 @@ function getNextRide(req, res) {
                             '_id': wLocation
                         }, function (err, data) {
                             if (err || data === null) {
-                                callback('error');
+                                console.log("Nao encontrou o local de trabalho -> " + wLocation);
+                                res.json(err);
                             } else {
                                 if (rideType === 'TC') {
                                     RideInfo.startLocation = data.name;

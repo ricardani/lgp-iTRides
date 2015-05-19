@@ -1,19 +1,19 @@
 <ion-view view-title="editProfile">
 	<ion-content>
 		<br><br>
-        <div class="list card" ng-if="user.name != null">
+		<div class="list card" ng-if="user.name != null">
 
-            <div class="item item-divider">
-               <span style="font-weight: bold">  Editar perfil </span>
-            </div>
-			
+			<div class="item item-divider">
+				<span style="font-weight: bold">  Editar perfil </span>
+			</div>
+
 			<div class="item item-avatar">
 				<i class="icon ion-edit orange edit_profile_icon"></i>
 				<h2 class="up35">{{user.name}}</h2>
 				<p>{{user.email}}</p>
 			</div>
 
-		    <div class="item item-body">
+			<div class="item item-body">
 				<form class="edit_profile">
 					<center><img class="full-imageEdited" id="previewImage" src="{{user.photo}}" style="border-radius:50%"></center>
 					<center>
@@ -24,31 +24,31 @@
 						</p>
 					</center>
 					<p>
-					  <span class="input_title">Nome </span>
-					  <input type="text" placeholder="{{user.name}}" name="name_profile" ng-model="new_name"/>
+						<span class="input_title">Nome </span>
+						<input type="text" placeholder="{{user.name}}" name="name_profile" ng-model="new_name"/>
 					</p>
 					<p>
-					  <span class="input_title">Contacto </span>
-					  <input type="text" placeholder="{{user.contact}}" name="name_profile" ng-model="new_contact"/>
-					</p>
-
-					<p>
-					  <span class="input_title">Password Antiga </span>
-					  <input type="password" name="name_profile" ng-model="old_password"/>
+						<span class="input_title">Contacto </span>
+						<input type="text" placeholder="{{user.contact}}" name="name_profile" ng-model="new_contact"/>
 					</p>
 
 					<p>
-					  <span class="input_title">Nova Password </span>
-					  <input type="password" name="name_profile" ng-model="new_password"/>
+						<span class="input_title">Password Antiga </span>
+						<input type="password" name="name_profile" ng-model="old_password"/>
 					</p>
 
 					<p>
-					  <span class="input_title">Confirmar Nova Password </span>
-					  <input type="password" name="name_profile" ng-model="confirm_new_password"/>
+						<span class="input_title">Nova Password </span>
+						<input type="password" name="name_profile" ng-model="new_password"/>
+					</p>
+
+					<p>
+						<span class="input_title">Confirmar Nova Password </span>
+						<input type="password" name="name_profile" ng-model="confirm_new_password"/>
 					</p>
 				</form>
 			</div>
-			
+
 			<a class="item item-icon-left assertive" href="#" style="background-color:rgb(243,121,38);" ng-click="submitChanges(new_name, new_contact, old_password, new_password, confirm_new_password)">
 				<i class="icon ion-checkmark #fff" style="font-size:150%;color:#fff"></i>
 				<a1 class="white" > Gravar </a1>

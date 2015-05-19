@@ -1,7 +1,7 @@
 <ion-view view-title="rideDetails">
     <ion-content>
         <br><br>
-        <div class="list card">
+        <div class="list card" ng-if="!rideNotAvailable">
             <div class="item item-divider">
                 Detalhes da Boleia
             </div>
@@ -37,12 +37,18 @@
             </div>
 
             <div class="item">
-                <div class="item item-avatar" ng-repeat="p in ride.passengers">
+                <div ng-if="ride.passengers.length > 0" class="item item-avatar" ng-repeat="p in ride.passengers">
                     <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{p.name}}</h2>
                     <p ng-if="$index === 0" style = "color: #aaa;">
                         Riding shotgun
                     </p>
+                </div>
+                <div ng-if="ride.passengers.length <= 0">
+                    <div class="item item-text-wrap item-icon-left">
+                        <i class="icon ion-sad-outline"></i>
+                        Ainda não há passageiros
+                    </div>
                 </div>
             </div>
 
@@ -88,6 +94,18 @@
                 Solicitar Boleia
             </a>
 
+        </div>
+
+        <div ng-if="rideNotAvailable" class="list card">
+            <div class="item item-divider">
+                Detalhes da Boleia
+            </div>
+            <div class="item">
+                <div class="item item-text-wrap item-icon-left">
+                    <i class="icon ion-sad-outline"></i>
+                    Esta boleia não existe!
+                </div>
+            </div>
         </div>
 
         <div class="list card">
