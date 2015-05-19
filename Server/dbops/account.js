@@ -38,7 +38,12 @@ function register(req, res) {
         }
     });
 
-    sendMail(req.body.email, "iTRides Account Confirmation", "Hello, Confirmation Link: <br><br> <a href=\"http://localhost:5000/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\"> LINK </a> <br><br> LGP iTRides");
+    var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" + 
+                  "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" + 
+                   "<a href=\"http://localhost:5000/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\"> Siga esta ligação para ativar a sua conta. </a> <br><br> " + 
+                   "Obrigado,<br>iTRides";
+
+    sendMail(req.body.email, "iTRides Account Confirmation", message);
 }
 
 module.exports.reg = register;
