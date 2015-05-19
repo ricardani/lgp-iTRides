@@ -27,6 +27,16 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                 }
             })
 
+            .state('networkError', {
+                url: "/networkError",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/networkError.html',
+                        controller: 'NetworkErrorCtrl'
+                    }
+                }
+            })
+
             .state('login', {
                 url: "/login",
                 views: {
