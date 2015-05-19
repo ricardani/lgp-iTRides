@@ -1,24 +1,24 @@
 /* CSS to color the icons to iTGrow's orange */
 
 ::-webkit-input-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 :-moz-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 ::-moz-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 :-ms-input-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 
 .badge.badge-assertive.orange {
-  background-color: rgb(243,121,38);
+	background-color: rgb(243,121,38);
 }
 
 .orange {
-  color: rgb(243,121,38);
+	color: rgb(243,121,38);
 }
 
 .white{
@@ -26,121 +26,125 @@
 }
 
 .error {
-  color: red;
+	color: red;
 }
 
 /* create ride form */
 
 #seats {
-  padding-left:10px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding-left:10px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #seats:focus,
 #seats.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 #infoName{
-  padding: 10px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding: 10px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #infoName:focus,
 #infoName.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 #date {
-  padding: 10px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding: 10px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #date:focus,
 #date.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 #cost {
-  padding-left:10px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding-left:10px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #cost:focus,
 #cost.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 #time {
-  padding: 10px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding: 10px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #time:focus,
 #time.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 #typeCost{
-  padding: 6px;
-  width:50%;
-  border: none;
-  border: solid 2px #c9c9c9;
-  transition: border 0.3s;
+	padding: 6px;
+	width:50%;
+	border: none;
+	border: solid 2px #c9c9c9;
+	transition: border 0.3s;
 }
 #typeCost:focus,
 #typeCost.focus {
-  border: solid 2px #969696;
+	border: solid 2px #969696;
 }
 
 /* Search page */
 
 .card.col.search-ride {
-  padding:0px;
+	padding:0px;
 }
 
 .button-ride-search {
-  border-color:#DDD;
-  display:block;
-  width:100%;
+	border-color:#DDD;
+	display:block;
+	width:100%;
 }
 
 .submit-search {
-  position:center;
-  width:50%;
-  left:25%;
-  background-color: rgb(243,121,38);
-  color:white;
+	position:center;
+	width:50%;
+	left:25%;
+	background-color: rgb(243,121,38);
+	color:white;
 }
 
 .button-searchType-selected {
-  background-color: rgb(243,121,38);
-  color:white;
-  border-color:#DDD;
+	background-color: rgb(243,121,38);
+	color:white;
+	border-color:#DDD;
 }
 
 .button-searchType-inactive {
-  background-color: #DDD;
-  color:black;
-  border-color:#DDD;
+	background-color: #DDD;
+	color:black;
+	border-color:#DDD;
 }
 
 /* Login page SignUp Page */
 
 .loginBody, .signup_body{
-	background-image:url(../img/loginBackground.jpg);
+	/*background-image:url(../img/loginBackground.jpg);
 	overflow: auto;
-	background-size:cover;
+	background-size:cover;*/
+	background: url(../img/loginBackground.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
 }
 
 .fillHeight{
@@ -228,27 +232,27 @@
 
 .loginBody .email::-webkit-input-placeholder,.loginBody .password::-webkit-input-placeholder, .resetPasswordBody .email::-webkit-input-placeholder
 {
-  color:#fff;
-  font-size:16px;
-  opacity:0.7;
+	color:#fff;
+	font-size:16px;
+	opacity:0.7;
 }
 .loginBody .email:-moz-placeholder , .loginBody .password:-moz-placeholder, .resetPasswordBody .email:-moz-placeholder
 {
-  color:#fff;
-  font-size:16px;
-  opacity:0.7;
+	color:#fff;
+	font-size:16px;
+	opacity:0.7;
 }
 .loginBody .email::-moz-placeholder, .loginBody .password::-moz-placeholder, .resetPasswordBody .email:-moz-placeholder
 {
-  color:#fff;
-  font-size:16px;
-  opacity:0.7;
+	color:#fff;
+	font-size:16px;
+	opacity:0.7;
 }
 .loginBody .email:-ms-input-placeholder , .loginBody .password:-ms-input-placeholder, .resetPasswordBody .email:-ms-input-placeholder
 {
-  color:#fff;
-  font-size:16px;
-  opacity:0.7;
+	color:#fff;
+	font-size:16px;
+	opacity:0.7;
 }
 
 .loginBody .completeHeight{
@@ -341,10 +345,10 @@ p.change_profile_photo{
 }
 
 p.change_profile_photo input[type="file"] {
-    display: block !important;
+	display: block !important;
 	height:30px;
-    opacity: 0 !important;
-    overflow: hidden !important;
+	opacity: 0 !important;
+	overflow: hidden !important;
 }
 
 p.change_profile_photo input[type="file"]:hover {
@@ -371,40 +375,40 @@ p.change_profile_photo input[type="file"]:hover {
 /*PARA A APLICA��O M�VEL*/
 
 @media all and (max-width: 600px) {
-  .button-searchType-selected {
-    font-size:3.5vw;
-  }
+	.button-searchType-selected {
+		font-size:3.5vw;
+	}
 
-  .button-searchType-inactive {
-    font-size:3.5vw;
-  }
+	.button-searchType-inactive {
+		font-size:3.5vw;
+	}
 
-  /* Login page, SignUp page */
+	/* Login page, SignUp page */
 
-  .loginBody form input[type="text"],.loginBody form input[type="password"], .signup_body form input[type="text"], .signup_body form input[type="password"], .signup_body form input[type="email"], .resetPasswordBody form input{
-	margin-left:auto;
-	margin-right:auto;
-	width:80%;
-  }
+	.loginBody form input[type="text"],.loginBody form input[type="password"], .signup_body form input[type="text"], .signup_body form input[type="password"], .signup_body form input[type="email"], .resetPasswordBody form input{
+		margin-left:auto;
+		margin-right:auto;
+		width:80%;
+	}
 
-  .loginBody form input[type="submit"], .signup_body form input[type="submit"]{
-	width:80%;
-  }
+	.loginBody form input[type="submit"], .signup_body form input[type="submit"]{
+		width:80%;
+	}
 
-  .loginBody .forgotPass{
-	width:100%;
-  }
+	.loginBody .forgotPass{
+		width:100%;
+	}
 
-  .loginBody .signupButtonLink, .signup_body .loginButton, .resetPasswordBody .resetPasswordButton{
-	width:80%;
-  }
+	.loginBody .signupButtonLink, .signup_body .loginButton, .resetPasswordBody .resetPasswordButton{
+		width:80%;
+	}
 
-  .loginBody .forgotPass .text{
-	margin-left:10%;
-  }
-  .loginBody .forgotPass .arrow{
-	margin-right:10%;
-  }
+	.loginBody .forgotPass .text{
+		margin-left:10%;
+	}
+	.loginBody .forgotPass .arrow{
+		margin-right:10%;
+	}
 }
 
 /* Sign Up Page only */
@@ -418,19 +422,19 @@ p.change_profile_photo input[type="file"]:hover {
 }
 
 .signup_body ::-webkit-input-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 
 .signup_body :-moz-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 
 .signup_body ::-moz-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 
 .signup_body :-ms-input-placeholder {
-    color:    #fff;
+	color:    #fff;
 }
 
 
@@ -454,4 +458,24 @@ p.change_profile_photo input[type="file"]:hover {
 .search-bar{
 	border:1px solid #B2B2B2;
 	border-radius:5px;
+}
+
+
+/*-----------------------------iTGrow Fonts------------------------------------*/
+@font-face {
+	font-family: ApexNewLight;
+	src: url(fonts/apexnew-light.otf);
+}
+
+@font-face {
+	font-family: ApexNewThin;
+	src: url(fonts/apexnew-thin.otf);
+}
+
+.iTGrowApexNewLight{
+	font-family: ApexNewLight;
+}
+
+.iTGrowApexNewLight{
+	font-family: ApexNewLight;
 }
