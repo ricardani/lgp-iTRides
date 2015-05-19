@@ -90,6 +90,13 @@ module.exports.checkLogin = login;
 
 function resetPassword(req, res) {
 
+    var message = 'Caro/a Utilizador(a) <br><br> ' + 
+                'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
+                'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
+                'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' + 
+                'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' + 
+                'Atenciosamente,<br>' + 'iTRides';
+
     Account.update(
         {'email': req.body.email},
         {
@@ -100,7 +107,7 @@ function resetPassword(req, res) {
             if(err) {
                 res.json(err);
             } else {
-                sendMail(req.body.email,'iTRides: Nova Password Gerada', req.body.password);
+                sendMail(req.body.email,'iTRides: Nova Password Gerada', message);
                 res.json(data);
             }
         }
