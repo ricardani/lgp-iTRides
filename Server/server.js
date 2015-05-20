@@ -77,6 +77,10 @@ app.use('/api/ride', rideRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/admin', adminRoutes);
 
+app.get('/connect', function (req, res) {
+    res.sendStatus(200);
+});
+
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 

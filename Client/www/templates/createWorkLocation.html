@@ -3,34 +3,34 @@
         <br><br><br><br>
         <form>
 
-          <div class="row">
-            <div class="card col search-ride" >
-                <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
-                    <i class="icon ion-home"></i>
-                    Local de trabalho
+            <div class="row">
+                <div class="card col search-ride" >
+                    <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
+                        <i class="icon ion-home"></i>
+                        Local de trabalho
+                    </div>
+                    <button class="button button-ride-search" ng-model="workLocation.district" ng-click="showModalDistrict()">
+                        {{workLocation.district}}
+                    </button>
+                    <button class="button button-ride-search" ng-model="workLocation.municipality" ng-click="showModalMunicipality()">
+                        {{workLocation.municipality}}
+                    </button>
+                    <button class="button button-ride-search" ng-model="workLocation.street" ng-click="showModalStreet()">
+                        {{workLocation.street}}
+                    </button>
+                    <button class="button button-ride-search" ng-model="workLocation.info" ng-click="showModalInfo()">
+                        {{workLocation.info}}
+                    </button>
                 </div>
-                <button class="button button-ride-search" ng-model="workLocation.district" ng-click="showModalDistrict()">
-                    {{workLocation.district}}
-                </button>
-                <button class="button button-ride-search" ng-model="workLocation.municipality" ng-click="showModalMunicipality()">
-                    {{workLocation.municipality}}
-                </button>
-                <button class="button button-ride-search" ng-model="workLocation.street" ng-click="showModalStreet()">
-                    {{workLocation.street}}
-                </button>
-                <button class="button button-ride-search" ng-model="workLocation.info" ng-click="showModalInfo()">
-                    {{workLocation.info}}
-                </button>
             </div>
-          </div>
 
-          <div class="list" style="width:93%;margin-left:3.5%">
-            <label class="item item-input item-stacked-label">
-      		    <span class="input-label">Nome do local de trabalho</span>
-      		    <input type= "text" ng-model="workLocation.workLocationName">
-      		  </label>
-          </div>
-          <input class="button button-large submit-search" type="submit" value="Criar Novo Local de Trabalho" ng-click="createWorkLocation()">
+            <div class="list" style="width:93%;margin-left:3.5%">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nome do local de trabalho</span>
+                    <input type= "text" ng-model="workLocation.workLocationName">
+                </label>
+            </div>
+            <input class="button button-large submit-search" type="submit" value="Criar Novo Local de Trabalho" ng-click="createWorkLocation()">
 
         </form>
         <br><br>
@@ -39,73 +39,73 @@
     </ion-content>
 
     <script id="districts.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Escolha o distrito</h1>
-        </ion-header-bar>
-        <ion-content>
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">Escolha o distrito</h1>
+            </ion-header-bar>
+            <ion-content>
 
-        <div class="list" >
+                <div class="list" >
 
-          <a ng-click="districtSelected(district)"
-              class="item item-icon-left"
-              ng-repeat="district in districts">
-            {{district}}
-          </a>
+                    <a ng-click="districtSelected(district)"
+                       class="item item-icon-left"
+                       ng-repeat="district in districts">
+                        {{district}}
+                    </a>
 
-        </div>
+                </div>
 
-        </ion-content>
-      </ion-modal-view>
+            </ion-content>
+        </ion-modal-view>
     </script>
 
     <script id="municipalities.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Escolha o concelho</h1>
-        </ion-header-bar>
-        <ion-content>
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">Escolha o concelho</h1>
+            </ion-header-bar>
+            <ion-content>
 
-        <div class="list" >
+                <div class="list" >
 
-          <a ng-click="municipalitySelected(municipality)"
-              class="item item-icon-left"
-              ng-repeat="municipality in municipalities">
-            {{municipality}}
-          </a>
+                    <a ng-click="municipalitySelected(municipality)"
+                       class="item item-icon-left"
+                       ng-repeat="municipality in municipalities">
+                        {{municipality}}
+                    </a>
 
-        </div>
+                </div>
 
-        </ion-content>
-      </ion-modal-view>
+            </ion-content>
+        </ion-modal-view>
     </script>
 
     <script id="streets.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Identifique a Rua</h1>
-        </ion-header-bar>
-        <ion-content>
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">Identifique a Rua</h1>
+            </ion-header-bar>
+            <ion-content>
 
-          <input class="button button-ride-search" placeholder="Rua" ng-model="newWorkLocation.street">
-          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="streetSelected(newWorkLocation.street)">
+                <input class="button button-ride-search" placeholder="Rua" ng-model="newWorkLocation.street">
+                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="streetSelected(newWorkLocation.street)">
 
-        </ion-content>
-      </ion-modal-view>
+            </ion-content>
+        </ion-modal-view>
     </script>
 
     <script id="info.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar>
-          <h1 class="title">Coloque alguma informação adicional para ajudar a descobrir o local</h1>
-        </ion-header-bar>
-        <ion-content>
+        <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title">Coloque alguma informação adicional para ajudar a descobrir o local</h1>
+            </ion-header-bar>
+            <ion-content>
 
-          <input class="button button-ride-search" placeholder="Info" ng-model="newWorkLocation.info">
-          <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newWorkLocation.info)">
+                <input class="button button-ride-search" placeholder="Info" ng-model="newWorkLocation.info">
+                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newWorkLocation.info)">
 
-        </ion-content>
-      </ion-modal-view>
+            </ion-content>
+        </ion-modal-view>
     </script>
 
 </ion-view>

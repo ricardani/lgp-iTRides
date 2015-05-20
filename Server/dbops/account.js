@@ -38,7 +38,12 @@ function register(req, res) {
         }
     });
 
-    sendMail(req.body.email, "iTRides Account Confirmation", "Hello, Confirmation Link: <br><br> <a href=\"http://localhost:5000/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\"> LINK </a> <br><br> LGP iTRides");
+    var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" + 
+                  "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" + 
+                   "<a href=\"http://localhost:5000/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " + 
+                   "Obrigado,<br>iTRides";
+
+    sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
 }
 
 module.exports.reg = register;
@@ -68,7 +73,7 @@ function login(req, res) {
         password: sha256(req.body.password)
     }, function(err, data) {
         if (err) {
-            res.json(err);
+            res.sendStatus(404);
         } else if(data != null) {
             if (data.activated) {
                 var profile = {
@@ -77,12 +82,10 @@ function login(req, res) {
                 var token = jwt.sign(profile, secret_key, {expiresInMinutes: 60*24});
                 res.json({activated: data.activated, token: token});
             }else{
-                res.json("Account Not activated");
+                res.sendStatus(400);
             }
-        }
-        else
-        {
-            res.json("Wrong Email/Password");
+        }else{
+            res.sendStatus(404);
         }
     });
 }
@@ -92,20 +95,27 @@ module.exports.checkLogin = login;
 
 function resetPassword(req, res) {
 
+    var message = 'Caro/a Utilizador(a) <br><br> ' + 
+                'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
+                'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
+                'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' + 
+                'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' + 
+                'Atenciosamente,<br>' + 'iTRides';
+
     Account.update(
-       {'email': req.body.email},
-       {
-        'password' : sha256(req.body.password),
-       },
-       { upsert: true },
-       function(err, data) {
-        if(err) {
-            res.json(err);
-        } else {
-            sendMail(req.body.email,'iTRides: Nova Password Gerada', req.body.password);
-            res.json(data);
+        {'email': req.body.email},
+        {
+            'password' : sha256(req.body.password),
+        },
+        { upsert: true },
+        function(err, data) {
+            if(err) {
+                res.json(err);
+            } else {
+                sendMail(req.body.email,'iTRides: Nova Password Gerada', message);
+                res.json(data);
+            }
         }
-       }
     );
 }
 

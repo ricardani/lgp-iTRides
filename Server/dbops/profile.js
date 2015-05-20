@@ -37,27 +37,35 @@ function getNotifications(req, res) {
                             rideDate : ''
                         };
 
-                        Ride.findOne({
-                            '_id': rideID
-                        }, function(err, data) {
-                            if (err || data === null) {
-                                callback('error');
-                            }else{
-                                notificationsData.rideID = rideID;
-                                notificationsData.rideDate = data.time_start;
+                        if(notificationsData.msgType !== 'Cancel'){
 
-                                senderInfo.push(notificationsData);
-                                callback();
-                            }
-                        });
+                            Ride.findOne({
+                                '_id': rideID
+                            }, function(err, data) {
+                                if (err || data === null) {
+                                    senderInfo.push(notificationsData);
+                                    callback();
+                                }else{
+                                    notificationsData.rideID = rideID;
+                                    notificationsData.rideDate = data.time_start;
+
+                                    senderInfo.push(notificationsData);
+                                    callback();
+                                }
+                            });
+
+                        }else{
+
+                            senderInfo.push(notificationsData);
+                            callback();
+
+                        }
                     }
                 });
 
             }, function(err){
                 // if any of the file processing produced an error, err would equal that error
                 if( err ) {
-                    // One of the iterations produced an error.
-                    // All processing will now stop.
                     res.json(err);
                 } else {
                     res.json(senderInfo);
@@ -100,6 +108,7 @@ function getProfileInfo(req, res) {
                         photo : data.photo,
                         contact : data.contact,
                         email: data.email,
+                        residency: data.residency,
                         feedaverage: feedaverage
                     };
                     res.json(information);
@@ -110,6 +119,104 @@ function getProfileInfo(req, res) {
 
 module.exports.information = getProfileInfo;
 
+
+function getUserInfo(req, res) {
+
+  Account.findOne({
+      '_id': req.body.userID
+  }, function(err, requestedUser) {
+    if (err || requestedUser === null) {
+        res.json(err);
+    } else {
+      var feedaverage = 0;
+      Ride.find({
+          '_owner': req.body.userID
+      }, function(error, requestedRides) {
+        if (error || requestedRides === null) {
+            res.json(error);
+        } else {
+            var myRides = [];
+
+            async.each(requestedRides, function(ride, callback) {
+                var RideInfo = {
+                    id : ride._id,
+                    date : ride.time_start,
+                    feedback : ride.feedback,
+                    startLocation : '',
+                    destination : ''
+                };
+
+                var wLocation = ride._workLocation;
+                var rideType = ride.ride_type;
+
+                if(rideType === 'CT'){
+                    RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'TC'){
+                    RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                }else if(rideType === 'Ocasional'){
+                    RideInfo.startLocation = ride.startLocation.identifier;
+                    RideInfo.destination = ride.destination.identifier;
+                }
+
+                if (rideType != 'Ocasional') {
+
+                    WorkLocation.findOne({
+                        '_id': wLocation
+                    }, function (err, data) {
+                        if (err || data === null) {
+                            callback('error');
+                            console.log(err);
+                        } else {
+                            if (rideType === 'TC') {
+                                RideInfo.startLocation = data.name;
+                            } else {
+                                RideInfo.destination = data.name;
+                            }
+                            myRides.push(RideInfo);
+                            callback();
+                        }
+                    });
+
+                }else{
+                    myRides.push(RideInfo);
+                    callback();
+                }
+
+            }, function(err){
+                if( err ) {
+                    console.log('GetMyRides error -> ' + err);
+                } else {
+                  var feedbacksum = 0;
+                  var count = 0;
+                  for (i = 0; i < myRides.length; i++) {
+                      for (j = 0; j < myRides[i].feedback.length; j++) {
+                          feedbacksum+=myRides[i].feedback[j].feedback;
+                          count+=1;
+                      }
+                  }
+                  feedaverage=feedbacksum/count;
+
+                  var information = {
+                      id : requestedUser._id,
+                      name : requestedUser.name,
+                      photo : requestedUser.photo,
+                      contact : requestedUser.contact,
+                      email: requestedUser.email,
+                      feedaverage: feedaverage,
+                      requestedUserRides: myRides
+                  };
+                  res.json(information);
+                }
+            });
+        }
+      });
+    }
+  });
+}
+
+module.exports.userInfo = getUserInfo;
+
+
 function getNextRide(req, res) {
     Ride.findOne({
         $and: [
@@ -119,6 +226,7 @@ function getNextRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
+            console.log("Nao encontrou a pr�xima boleia");
             res.json(err);
         } else {
 
@@ -151,7 +259,8 @@ function getNextRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        callback('error');
+                        console.log("Nao encontrou o passageiro -> " + userID);
+                        callback();
                     }else{
                         var user = {
                             name : data.name,
@@ -177,7 +286,8 @@ function getNextRide(req, res) {
                             '_id': wLocation
                         }, function (err, data) {
                             if (err || data === null) {
-                                callback('error');
+                                console.log("Nao encontrou o local de trabalho -> " + wLocation);
+                                res.json(err);
                             } else {
                                 if (rideType === 'TC') {
                                     RideInfo.startLocation = data.name;
@@ -285,7 +395,7 @@ function updateProfile(req, res) {
         {
             'name' : req.body.name,
             'contact' : req.body.contact,
-            //photo: req.body.photo,
+            'residency' : req.body.residency
         },
         { upsert: true },
         function(err, data) {
@@ -314,8 +424,8 @@ function updateProfilePassword(req, res) {
                         {
                             'name' : req.body.name,
                             'contact' : req.body.contact,
-                            'password' : sha256(req.body.new_password)
-                            //photo: req.body.photo,
+                            'password' : sha256(req.body.new_password),
+                            'residency' : req.body.residency
                         },
                         { upsert: true },
                         function(err, data) {
@@ -367,5 +477,3 @@ function updateImg(req, res) {
 }
 
 module.exports.updateImg = updateImg;
-
-

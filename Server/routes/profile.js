@@ -5,7 +5,11 @@ profiles = require('../dbops/profile');
 
 router.get('/getNotifications', profiles.notifications);
 
+//Request GET that responds with the current user's profile data
 router.get('/getProfileInfo', profiles.information);
+
+//Request GET that responds with the requested user's profile data
+router.post('/getUserInfo', profiles.userInfo);
 
 router.get('/getNextRide', profiles.nextRide);
 
@@ -19,13 +23,13 @@ router.post('/updateProfilePassword', profiles.profileUpdatePassword);
 
 
 /*
-router.post('/createCR', rides.createCustomRide);
+ router.post('/createCR', rides.createCustomRide);
 
-router.post('/createDR', rides.createDefaultRide);
+ router.post('/createDR', rides.createDefaultRide);
 
-router.post('/deleteRide', rides.deleteRide);
+ router.post('/deleteRide', rides.deleteRide);
 
-router.post('/requestRide', rides.requestsRide);
-*/
+ router.post('/requestRide', rides.requestsRide);
+ */
 
 module.exports = router;

@@ -148,15 +148,15 @@ module.exports.searchRide = rideSearch;
 
 function removeRide(req, res) {
 
-  Ride.findOne({
-    "_id": req.body.rideID
-  }).remove(function(error,data) {
-    if (error) {
-        res.json(error);
-    } else
-        res.json(data);
-    }
-  );
+    Ride.findOne({
+        "_id": req.body.rideID
+    }).remove(function(error,data) {
+            if (error) {
+                res.json(error);
+            } else
+                res.json(data);
+        }
+    );
 }
 
 module.exports.deleteRide = removeRide;
@@ -200,7 +200,6 @@ function rideInfoCreation(req,res) {
 
 module.exports.createRideInfo = rideInfoCreation;
 
-//TODO verificar o problema de haver 2 donos com o mesmo nome
 function requestRide(req, res) {
 
     Ride.findOne({
@@ -248,64 +247,63 @@ module.exports.deleteRequestedRide = requestRideDeletion;
 
 function feedbackRide(req,res) {
 
-  console.log(req);
-  console.log('--------------');
+    console.log(req);
+    console.log('--------------');
 
-  var alreadyGaveFeedback = false;
-  var userInRide = false;
+    var alreadyGaveFeedback = false;
+    var userInRide = false;
 
-  Ride.findOne({
-    "_id": req.body.rideID
-  }, function(err, data) {
-    if(err) {
-      res.json(err);
-    }
-    else {
-
-      for(var i =0; i < data.passengers.length; i++) {
-        if(data.passengers[i]._user == req.user.id) {
-          userInRide = true;
-        } else {
-
-          console.log('passenger not in ride');
+    Ride.findOne({
+        "_id": req.body.rideID
+    }, function(err, data) {
+        if(err) {
+            res.json(err);
         }
-      }
-      for(var i =0; i < data.feedback.length; i++) {
-        if(data.feedback[i]._user == req.user.id) {
-          alreadyGaveFeedback = true;
-          console.log('already gave feedback');
-        }
-      }
-      if(!alreadyGaveFeedback && userInRide) {
-        data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
-        data.save(function(error, addedFeedback) {
-            if (error) {
-                console.log("ERRORRR");
-                console.log(error);
-                res.json(error);
-            } else {
-              console.log('SUCCESS giving feedback')
-                res.json(addedFeedback);
+        else {
+
+            for(var i =0; i < data.passengers.length; i++) {
+                if(data.passengers[i]._user == req.user.id) {
+                    userInRide = true;
+                } else {
+
+                    console.log('passenger not in ride');
+                }
             }
             for(var i =0; i < data.feedback.length; i++) {
                 if(data.feedback[i]._user == req.user.id) {
                     alreadyGaveFeedback = true;
+                    console.log('already gave feedback');
                 }
             }
             if(!alreadyGaveFeedback && userInRide) {
                 data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
                 data.save(function(error, addedFeedback) {
-                    if (error) {
-                        res.json(error);
-                    } else {
-                        res.json(addedFeedback);
+                        if (error) {
+                            console.log(error);
+                            res.json(error);
+                        } else {
+                            console.log('SUCCESS giving feedback')
+                            res.json(addedFeedback);
+                        }
+                        for(var i =0; i < data.feedback.length; i++) {
+                            if(data.feedback[i]._user == req.user.id) {
+                                alreadyGaveFeedback = true;
+                            }
+                        }
+                        if(!alreadyGaveFeedback && userInRide) {
+                            data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
+                            data.save(function(error, addedFeedback) {
+                                if (error) {
+                                    res.json(error);
+                                } else {
+                                    res.json(addedFeedback);
+                                }
+                            });
+                        }
                     }
-                });
-            }
-        }
-    
-    );
-      }}});
+
+                );
+            }}});
 
 }
 
@@ -423,56 +421,56 @@ module.exports.myRides = getMyRides;
 
 function rideEdit(req, res) {
 
-  if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
-    HomeAndWorkRide.findOneAndUpdate( {'_id': req.body.rideID},
-      {
-      'seats': req.body.seats,
-      'time_start': req.body.time_start,
-      'ride_type': req.body.ride_type,
-      'type_cost': req.body.type_cost,
-      'cost': req.body.cost,
-      'locationName': req.body.locationName,
-      'homeLocation' : {
-          "district": req.body.homeLocation.district,
-          "municipality": req.body.homeLocation.municipality,
-          "street": req.body.homeLocation.street,
-          "info": req.body.homeLocation.info
-      }
-    }, function(error, data) {
-      if(error) {
-        res.json(error);
-      }
-      else {
-        res.json(data);
-      }
-    });
-  }
-  else if(req.body.ride_type == 'Ocasional') {
+    if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
+        HomeAndWorkRide.findOneAndUpdate( {'_id': req.body.rideID},
+            {
+                'seats': req.body.seats,
+                'time_start': req.body.time_start,
+                'ride_type': req.body.ride_type,
+                'type_cost': req.body.type_cost,
+                'cost': req.body.cost,
+                'locationName': req.body.locationName,
+                'homeLocation' : {
+                    "district": req.body.homeLocation.district,
+                    "municipality": req.body.homeLocation.municipality,
+                    "street": req.body.homeLocation.street,
+                    "info": req.body.homeLocation.info
+                }
+            }, function(error, data) {
+                if(error) {
+                    res.json(error);
+                }
+                else {
+                    res.json(data);
+                }
+            });
+    }
+    else if(req.body.ride_type == 'Ocasional') {
 
-    OccasionalRide.findOneAndUpdate( {'_id': req.body.rideID},
-    {
-      'seats': req.body.seats,
-      'time_start': req.body.time_start,
-      'ride_type': req.body.ride_type,
-      'type_cost': req.body.type_cost,
-      'cost': req.body.cost,
-      'startLocation' : {
-        "address": req.body.startLocation.address,
-        "identifier": req.body.startLocation.identifier
-      },
-      'destination' : {
-        "address": req.body.destination.address,
-        "identifier": req.body.destination.identifier
-      }
-    }, function(error, data) {
-      if(error) {
-        res.json(error);
-      }
-      else {
-        res.json(data);
-      }
-    });
-  }
+        OccasionalRide.findOneAndUpdate( {'_id': req.body.rideID},
+            {
+                'seats': req.body.seats,
+                'time_start': req.body.time_start,
+                'ride_type': req.body.ride_type,
+                'type_cost': req.body.type_cost,
+                'cost': req.body.cost,
+                'startLocation' : {
+                    "address": req.body.startLocation.address,
+                    "identifier": req.body.startLocation.identifier
+                },
+                'destination' : {
+                    "address": req.body.destination.address,
+                    "identifier": req.body.destination.identifier
+                }
+            }, function(error, data) {
+                if(error) {
+                    res.json(error);
+                }
+                else {
+                    res.json(data);
+                }
+            });
+    }
 }
 
 module.exports.editRide = rideEdit;
@@ -572,30 +570,34 @@ module.exports.myRequestedRides = getMyRequestedRides;
 
 
 function getRideToEdit(req, res) {
-  Ride.findOne({
-      "_id": req.query.rideID
-  }, function(error,data) {
-    if(error) {
-      res.json(error);
-    }
-    else {
-      res.json(data);
-    }
-  });
+    Ride.findOne({
+        "_id": req.query.rideID
+    }, function(error,data) {
+        if(error) {
+            res.json(error);
+        }
+        else {
+            res.json(data);
+        }
+    });
 }
 
 module.exports.rideToEdit = getRideToEdit;
 
 function getRide(req, res) {
 
+    var rideID = JSON.parse(JSON.stringify(req.query.rideID));
+
+
     Ride.findOne({
         $and: [
-            { '_id': req.query.rideID }/*,
+            { '_id': rideID }/*,
              { state: 'active' },
              { time_start: { $gte: Date.now() } }*/
         ]
     }, function(err, data) {
         if (err || data === null) {
+            console.log("Nao encontrou a boleia ->" + rideID);
             res.json(err);
         } else {
             var RideInfo = {
@@ -636,7 +638,8 @@ function getRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        callback('error');
+                        console.log("Nao encontrou o passageiro -> " + userID);
+                        callback();
                     }else{
                         var user = {
                             name : data.name,
@@ -651,10 +654,7 @@ function getRide(req, res) {
                 });
 
             }, function(err){
-                // if any of the file processing produced an error, err would equal that error
                 if( err ) {
-                    // One of the iterations produced an error.
-                    // All processing will now stop.
                     res.json(err);
                 } else {
 
@@ -672,6 +672,7 @@ function getRide(req, res) {
                         '_id': ownerID
                     }, function(err, data) {
                         if (err || data === null) {
+                            console.log("Nao encontrou o dono da boleia -> " + ownerID);
                             res.json(err);
                         } else {
                             RideInfo.ownerName = data.name;
@@ -683,7 +684,8 @@ function getRide(req, res) {
                                     '_id': wLocation
                                 }, function (err, data) {
                                     if (err || data === null) {
-                                        callback('error');
+                                        console.log("Nao encontrou o local de trabalho -> " + wLocation);
+                                        res.json(err);
                                     } else {
                                         if (rideType === 'TC') {
                                             RideInfo.startLocation = data.name;
@@ -700,8 +702,8 @@ function getRide(req, res) {
                         }});
                 }
             });
-        
-      }});
+
+        }});
 }
 
 module.exports.oneRide = getRide;
@@ -871,13 +873,13 @@ function getMyPastRides(req, res) {
                 var ownerID = ride._owner;
                 var alreadyGaveFeedback = false;
 
-                
+
                 for (var i = 0; i < ride.feedback.length; i++) {
-                  console.log('----------------------------------');  
-                  if(ride.feedback[i]._user == req.user.id) {
-                    alreadyGaveFeedback = true;
-                    console.log("already gave feedback");
-                  }
+                    console.log('----------------------------------');
+                    if(ride.feedback[i]._user == req.user.id) {
+                        alreadyGaveFeedback = true;
+                        console.log("already gave feedback");
+                    }
 
                 }
 
@@ -894,7 +896,7 @@ function getMyPastRides(req, res) {
                     '_id': ownerID
                 }, function(err, data) {
                     if (err || data === null) {
-                      //  console.log(err);
+                        //  console.log(err);
                         callback('error');
                     } else {
                         RideInfo.ownerName = data.name;
@@ -904,7 +906,7 @@ function getMyPastRides(req, res) {
                                 '_id': wLocation
                             }, function (err, data) {
                                 if (err || data === null) {
-                                 //   console.log(err);
+                                    //   console.log(err);
                                     callback('error');
                                 } else {
                                     if (rideType === 'TC') {
@@ -913,8 +915,8 @@ function getMyPastRides(req, res) {
                                         RideInfo.destination = data.name;
                                     }
                                     if (!alreadyGaveFeedback) {
-                                      myPastRides.push(RideInfo);
-                                    
+                                        myPastRides.push(RideInfo);
+
                                     }
                                     callback();
                                 }
@@ -927,7 +929,7 @@ function getMyPastRides(req, res) {
 
             }, function(err){
                 if( err ) {
-                 //   console.log('Get My Past Rides error -> ' + err);
+                    //   console.log('Get My Past Rides error -> ' + err);
                 } else {
                     res.json(myPastRides);
                 }
