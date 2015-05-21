@@ -2,7 +2,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers',
-    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers'])
+    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers', 'iTRides.listFeedbacksControllers'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -324,6 +324,16 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     'content': {
                         templateUrl: 'templates/confirmAccount.html',
                         controller: 'ConfirmAccountCtrl'
+                    }
+                }
+            })
+
+            .state('listFeedbacks', {
+                url: "/listFeedbacks",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/listFeedbacks.html',
+                        controller: 'ListFeedbacksCtrl'
                     }
                 }
             })
