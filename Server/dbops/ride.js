@@ -588,7 +588,6 @@ function getRide(req, res) {
 
     var rideID = JSON.parse(JSON.stringify(req.query.rideID));
 
-
     Ride.findOne({
         $and: [
             { '_id': rideID }/*,

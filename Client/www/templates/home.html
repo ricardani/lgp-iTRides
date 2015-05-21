@@ -81,11 +81,10 @@
                     <i class="icon ion-email-unread orange"></i>
                     Notificações
                     <span ng-if="notifications.length > 3" class="badge badge-assertive orange">+{{notifications.length - 3}}</span>
-                    <!-- <i class="ion-checkmark ion-trash-b" style="color:red;float:right" ng-click="removeAllNotification()"></i> -->
                 </div>
 
                 <ion-list>
-                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap" href="#/rideDetails/{{notification.rideID}}">
+                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap" href="#/rideDetails/{{notification.rideID}}/home">
                         <img ng-src="{{notification.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                         <h2>{{notification.name}}</h2>
                         <div ng-switch on="notification.msgType" class=" item-text-wrap">
@@ -163,7 +162,7 @@
                     {{myNextRide.destination}}
                 </div>
 
-                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRide.id}}">
+                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRide.id}}/home">
                     <i class="icon ion-information-circled orange"></i>
                     <a1 class="orange"> Ver detalhes </a1>
                 </a>
@@ -212,7 +211,7 @@
                     </div>
                 </div>
 
-                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRequest.id}}">
+                <a class="item item-icon-left assertive" href="#/rideDetails/{{myNextRequest.id}}/home">
                     <i class="icon ion-information-circled orange"></i>
                     <a1 class="orange"> Ver detalhes </a1>
                 </a>

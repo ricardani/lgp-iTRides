@@ -8,7 +8,7 @@
             </div>
 
             <div ng-if="requestedRides.length > 0" ng-repeat="requestedRide in requestedRides | orderBy:'date'" type="item-text-wrap" class="card">
-                <a href="#/rideDetails/{{requestedRide.id}}" style="text-decoration: none; color:black;">
+                <a href="#/rideDetails/{{requestedRide.id}}/listRequestedRides" style="text-decoration: none; color:black;">
                     <div class="text-wrap">
                         <i class="ion-model-s orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
                         <p style="margin-left: 47px"> Boleia de {{requestedRide.ownerName}} </p>
