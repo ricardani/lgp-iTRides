@@ -9,7 +9,7 @@
             </div>
 
             <div ng-if="createdRides.length > 0" ng-repeat="createdRide in createdRides | orderBy:'date'" type="item-text-wrap" class="card">
-                <a href="#/rideDetails/{{createdRide.id}}" style="text-decoration: none; color:black;">
+                <a href="#/rideDetails/{{createdRide.id}}/listCreatedRides" style="text-decoration: none; color:black;">
                     <div class="text-wrap">
                         <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
                         <p style="margin-left: 47px"> {{createdRide.date | date : 'dd/MM/yy HH:mm'}} </p>

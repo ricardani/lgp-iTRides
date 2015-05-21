@@ -123,7 +123,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
             })
 
             .state('rideDetails', {
-                url: "/rideDetails/:rideID",
+                url: "/rideDetails/:rideID/:backState",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',

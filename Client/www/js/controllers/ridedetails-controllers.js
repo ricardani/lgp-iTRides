@@ -1,13 +1,20 @@
 angular.module('iTRides.rideDetailsControllers', [])
 
     .controller('RideDetailsCtrl', function($scope, $ionicLoading, $ionicPopup, $timeout, $state, $stateParams, Server, $http, $cordovaCalendar) {
+
+        $scope.goBack = $stateParams.backState;
+
         $http.get(Server.url + 'api/ride/getRide',  {
             params: {rideID : $stateParams.rideID}
         }).
             success(function(data, status, headers, config) {
                 $scope.ride = data;
 
-                $scope.rideNotAvailable = !$scope.ride.id;
+                if(data === null || data === undefined){
+                    $scope.rideNotAvailable = true;
+                }else{
+                    $scope.rideNotAvailable = !$scope.ride.id;
+                }
 
                 $ionicLoading.hide();
             }).
