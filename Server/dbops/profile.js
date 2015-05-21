@@ -100,7 +100,12 @@ function getProfileInfo(req, res) {
                             count+=1;
                         }
                     }
-                    feedaverage=feedbacksum/count;
+					if(count==0){
+						feedaverage=0;
+					}else{
+						feedaverage = feedbacksum/count;
+					}
+					feedaverage = feedaverage - (data.penalties * 1/5);
 
                     var information = {
                         id : data._id,
@@ -109,6 +114,7 @@ function getProfileInfo(req, res) {
                         contact : data.contact,
                         email: data.email,
                         residency: data.residency,
+						penalties: data.penalties,
                         feedaverage: feedaverage
                     };
                     res.json(information);
@@ -387,7 +393,24 @@ function getNextRequestedRide(req, res) {
 
 module.exports.nextRequestedRide = getNextRequestedRide;
 
+function updatePenalties(req, res) {
+    Account.update(
+        {'_id': req.user.id},
+        {
+            'penalties' : req.body.penalties
+        },
+        { upsert: true },
+        function(err, data) {
+            if(err) {
+                res.json(err);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+} 
 
+module.exports.penaltiesUpdate = updatePenalties;
 
 function updateProfile(req, res) {
     Account.update(

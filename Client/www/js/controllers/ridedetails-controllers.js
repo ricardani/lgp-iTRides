@@ -21,13 +21,43 @@ angular.module('iTRides.rideDetailsControllers', [])
                 $state.go('home');
                 $ionicLoading.hide();
             });
+		
+		$http.get(Server.url + 'api/profile/getProfileInfo').
+            success(function(data1, status, headers, config) {
+                $scope.user = data1;
+                $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+                console.log(JSON.stringify(config));
+                if(status === 401){
+                    delete window.sessionStorage.token;
+                    localStorage.removeItem('SessionToken');
+                    $state.go('login');
+                }
+                $ionicLoading.hide();
+            });
 
         $scope.deleteRide = function() {
             if($scope.ride.myStatus === 'myRide') {
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'Apagar boleia',
-                    template: 'Confirme o seu pedido'
-                });
+				
+				//VERIFICAR SE ESTA A ELIMINAR 24H ANTES
+				var now = new Date();
+				var rideDate = new Date($scope.ride.date);
+				var horas = ((rideDate-now)/1000)/3600;
+				
+				if(horas>24) {
+					var confirmPopup = $ionicPopup.confirm({
+						title: 'Apagar boleia',
+						template: 'Confirme o seu pedido'
+					});
+				}
+				else if(horas<=24) {
+					var confirmPopup = $ionicPopup.confirm({
+						title: 'Faltam menos de 24h',
+						template: 'Ao apagar boleia será penalizado na sua classificação'
+					});
+				}				
+                
                 confirmPopup.then(function(res) {
                     if(res) {
                         $http.post(Server.url + 'api/ride/deleteRide',
@@ -37,6 +67,23 @@ angular.module('iTRides.rideDetailsControllers', [])
                         )
                             .success(function(data, status, headers, config) {
                                 if(data){
+									if(horas<=24){
+										/*ACTUALIZAR O FEEDBACK*/
+										var new_penalties = $scope.user.penalties + 1;
+										$http.post(Server.url + 'api/profile/updatePenalties',
+										{
+											'penalties': new_penalties
+										})
+										.success(function(data, status, headers, config) {
+											/*if(data) 
+												$state.go('home');*/
+											$ionicLoading.hide();
+										})
+										.error(function(data, status, headers, config) {
+											/*console.log("Error updating feedaverage " + status);*/
+											$ionicLoading.hide();
+										});
+									}
                                     var alertPopup = $ionicPopup.alert({
                                         title: 'Apagar boleia',
                                         template: 'A sua boleia foi apagada com sucesso'

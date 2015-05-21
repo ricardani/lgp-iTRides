@@ -28,6 +28,10 @@ var Account = new Schema({
   permission: {
     type: String,
     default: 'User'
+  },
+  penalties: {
+	type: Number,
+	default: 0
   }
 
 });
