@@ -113,6 +113,7 @@ function getProfileInfo(req, res) {
                         photo : data.photo,
                         contact : data.contact,
                         email: data.email,
+                        permission: data.permission,
                         residency: data.residency,
 						penalties: data.penalties,
                         feedaverage: feedaverage

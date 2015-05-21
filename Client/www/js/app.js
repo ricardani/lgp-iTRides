@@ -2,7 +2,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers',
-    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers', 'iTRides.listFeedbacksControllers'])
+    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers', 'iTRides.listFeedbacksControllers','iTRides.adminpageControllers'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -334,6 +334,25 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     'content': {
                         templateUrl: 'templates/listFeedbacks.html',
                         controller: 'ListFeedbacksCtrl'
+                    }
+                }
+            })
+
+
+            .state('adminPage', {
+                url: "/adminPage",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/adminPage.html',
+                        controller: 'AdminCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
                     }
                 }
             })
