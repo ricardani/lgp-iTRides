@@ -23,6 +23,7 @@ router.post('/updateImg', profiles.updateImg);
 
 router.post('/updateProfilePassword', profiles.profileUpdatePassword);
 
+router.get('/getUserFeedback', profiles.userFeedback);
 
 /*
  router.post('/createCR', rides.createCustomRide);

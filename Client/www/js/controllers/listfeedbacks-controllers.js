@@ -2,9 +2,10 @@ angular.module('iTRides.listFeedbacksControllers', [])
 
     .controller('ListFeedbacksCtrl', function($scope, $window, $state, $http, $ionicLoading, Server) {
 
-    /*    $http.get(Server.url + 'api/ride/getMyRequestedRides').
+        $http.get(Server.url + 'api/profile/getUserFeedback').
             success(function(data, status, headers, config) {
-                $scope.requestedRides = data;
+                $scope.feedbackList = data;
+                console.log(feedbackList);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
@@ -15,7 +16,7 @@ angular.module('iTRides.listFeedbacksControllers', [])
                     $state.go('login');
                 }
                 $ionicLoading.hide();
-            });*/
+            });
 
 
         $scope.getNumberComplete = function(num) {
@@ -25,7 +26,7 @@ angular.module('iTRides.listFeedbacksControllers', [])
         $scope.getNumberEmpty = function(num) {
             return new Array(Math.floor(5-num));
         };
-
+/*
         $scope.feedbackList = [
         {
             rideID: '1',
@@ -45,7 +46,7 @@ angular.module('iTRides.listFeedbacksControllers', [])
             message: 'Not so good'
         }
 
-        ]
+        ]*/
     })
 
 ;

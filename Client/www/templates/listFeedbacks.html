@@ -7,19 +7,19 @@
                 <span style="font-weight: bold">As minhas Avaliações</span>
             </div>
 
-            <div ng-if="feedbackList.length > 0" ng-repeat="feedback in feedbackList | orderBy:'date'" type="item-text-wrap" >
+            <div ng-if="feedbackList.length > 0" ng-repeat="feedback in feedbackList | orderBy:'date'" type="item-text-wrap" class="card">
                 <a href="#/rideDetails/{{feedback.id}}/" style="text-decoration: none; color:black;">
                         <i class="ion-person orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-                        <p style="margin-left: 47px"> Avaliação de {{feedback.user}} </p>
+                        <p style="margin-left: 55px"> Avaliação de {{feedback.user}} </p>
                         <i class="ion-model-s orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
-                        <p style="margin-left: 45px;">  {{feedback.startLocation}}
+                        <p style="margin-left: 55px;">  {{feedback.startLocation}}
                         <i class="ion-arrow-right-c orange"> </i>
                           {{feedback.destination}} em {{feedback.date | date : 'dd/MM/yyyy'}}</p>
-                        <span class="orange" style="margin-left: 47px;" >
+                        <span class="orange" style="margin-left: 55px;" >
                         <span ng-repeat="i in getNumberComplete(feedback.stars) track by $index"> <i class="icon ion-android-star"></i></span>
                         <span ng-repeat="i in getNumberEmpty(feedback.stars) track by $index"><i class="icon ion-android-star-outline"></i> </span>
                         </span>
-                        <p style="margin-left: 47px; margin-top:5px;"> {{feedback.message}} </p>
+                        <p style="margin-left: 55px; margin-top:5px;"> {{feedback.message}} </p>
                </a>
             </div>
 
