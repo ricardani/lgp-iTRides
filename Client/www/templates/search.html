@@ -1,4 +1,4 @@
-<ion-view view-title="Search">
+﻿<ion-view view-title="Search">
     <ion-content>
         <br><br>
 
@@ -147,7 +147,35 @@
                 <div style="color: white"> Sem Resultados </div>
             </a>
         </div>
-
+		
+		<div ng-if="first">
+			<div class="list card">
+				<div class="item item-divider">
+					És condutor?
+				</div>
+				<div class="item item-body">
+					<img class="full-image" src="../img/driver.jpg">
+					<h2>Divide as tuas despesas!</h2>
+					<p>
+					  Faz as viagens para o trabalho ou de regresso a casa mais animadas partilhando os lugares vagos do teu veículo.
+					</p>
+				</div>
+			</div>
+			
+			<div class="list card">
+				<div class="item item-divider">
+					És passageiro?
+				</div>
+				<div class="item item-body">
+					<img class="full-image" src="../img/share.jpg">
+					<h2>Viaja poupando!</h2>
+					<p>
+					  Procura a boleia para a data e hora que precisas e viaja por um custo inferior.
+					</p>
+				</div>
+			</div><br><br>
+		</div>
+		
 
         <script id="districts.html" type="text/ng-template">
             <ion-modal-view>

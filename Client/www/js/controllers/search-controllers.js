@@ -14,6 +14,7 @@ angular.module('iTRides.searchControllers', [])
         $scope.ocasionalStart = 'Local de Partida';
         $scope.ocasionalEnd = 'Local de Chegada';
         $scope.resultRides = [];
+		$scope.first = true;
 
         var resetSearch = function(){
             $scope.district = 'Distrito';
@@ -62,11 +63,13 @@ angular.module('iTRides.searchControllers', [])
         $scope.showResults = function() {
             $scope.seeResults = true;
             $scope.seeCounter = false;
+			$scope.first = false;
         }
 
         $scope.hideResults = function() {
             $scope.seeResults = false;
             $scope.seeCounter = true;
+			$scope.first = true;
         }
 
         $scope.itemClicked = function (index) {
