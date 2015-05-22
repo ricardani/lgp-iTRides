@@ -83,7 +83,7 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                     { text: 'Cancel' },
                     {
                         text: '<b>Criar Boleia</b>',
-                        type: 'button-positive',
+                        type: 'button-energized',
                         onTap: function(e) {
                             if(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/.test($scope.data.start_date.toString())) {
                                 if($scope.checkIfInTheFuture(new Date($scope.data.start_date)))
@@ -114,7 +114,7 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                             { text: 'Cancel' },
                             {
                                 text: '<b>Criar boleia</b>',
-                                type: 'button-positive',
+                                type: 'button-energized',
                                 onTap: function(e) {
                                     $scope.data.dateFormat = 'empty';
                                     if(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/.test($scope.data.start_date.toString())) {

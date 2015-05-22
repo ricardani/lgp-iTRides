@@ -38,7 +38,7 @@ angular.module('iTRides.profileControllers', [])
         $scope.getNumberHalf = function(num) {
 			if(num<0){
 				return new Array(0);
-			} else {			
+			} else {
 				if(num % 1 === 0){
 					//é inteiro
 					return new Array(0);
@@ -59,14 +59,14 @@ angular.module('iTRides.profileControllers', [])
                 scope: $scope,
                 buttons: [
                     { text: 'Boleia',
-                        type: 'button-positive',
+                        type: 'button-energized',
                         onTap: function(e) {
                             $state.go('createRide', {'createNew': 'createNow'});
                         }
                     },
                     {
                         text: '<b>Boleia pré-definida</b>',
-                        type: 'button-positive',
+                        type: 'button-energized',
                         onTap: function(e) {
                             $state.go('createRide', {'createNew': 'createInfo'});
                         }

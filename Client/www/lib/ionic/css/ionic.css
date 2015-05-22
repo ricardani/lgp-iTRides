@@ -6677,14 +6677,15 @@ progress {
         color: #fff; }
   .button.button-energized {
     border-color: #e6b400;
-    background-color: #ffc900;
+    font-family: ApexNewBook !important;
+    background-color: rgb(243,121,38);
     color: #fff; }
     .button.button-energized:hover {
       color: #fff;
       text-decoration: none; }
     .button.button-energized.active, .button.button-energized.activated {
       border-color: #e6b400;
-      background-color: #e6b400;
+      background-color: rgb(243,121,38);;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1); }
     .button.button-energized.button-clear {
       border-color: transparent;
@@ -6699,7 +6700,7 @@ progress {
       background: transparent;
       color: #ffc900; }
       .button.button-energized.button-outline.active, .button.button-energized.button-outline.activated {
-        background-color: #ffc900;
+        background-color: rgb(243,121,38);;
         box-shadow: none;
         color: #fff; }
   .button.button-royal {

@@ -73,14 +73,14 @@ angular.module('iTRides.homeControllers', [])
                 scope: $scope,
                 buttons: [
                     { text: 'Boleia',
-                        type: 'button-positive',
+                        type: 'button-energized',
                         onTap: function(e) {
                             $state.go('createRide', {'createNew': 'createNow'});
                         }
                     },
                     {
-                        text: '<b>Boleia pré-definida</b>',
-                        type: 'button-positive',
+                        text: 'Boleia pré-definida',
+                        type: 'button-energized',
                         onTap: function(e) {
                             $state.go('createRide', {'createNew': 'createInfo'});
                         }
