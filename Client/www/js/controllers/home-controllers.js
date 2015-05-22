@@ -100,7 +100,7 @@ angular.module('iTRides.homeControllers', [])
                 buttons: [
                     {
                         text: '<b>Avaliar</b>',
-                        type: 'button-positive',
+                        type: 'button-energized',
                         onTap: function(e) {
                             if (!$scope.data.rating && !$scope.data.message.length) {
                                 //don't allow the user to close unless he enters a valid rating
