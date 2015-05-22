@@ -33,7 +33,7 @@
 
 #seats {
 	padding-left:10px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
@@ -45,7 +45,7 @@
 
 #infoName{
 	padding: 10px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
@@ -57,7 +57,7 @@
 
 #date {
 	padding: 10px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
@@ -69,7 +69,7 @@
 
 #cost {
 	padding-left:10px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
@@ -81,7 +81,7 @@
 
 #time {
 	padding: 10px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
@@ -93,7 +93,7 @@
 
 #typeCost{
 	padding: 6px;
-	width:50%;
+	width:100%;
 	border: none;
 	border: solid 2px #c9c9c9;
 	transition: border 0.3s;
