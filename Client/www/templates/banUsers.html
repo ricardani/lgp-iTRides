@@ -16,6 +16,9 @@
 				<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in users" type="item-text-wrap">
 					<i class="ion-person orange" style="font-size:200%; float:left;"> </i>
 					<h2 style="margin-left: 40px; margin-top: 10px">{{user.name}}</h2>
+					<ion-option-button class="button-balanced" ng-click="promoteUser($index)">
+						<i class="icon ion-android-arrow-up" style="color:white"> </i>
+					</ion-option-button>
 					<ion-option-button class="button-assertive" ng-click="removeUser($index)">
 						<i class="icon ion-trash-b" style="color:white"> </i>
 					</ion-option-button>
