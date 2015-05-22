@@ -16,10 +16,11 @@ function sendMail(who, title, msg) {
             subject: title,
             html: msg
         }
-    }, function(error, response) { //uh oh, there was an error
-        if (error) console.log(JSON.stringify(error));
-        //everything's good, lets see what mandrill said
-        else console.log(response);
+    }, function(error, response) {
+        if (error)
+          console.log(JSON.stringify(error));
+        else
+          console.log(response);
     });
 }
 
@@ -115,14 +116,18 @@ function resetPassword(req, res) {
         'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' +
         'Atenciosamente,<br>' + 'iTRides';
 
-    Account.update(
-        {'email': req.body.email},
+
+    Account.findOneAndUpdate(
         {
-            'password' : sha256(req.body.password),
+          email: req.body.email,
+          activated: true
         },
-        { upsert: true },
+        {
+            'password' : sha256(req.body.password)
+        },
         function(err, data) {
-            if(err) {
+            if(err || data === null) {
+                console.log("Borrou");
                 res.json(err);
             } else {
                 sendMail(req.body.email,'iTRides: Nova Password Gerada', message);
