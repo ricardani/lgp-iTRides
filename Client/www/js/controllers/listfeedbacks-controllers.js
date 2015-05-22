@@ -5,7 +5,6 @@ angular.module('iTRides.listFeedbacksControllers', [])
         $http.get(Server.url + 'api/profile/getUserFeedback').
             success(function(data, status, headers, config) {
                 $scope.feedbackList = data;
-                console.log(feedbackList);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
@@ -26,27 +25,6 @@ angular.module('iTRides.listFeedbacksControllers', [])
         $scope.getNumberEmpty = function(num) {
             return new Array(Math.floor(5-num));
         };
-/*
-        $scope.feedbackList = [
-        {
-            rideID: '1',
-            user: 'João Castro',
-            startLocation: 'Braga',
-            destination: 'Lisboa',
-            date: '15/07/2014',
-            stars:'4',
-            message: 'Not bad at all'
-        },{
-            rideID: '2',
-            user: 'Manuel Castro',
-            startLocation: 'Braga',
-            destination: 'Porto',
-            date: '21/07/2014',
-            stars:'2',
-            message: 'Not so good'
-        }
-
-        ]*/
     })
 
 ;

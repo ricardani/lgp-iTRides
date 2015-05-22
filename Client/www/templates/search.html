@@ -100,15 +100,15 @@
         <div ng-if="hasDate">
 
 
-            <a ng-show="seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
-                <i class="icon ion-map" style="color: white"></i>
-                <div style="color: white" ng-click="showResults()" > Ver Resultados </div>
-                <span class="badge badge-stable">{{resultRides.length}}</span>
+            <a ng-show="seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)" ng-click="showResults()" >
+                <i class="icon ion-chevron-down" style="color: white"></i>
+                <div style="color: white" > Ver Resultados </div>
+                <span class="badge badge-stable" style="color: rgb(243,121,38)">{{resultRides.length}}</span>
             </a>
 
-            <a ng-show="!seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
-                <i class="icon ion-map" style="color: white"></i>
-                <div style="color: white" ng-click="hideResults()" > Esconder resultados </div>
+            <a ng-show="!seeCounter" ng-if="resultRides.length > 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)" ng-click="hideResults()">
+                <i class="icon ion-chevron-up" style="color: white"></i>
+                <div style="color: white" > Esconder resultados </div>
             </a>
 
 
@@ -148,7 +148,7 @@
             </a>
         </div>
 		
-		<div ng-if="first">
+		<div ng-if="!hasDate">
 			<div class="list card">
 				<div class="item item-divider">
 					És condutor?

@@ -68,6 +68,23 @@ function banAccount(req, res) {
 module.exports.banUser = banAccount;
 
 
+function promUser(req,res) {
+   Account.findOneAndUpdate( {'_id': req.body.userID},
+            {
+                'permission' : 'Admin'
+            }, function(error, data) {
+                if(error || data === null) {
+                    res.json(error);
+                }
+                else {
+                    res.json(data);
+                }
+            });
+}
+
+module.exports.promoteUser = promUser;
+
+
 function getAccounts(req, res) {
     Account.find({}, function(err,data) {
         if (err || data === null) {

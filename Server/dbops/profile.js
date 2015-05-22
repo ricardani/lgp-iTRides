@@ -506,87 +506,76 @@ module.exports.updateImg = updateImg;
 
 
 function getUserFeedback(req, res) {
-
-  Account.findOne({
-      '_id': req.body.userID
-  }, function(err, requestedUser) {
-    if (err || requestedUser === null) {
-        res.json(err);
-    } else {
-
-
-      Ride.find({
-          '_owner': req.body.userID
-      }, function(error, feedbackRides) {
-        if (error || feedbackRides === null) {
-            res.json(error);
+	Account.findOne({
+        '_id': req.user.id
+    }, function(err, data) {
+        if (err || data === null) {
+            res.json(err);
         } else {
-            var myFeedbacks = [];
-
-            async.each(feedbackRides, function(ride, callback) {
-                var feedback = {
-                    id : ride._id,
-                    date : ride.time_start,
-                    feedback : ride.feedback,
-                    startLocation : '',
-                    destination : ''
-                };
-
-                var wLocation = ride._workLocation;
-                var rideType = ride.ride_type;
-
-                if(rideType === 'CT'){
-                    feedback.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
-                }else if(rideType === 'TC'){
-                    feedback.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
-                }else if(rideType === 'Ocasional'){
-                    feedback.startLocation = ride.startLocation.identifier;
-                    feedback.destination = ride.destination.identifier;
-                }
-
-                if (rideType != 'Ocasional') {
-
-                    WorkLocation.findOne({
-                        '_id': wLocation
-                    }, function (err, data) {
-                        if (err || data === null) {
-                            callback('error');
-                            console.log(err);
-                        } else {
-                            if (rideType === 'TC') {
-                                feedback.startLocation = data.name;
-                            } else {
-                                feedback.destination = data.name;
-                            }
-                            myFeedbacks.push(feedback);
-                            callback();
-                        }
-                    });
-
-                }else{
-                    myFeedbacks.push(feedback);
-                    callback();
-                }
-
-            }, function(err){
-                if( err ) {
-                    console.log('GetMyFeedbacks error -> ' + err);
+            var feedaverage = 0;
+            Ride.find({
+                '_owner': req.user.id
+            }, function(error, myrides) {
+                if (error || myrides === null) {
+                    res.json(error);
                 } else {
-                  var feedbacksum = 0;
-                  var count = 0;
-                  for (i = 0; i < myRides.length; i++) {
-                      for (j = 0; j < myRides[i].feedback.length; j++) {
-                          feedbacksum+=myRides[i].feedback[j].feedback;
-                          count+=1;
-                      }
-                  }
-                  res.json(myFeedbacks);
-                }
-            });
-        }
-      });
-    }
-  });
+					var feedbacklist=[];
+						for (i = 0; i < myrides.length; i++) {
+							for (j = 0; j < myrides[i].feedback.length; j++) {
+								var start, end;
+								if(myrides[i].ride_type=="CT"){
+									start = myrides[i].homeLocation.district;
+									end = myrides[i]._workLocation;
+								} else if(myrides[i].ride_type == "TC"){
+									end = myrides[i].homeLocation.district;
+									start = myrides[i]._workLocation;
+								} else if(myrides[i].ride_type == "Ocasional") {
+									start = myrides[i].homeLocation.district;
+									end = myrides[i].destination.address;
+								}
+								var  user_name = "NULL";
+								
+								Account.findOne({
+									'_id': myrides[i].feedback[j]._user
+								}, function(err1, data1) {
+									if (err1 || data1 === null) {
+										res.json(err1);
+									} else {
+										user_name = data1.name;
+									}
+								});
+								
+								if(myrides[i].ride_type == "CT" || myrides[i].ride_type == "TC"){
+									workLocation.findOne({
+										'_id': myrides[i]._workLocation
+									}, function(err2, data2) {
+										if (err1 || data2 === null) {
+											res.json(err2);
+										} else {
+											if (myrides[i].ride_type == "CT" ){
+												end = data2.name;
+											} else {
+												start = data2.name;
+											}
+										}
+									});
+								} 	
+								
+								var information = {
+									rideID : myrides[i]._id,
+									user : user_name,
+									startLocation : start,
+									destination: end,
+									date: myrides[i].time_start,
+									stars: myrides[i].feedback[j].feedback,
+									message: myrides[i].feedback[j].message
+								};
+								feedbacklist.push(information);
+                        }
+                    }
+					res.json(feedbacklist);
+                }});
+        }});
 }
 
 module.exports.userFeedback = getUserFeedback;
