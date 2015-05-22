@@ -472,12 +472,38 @@ p.change_profile_photo input[type="file"]:hover {
 	src: url(fonts/apexnew-thin.otf);
 }
 
-.iTGrowApexNewLight{
-	font-family: ApexNewLight;
+@font-face {
+	font-family: ApexNewBook;
+	src: url(fonts/apexnew-book.otf);
+}
+
+@font-face {
+	font-family: ApexNewMedium;
+	src: url(fonts/apexnew-medium.otf);
 }
 
 .iTGrowApexNewLight{
-	font-family: ApexNewLight;
+	font-family: ApexNewLight !important;
+}
+
+.iTGrowApexNewThin{
+	font-family: ApexNewThin !important;
+}
+
+.iTGrowApexNewBook{
+	font-family: ApexNewBook !important;
+}
+
+.iTGrowApexNewMedium{
+	font-family: ApexNewMedium !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+	font-family: ApexNewMedium !important;
+}
+
+body, div{
+	font-family: ApexNewBook !important;
 }
 
 /* ---------------------------- ConfirmAccount ------------------------*/

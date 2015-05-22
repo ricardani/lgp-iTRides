@@ -38,10 +38,10 @@ function register(req, res) {
         }
     });
 
-    var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" + 
-                  "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" + 
-                   "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
-                   "Obrigado,<br>iTRides";
+    var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" +
+        "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
+        "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
+        "Obrigado,<br>iTRides";
 
     sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
 }
@@ -52,15 +52,28 @@ function accountConfirmation(req, res) {
     Account.findOne({
         email: req.query.email
     }, function(err, user) {
-        if (sha256(user.email + user.name) === req.query.code) {
+        if (err || user === null) {
+            res.writeHead(302, {
+                'Location': 'accountConfirmed'
+            });
+            res.end();
+        } else if (sha256(user.email + user.name) === req.query.code) {
             user.activated = true;
             user.save(function(err) {
                 if (err) {
                     res.json(err);
                 } else {
-                    res.json('Account confirmed');
+                    res.writeHead(302, {
+                        'Location': 'accountConfirmed'
+                    });
+                    res.end();
                 }
             });
+        }else{
+            res.writeHead(302, {
+                'Location': 'accountConfirmed'
+            });
+            res.end();
         }
     });
 }
@@ -95,12 +108,12 @@ module.exports.checkLogin = login;
 
 function resetPassword(req, res) {
 
-    var message = 'Caro/a Utilizador(a) <br><br> ' + 
-                'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
-                'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
-                'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' + 
-                'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' + 
-                'Atenciosamente,<br>' + 'iTRides';
+    var message = 'Caro/a Utilizador(a) <br><br> ' +
+        'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
+        'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
+        'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' +
+        'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' +
+        'Atenciosamente,<br>' + 'iTRides';
 
     Account.update(
         {'email': req.body.email},

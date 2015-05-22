@@ -1,0 +1,46 @@
+/* Global Definitions */
+.orange {
+	color: rgb(243,121,38);
+}
+
+.white{
+	color:#fff;
+}
+
+/* Page Style */
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	background: url(loginBackground.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+
+	font-family: 'Roboto', sans-serif;
+	
+	text-align: center;
+	margin-top: 10%;
+}
+
+
+.button{
+	margin-left:auto;
+	margin-right:auto;
+	width:40%;
+	display: block;
+	margin-top:10px;
+	padding-top:15px;
+	padding-bottom:15px;
+	border:1px solid rgb(203,87,9);
+	background: #ffffff; /* Old browsers */
+	color:rgb(243,121,38);
+	font-size:17px;
+}
+
+
+#confirmation_text {
+	font-size: 90%;
+}
