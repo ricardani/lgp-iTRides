@@ -331,9 +331,17 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
             .state('listFeedbacks', {
                 url: "/listFeedbacks",
                 views: {
+					'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
                     'content': {
                         templateUrl: 'templates/listFeedbacks.html',
                         controller: 'ListFeedbacksCtrl'
+                    },
+					'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
                     }
                 }
             })

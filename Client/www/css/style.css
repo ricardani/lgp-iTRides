@@ -362,7 +362,7 @@ p.change_profile_photo input[type="file"]:hover {
 	padding:7px;
 }
 
-.edit_profile p input[type="text"]:focus, .edit_profile p input[type="password"]:focus{
+.edit_profile p input[type="text"]:focus, .edit_profile p input[type="password"]:focus, .focusClass:focus{
 	border:1px solid rgb(243,121,38);
 }
 
@@ -371,6 +371,7 @@ p.change_profile_photo input[type="file"]:hover {
 	font-size:13px;
 	font-weight: bold;
 }
+
 
 /*PARA A APLICA��O M�VEL*/
 
