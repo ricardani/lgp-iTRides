@@ -127,7 +127,6 @@ function resetPassword(req, res) {
         },
         function(err, data) {
             if(err || data === null) {
-                console.log("Borrou");
                 res.json(err);
             } else {
                 sendMail(req.body.email,'iTRides: Nova Password Gerada', message);
