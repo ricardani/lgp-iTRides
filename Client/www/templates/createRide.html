@@ -143,7 +143,12 @@
             <br>
             <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)" ng-if= "createNew === 'createNow'">
             <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRideInfo(newRide)" ng-if= "createNew === 'createInfo'">
-        </form>
+       
+			<a class="item item-icon-left assertive" href="#/home" style="background-color:#fff">
+				<i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+				<a1 class="orange"> Cancelar </a1>
+			</a>
+		</form>
         <br><br>
         <br><br>
 
@@ -186,34 +191,6 @@
                     </a>
 
                 </div>
-
-            </ion-content>
-        </ion-modal-view>
-    </script>
-
-    <script id="streets.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar>
-                <h1 class="title">Identifique a rua</h1>
-            </ion-header-bar>
-            <ion-content>
-
-                <input class="button button-ride-search" placeholder="Rua" ng-model="newRide.street">
-                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="streetSelected(newRide.street)">
-
-            </ion-content>
-        </ion-modal-view>
-    </script>
-
-    <script id="info.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar>
-                <h1 class="title">Coloque alguma informação adicional para ajudar a descobrir o local</h1>
-            </ion-header-bar>
-            <ion-content>
-
-                <input class="button button-ride-search" placeholder="Info" ng-model="newRide.info">
-                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(newRide.info)">
 
             </ion-content>
         </ion-modal-view>
