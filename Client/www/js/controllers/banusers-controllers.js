@@ -35,6 +35,23 @@ angular.module('iTRides.banUsersControllers', [])
                 });
         };
 
+
+        $scope.promoteUser = function(index) {
+            $http.post(Server.url + 'api/admin/promoteUser', {
+                "userID": $scope.users[index]._id
+            }).
+                success(function(data, status, headers, config) {
+                    $scope.users.splice(index, 1);
+                    $ionicLoading.hide();
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(JSON.stringify(data));
+                    $ionicLoading.hide();
+                });
+
+
+        };
+
         $scope.filter = function (string) {
             $scope.users = $scope.usersTemp;
             var temp = [];

@@ -65,7 +65,31 @@ angular.module('iTRides.homeControllers', [])
                 $ionicLoading.hide();
             });
 
+        $scope.showConfirm = function() {
 
+            var myPopup = $ionicPopup.show({
+                template: 'Deseja especificar já a data da boleia ou criar uma boleia pré-definida?',
+                title: 'Criar Boleia',
+                scope: $scope,
+                buttons: [
+                    { text: 'Boleia',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            $state.go('createRide', {'createNew': 'createNow'});
+                        }
+                    },
+                    {
+                        text: '<b>Boleia pré-definida</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            $state.go('createRide', {'createNew': 'createInfo'});
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+            });
+        };
 
         $scope.showPopup = function(rideID) {
             $scope.data = {}

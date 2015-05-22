@@ -10,6 +10,7 @@ router.post('/createWorkLocation', administrator.createWorkLocations);
 router.post('/deleteWorkLocation', administrator.deleteWorkLocations);
 
 router.post('/banUser', administrator.banUser);
+router.post('/promoteUser', administrator.promoteUser);
 
 router.post('/getUsers', administrator.getUsers);
 

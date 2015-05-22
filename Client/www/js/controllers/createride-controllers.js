@@ -1,6 +1,6 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server) {
+    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server, $state) {
         //var creatRideCtrl = this; e remover $scope
         $scope.costTypeOptions = [
             { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
@@ -44,7 +44,6 @@ angular.module('iTRides.createRideControllers', [])
 
         /*Occasional Ride variable */
         $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
-
 
         $http.get(Server.url + 'api/ride/getWorkLocations').
             success(function(data, status, headers, config) {
@@ -175,7 +174,7 @@ angular.module('iTRides.createRideControllers', [])
                 $scope.municipalityValidation = "error";
                 console.log('missing municipality');
                 noErrors=false;
-            }
+            }/*
             if($scope.street == 'Rua' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
                 $scope.streetValidation = "error";
                 console.log('missing street');
@@ -183,9 +182,9 @@ angular.module('iTRides.createRideControllers', [])
             }
             if($scope.info == 'Info' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
                 $scope.infoValidation = "error";
-                console.log('missing street');
+                console.log('missing info');
                 noErrors=false;
-            }
+            }*/
 
             return noErrors;
 
@@ -219,15 +218,16 @@ angular.module('iTRides.createRideControllers', [])
                         'homeLocation' : {
                             "district": $scope.district,
                             "municipality": $scope.municipality,
-                            "street": $scope.street,
-                            "info": $scope.info
+                            "street": newRide.destinationStreet,
+                            "info": newRide.destinationLocationInfo
                         }
                     }
                 )
                     .success(function(data, status, headers, config) {
                         if(data){
                             /* TODO caso funcione */
-                            $ionicLoading.hide();
+                            $state.go('home');
+							$ionicLoading.hide();
                         }
                     }).
                     error(function(data, status, headers, config) {
@@ -249,15 +249,16 @@ angular.module('iTRides.createRideControllers', [])
                         'homeLocation' : {
                             "district": $scope.district,
                             "municipality": $scope.municipality,
-                            "street": $scope.street,
-                            "info": $scope.info
+                            "street": newRide.startStreet,
+                            "info": newRide.startLocationInfo
                         }
                     }
                 )
                     .success(function(data, status, headers, config) {
                         if(data){
                             /* TODO caso funcione */
-                            $ionicLoading.hide();
+                            $state.go('home');
+							$ionicLoading.hide();
                         }
                     }).
                     error(function(data, status, headers, config) {
@@ -286,7 +287,8 @@ angular.module('iTRides.createRideControllers', [])
                     success(function(data, status, headers, config) {
                         if(data){
                             /* TODO caso funcione */
-                            $ionicLoading.hide();
+							$state.go('home');
+							$ionicLoading.hide();
                         }
                     }).
                     error(function(data, status, headers, config) {
@@ -298,7 +300,7 @@ angular.module('iTRides.createRideControllers', [])
                 /* TODO caso dê erro ao definir o tipo da boleia */
                 $ionicLoading.hide();
             }
-
+			
         };
 
         /*------------------Create Ride Info--------------------*/
