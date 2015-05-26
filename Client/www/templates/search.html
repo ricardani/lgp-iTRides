@@ -13,7 +13,7 @@
                ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
                ng-disabled="!hasDate"
                ng-click="itemClicked($index)"
-               class="button button-searchType-selected">
+               class="button button-searchType-selected item-text-wrap">
                 {{type}}
             </a>
         </div>
@@ -112,8 +112,8 @@
             </a>
 
 
-            <div class="text-wrap list card" ng-repeat="resultRide in resultRides | orderBy:'cost'" ng-show="seeResults">       
-                 <div ng-if="resultRide.rideType == 'Ocasional' ">   
+            <div class="text-wrap list card" ng-repeat="resultRide in resultRides | orderBy:'cost'" ng-show="seeResults">
+                <div ng-if="resultRide.rideType == 'Ocasional' ">
                     <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
                     <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
                     <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
@@ -125,7 +125,7 @@
                     <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}/search">Ver detalhes</a>
                 </div>
 
-                <div ng-if="resultRide.rideType == 'CT' ">   
+                <div ng-if="resultRide.rideType == 'CT' ">
                     <i class="ion-calendar orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
                     <p style="margin-left: 47px"> {{resultRide.date | date : 'dd/MM/yy HH:mm'}} </p>
                     <i class="ion-ios-home orange" style="font-size:100%; float:left; margin-left: 27px;"> </i>
@@ -137,45 +137,47 @@
                     <i class="ion-social-euro orange" style="font-size:100%; float:left;  margin-left: 29px;"> </i>
                     <p style="margin-left: 47px;">  {{resultRide.cost}}</p>
                     <a class="item item-icon-left assertive" href="#/rideDetails/{{resultRide.id}}/search">Ver detalhes</a>
-              </div>
+                </div>
             </div>
 
-
+            <br>
 
             <a ng-if="resultRides.length <= 0" class="item item-icon-left orange" style="background-color: rgb(243,121,38)">
                 <i class="icon ion-map" style="color: white"></i>
                 <div style="color: white"> Sem Resultados </div>
             </a>
+
+            <br>
         </div>
-		
-		<div ng-if="!hasDate">
-			<div class="list card">
-				<div class="item item-divider">
-					És condutor?
-				</div>
-				<div class="item item-body">
-					<img class="full-image" src="../img/driver.jpg">
-					<h2>Divide as tuas despesas!</h2>
-					<p>
-					  Faz as viagens para o trabalho ou de regresso a casa mais animadas partilhando os lugares vagos do teu veículo.
-					</p>
-				</div>
-			</div>
-			
-			<div class="list card">
-				<div class="item item-divider">
-					És passageiro?
-				</div>
-				<div class="item item-body">
-					<img class="full-image" src="../img/share.jpg">
-					<h2>Viaja poupando!</h2>
-					<p>
-					  Procura a boleia para a data e hora que precisas e viaja por um custo inferior.
-					</p>
-				</div>
-			</div><br><br>
-		</div>
-		
+
+        <div ng-if="!hasDate">
+            <div class="list card">
+                <div class="item item-divider">
+                    És condutor?
+                </div>
+                <div class="item item-body">
+                    <img class="full-image" ng-src="img/driver.jpg">
+                    <h2>Divide as tuas despesas!</h2>
+                    <p>
+                        Faz as viagens para o trabalho ou de regresso a casa mais animadas partilhando os lugares vagos do teu veículo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="list card">
+                <div class="item item-divider">
+                    És passageiro?
+                </div>
+                <div class="item item-body">
+                    <img class="full-image" ng-src="img/share.jpg">
+                    <h2>Viaja poupando!</h2>
+                    <p>
+                        Procura a boleia para a data e hora que precisas e viaja por um custo inferior.
+                    </p>
+                </div>
+            </div><br><br>
+        </div>
+
 
         <script id="districts.html" type="text/ng-template">
             <ion-modal-view>

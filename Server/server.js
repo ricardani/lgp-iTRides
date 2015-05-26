@@ -86,10 +86,6 @@ app.use('/', express.static(__dirname + '/public/index'));
 
 app.use('/user/accountConfirmed', express.static(__dirname + '/public/accountConfirmed'));
 
-app.get('/', function(request, response) {
-    response.send('Hello World!');
-});
-
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
 });
