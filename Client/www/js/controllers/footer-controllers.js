@@ -11,23 +11,4 @@ angular.module('iTRides.footerControllers', [])
             $scope.isProfile = true;
         else if($state.is('search'))
             $scope.isSearch = true;
-
-        $http.get(Server.url + 'api/profile/getProfileInfo').
-            success(function(data, status, headers, config) {
-                $scope.user = data;
-                //console.log($scope.user.permission);
-                $ionicLoading.hide();
-            }).
-            error(function(data, status, headers, config) {
-                console.log(JSON.stringify(config));
-                if(status === 401){
-                    delete window.sessionStorage.token;
-                    localStorage.removeItem('SessionToken');
-                    $state.go('login');
-                }
-                $ionicLoading.hide();
-           });
-
-    
-
     });
