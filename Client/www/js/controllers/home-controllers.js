@@ -92,8 +92,8 @@ angular.module('iTRides.homeControllers', [])
         $scope.showPopup = function(rideID) {
             $scope.data = {}
             var myPopup = $ionicPopup.show({
-                template: '<input ng-model="data.rating" type="number" min="1" max="5"> <br> ' +
-                '<input ng-model="data.message" type="text" placeholder="Deixe uma pequena mensagem">',
+                template: '<input ng-model="data.message" type="text" placeholder="Deixe uma pequena mensagem"> <br>' +
+                '<input ng-model="data.rating" type="tel" min="1" max="5" placeholder="Avalie de 1 a 5">',
                 title: 'Avalie esta boleia',
                 scope: $scope,
                 buttons: [
