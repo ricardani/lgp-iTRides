@@ -25,12 +25,10 @@ function sendMail(who, title, msg) {
 }
 
 function register(req, res) {
-/*
-  @criticalsoftware.com
-  @itgrow.pt*/
-    var email = req.body.email;
-    var emailDomain = email.toString().substring(email.indexOf(",") + 1);
-    console.log(emailDomain);
+
+  var email = req.body.email.toString();
+  var emailDomain = email.substring(email.indexOf("@") + 1);
+  if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
 
     Account.findOne({
       "email": req.body.email
@@ -62,10 +60,15 @@ function register(req, res) {
         });
       }
       else {
+        console.log("Invalid email: already in use.");
         res.json("Invalid email: already in use.");
       }
     });
-
+  }
+  else {
+    console.log("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
+    res.json("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
+  }
 }
 
 module.exports.reg = register;

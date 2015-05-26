@@ -100,7 +100,6 @@ module.exports.removeNotifications = DeleteAllNotifications;
 
 
 function DeleteNotification(req,res) {
-  console.log(req.body);
   Account.findOneAndUpdate({
     "_id": req.user.id
   },
@@ -108,11 +107,9 @@ function DeleteNotification(req,res) {
     "_id": req.body.notificationID}}},
   function(err,data) {
     if (err || data === null) {
-      console.log('Kaboom');
       res.json(err);
     }
     else {
-      console.log("Woohoo");
       res.json(data);
     }
   });
@@ -646,4 +643,3 @@ function getUserFeedback(req, res) {
 }
 
 module.exports.userFeedback = getUserFeedback;
-
