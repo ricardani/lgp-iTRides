@@ -28,7 +28,7 @@ function register(req, res) {
 
   var email = req.body.email.toString();
   var emailDomain = email.substring(email.indexOf("@") + 1);
-  if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
+  //if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
 
     Account.findOne({
       "email": req.body.email
@@ -54,21 +54,22 @@ function register(req, res) {
                 "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
                 "Obrigado,<br>iTRides";
 
-            sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
+            //sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
+            console.log("enviei e-mail");
             res.json(data);
           }
         });
       }
       else {
         console.log("Invalid email: already in use.");
-        res.json("Invalid email: already in use.");
+        res.json("AU");
       }
     });
-  }
+/*  }
   else {
     console.log("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
-    res.json("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
-  }
+    res.json("WD");
+  }*/
 }
 
 module.exports.reg = register;
