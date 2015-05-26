@@ -51,15 +51,4 @@ angular.module('iTRides.banUsersControllers', [])
 
 
         };
-
-        $scope.filter = function (string) {
-            $scope.users = $scope.usersTemp;
-            var temp = [];
-            for (i = 0; i < $scope.users.length; i++) {
-                if (($scope.users[i].name.toLowerCase().indexOf(string.toLowerCase()) !=-1) || ($scope.users[i].email.toLowerCase().indexOf(string.toLowerCase())!=-1)) {
-                    temp.push($scope.users[i]);
-                }
-            }
-            $scope.users = temp;
-        };
     });

@@ -15,7 +15,7 @@ angular.module('iTRides.footerControllers', [])
         $http.get(Server.url + 'api/profile/getProfileInfo').
             success(function(data, status, headers, config) {
                 $scope.user = data;
-                console.log($scope.user.permission);
+                //console.log($scope.user.permission);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {

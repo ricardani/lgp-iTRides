@@ -2,7 +2,7 @@
     <ion-content>
         <br><br>
 
-        <div ng-if= "notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0" >
+        <div ng-if= "notifications.length === 0 && myNextRide.id === null && myNextRequest.id === null && pastRides.length === 0" >
 
             <div class="card">
                 <div class="item item-text-wrap">
@@ -66,17 +66,8 @@
         </div>
 
 
-        <div ng-if= "!(notifications.length == 0 && myNextRide.id == null && myNextRequest.id == null && pastRides.length == 0)" class="">
-            <div class="list card" ng-if="notifications.length == 0">
-                <div class="item item-divider">
-                    <i class="icon ion-email-unread orange"></i>
-                    Notificações
-                    <span class="badge badge-assertive orange">0</span>
-                </div>
-            </div>
-
+        <div ng-if= "!(notifications.length === 0 && myNextRide.id === null && myNextRequest.id === null && pastRides.length === 0)" class="">
             <div class="list card" ng-if="notifications.length > 0">
-
                 <div class="item item-divider">
                     <i class="icon ion-email-unread orange"></i>
                     Notificações

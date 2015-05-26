@@ -82,37 +82,37 @@ module.exports.notifications = getNotifications;
 
 
 function DeleteAllNotifications(req,res) {
-  Account.findOneAndUpdate({
-    "_id": req.user.id
-  },
-  {notifications : []},
-  function(err,data) {
-    if (err || data === null) {
-      res.json(err);
-    }
-    else {
-      res.json(data);
-    }
-  });
+    Account.findOneAndUpdate({
+            "_id": req.user.id
+        },
+        {notifications : []},
+        function(err,data) {
+            if (err || data === null) {
+                res.json(err);
+            }
+            else {
+                res.json(data);
+            }
+        });
 }
 
 module.exports.removeNotifications = DeleteAllNotifications;
 
 
 function DeleteNotification(req,res) {
-  Account.findOneAndUpdate({
-    "_id": req.user.id
-  },
-  {$pull:{notifications: {
-    "_id": req.body.notificationID}}},
-  function(err,data) {
-    if (err || data === null) {
-      res.json(err);
-    }
-    else {
-      res.json(data);
-    }
-  });
+    Account.findOneAndUpdate({
+            "_id": req.user.id
+        },
+        {$pull:{notifications: {
+            "_id": req.body.notificationID}}},
+        function(err,data) {
+            if (err || data === null) {
+                res.json(err);
+            }
+            else {
+                res.json(data);
+            }
+        });
 }
 
 module.exports.removeNotification = DeleteNotification;
@@ -643,3 +643,43 @@ function getUserFeedback(req, res) {
 }
 
 module.exports.userFeedback = getUserFeedback;
+
+
+function getAllUsers(req, res) {
+    var user_old_password;
+    Account.find({activated : true},
+        function(err, data) {
+            if (err || data === null) {
+                res.sendStatus(404);
+            } else {
+
+                var allInfo = [];
+
+                async.each(data, function(user, callback) {
+
+                    var info = {
+                        id : user._id,
+                        name : user.name,
+                        photo : user.photo,
+                        contact : user.contact,
+                        residency : user.residency,
+                        email: user.email
+                    };
+
+                    allInfo.push(info);
+
+                    callback();
+
+                }, function(err){
+                    if( err ) {
+                        res.sendStatus(400);
+                    } else {
+                        res.json(allInfo);
+                    }
+                });
+            }
+        }
+    );
+}
+
+module.exports.getAllUsers = getAllUsers;

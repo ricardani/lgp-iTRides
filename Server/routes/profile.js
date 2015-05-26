@@ -29,14 +29,6 @@ router.post('/updateProfilePassword', profiles.profileUpdatePassword);
 
 router.get('/getUserFeedback', profiles.userFeedback);
 
-/*
- router.post('/createCR', rides.createCustomRide);
-
- router.post('/createDR', rides.createDefaultRide);
-
- router.post('/deleteRide', rides.deleteRide);
-
- router.post('/requestRide', rides.requestsRide);
- */
+router.get('/getAllUsers', profiles.getAllUsers);
 
 module.exports = router;

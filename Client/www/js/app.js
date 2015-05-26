@@ -2,7 +2,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
     'iTRides.loginControllers','iTRides.resetPasswordControllers', 'iTRides.footerControllers', 'iTRides.createRideControllers', 'iTRides.signupControllers',
     'iTRides.loadingControllers', 'iTRides.listDefaultRidesControllers', 'iTRides.listRequestedRidesControllers','iTRides.rideDetailsControllers',
     'iTRides.listCreatedRidesControllers', 'iTRides.listWorkLocationControllers', 'iTRides.editProfileControllers', 'iTRides.editRideControllers', 'iTRides.createWorkLocationControllers',
-    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers', 'iTRides.listFeedbacksControllers','iTRides.adminpageControllers'])
+    'iTRides.userInfoControllers', 'iTRides.services', 'iTRides.confirmAccountControllers', 'iTRides.listFeedbacksControllers','iTRides.adminpageControllers', 'iTRides.searchUsers'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
@@ -230,7 +230,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                 }
             })
 
-			      .state('listRequestedRides', {
+            .state('listRequestedRides', {
                 url: "/listRequestedRides",
                 views: {
                     'header': {
@@ -264,7 +264,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     }
                 }
             })
-			      .state('editProfile', {
+            .state('editProfile', {
                 url: "/editProfile",
                 views: {
                     'header': {
@@ -282,7 +282,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                 }
             })
 
-			      .state('listCreatedRides', {
+            .state('listCreatedRides', {
                 url: "/listCreatedRides",
                 views: {
                     'header': {
@@ -331,7 +331,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
             .state('listFeedbacks', {
                 url: "/listFeedbacks",
                 views: {
-					'header': {
+                    'header': {
                         templateUrl: 'templates/header.html',
                         controller: ''
                     },
@@ -339,7 +339,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                         templateUrl: 'templates/listFeedbacks.html',
                         controller: 'ListFeedbacksCtrl'
                     },
-					'footer': {
+                    'footer': {
                         templateUrl: 'templates/footer.html',
                         controller:'FooterCtrl'
                     }
@@ -357,6 +357,25 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     'content': {
                         templateUrl: 'templates/adminPage.html',
                         controller: 'AdminCtrl'
+                    },
+                    'footer': {
+                        templateUrl: 'templates/footer.html',
+                        controller:'FooterCtrl'
+                    }
+                }
+            })
+
+
+            .state('searchUsers', {
+                url: "/searchUsers",
+                views: {
+                    'header': {
+                        templateUrl: 'templates/header.html',
+                        controller: ''
+                    },
+                    'content': {
+                        templateUrl: 'templates/searchUsers.html',
+                        controller: 'SearchUsersCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',

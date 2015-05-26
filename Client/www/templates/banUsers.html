@@ -9,11 +9,11 @@
 					<div class="list list-inset search-bar">
 						<label class="item item-input">
 							<i class="icon ion-search placeholder-icon" style="font-size:"></i>
-							<input type="text" placeholder="Nome ou Email do Utilizador" ng-model="valor" ng-change="filter(valor)">
+							<input type="text" placeholder="Nome ou Email do Utilizador" ng-model="valor">
 						</label>
 					</div>
 				</div>
-				<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in users" type="item-text-wrap">
+				<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in users | filter : valor" type="item-text-wrap">
 					<i class="ion-person orange" style="font-size:200%; float:left;"> </i>
 					<h2 style="margin-left: 40px; margin-top: 10px">{{user.name}}</h2>
 					<ion-option-button class="button-balanced" ng-click="promoteUser($index)">

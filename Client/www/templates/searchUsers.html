@@ -1,0 +1,35 @@
+<ion-view>
+    <ion-content>
+        <br><br>
+
+        <div class="list card">
+            <ion-list>
+                <div class="item item-divider" style="white-space:normal">
+                    <span>Utilizadores da Aplicação</span>
+                    <div class="list list-inset search-bar">
+                        <label class="item item-input">
+                            <i class="icon ion-search placeholder-icon"></i>
+                            <input type="text" placeholder="Nome ou Email do Utilizador" ng-model="search">
+                        </label>
+                    </div>
+                </div>
+                <a class="item item-avatar" ng-repeat="user in users | filter : search | orderBy : 'name' | limitTo : 5 " type="item-text-wrap" ng-href="#/userInfo/{{user.id}}">
+                    <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
+                    <h2>{{user.name}}</h2>
+                    <div ng-if="user.contact && user.residency">
+                        <p>{{user.contact}} | {{user.residency}}</p>
+                    </div>
+
+                    <div ng-if="user.contact && !user.residency">
+                        <p>{{user.contact}}</p>
+                    </div>
+
+                    <div ng-if="!user.contact && user.residency">
+                        <p>{{user.residency}}</p>
+                    </div>
+                </a>
+            </ion-list>
+        </div>
+        <br><br>
+    </ion-content>
+</ion-view>
