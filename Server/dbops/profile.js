@@ -21,7 +21,7 @@ function getNotifications(req, res) {
             async.eachSeries(notifications, function(n, callback) {
                 var noti_obj = JSON.parse(JSON.stringify(n));
                 var senderID = noti_obj._sender;
-                var rideID = noti_obj._customRideId;
+                var rideID = noti_obj._ride;
 
                 Account.findOne({
                     '_id': senderID
@@ -33,6 +33,7 @@ function getNotifications(req, res) {
                             name : data.name,
                             photo : data.photo,
                             msgType : noti_obj.type,
+                            message : noti_obj.message,
                             rideID : '',
                             rideDate : ''
                         };
@@ -77,6 +78,45 @@ function getNotifications(req, res) {
 }
 
 module.exports.notifications = getNotifications;
+
+
+function DeleteAllNotifications(req,res) {
+  Account.findOneAndUpdate({
+    "_id": req.user.id
+  },
+  {notifications : []},
+  function(err,data) {
+    if (err || data === null) {
+      res.json(err);
+    }
+    else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports.removeNotifications = DeleteAllNotifications;
+
+
+function DeleteNotification(req,res) {
+  Account.findOneAndUpdate({
+    "_id": req.user.id
+  },
+  {$pull:{notifications: {
+    type: req.body.notificationType,
+    _ride: req.body.rideID}}},
+  function(err,data) {
+    if (err || data === null) {
+      res.json(err);
+    }
+    else {
+      res.json(data);
+    }
+  });
+}
+
+module.exports.removeNotification = DeleteNotification;
+
 
 function getProfileInfo(req, res) {
     Account.findOne({
@@ -409,7 +449,7 @@ function updatePenalties(req, res) {
             }
         }
     );
-} 
+}
 
 module.exports.penaltiesUpdate = updatePenalties;
 
@@ -534,7 +574,7 @@ function getUserFeedback(req, res) {
 									end = myrides[i].destination.address;
 								}
 								var  user_name = "NULL";
-								
+
 								Account.findOne({
 									'_id': myrides[i].feedback[j]._user
 								}, function(err1, data1) {
@@ -544,7 +584,7 @@ function getUserFeedback(req, res) {
 										user_name = data1.name;
 									}
 								});
-								
+
 								if(myrides[i].ride_type == "CT" || myrides[i].ride_type == "TC"){
 									workLocation.findOne({
 										'_id': myrides[i]._workLocation
@@ -559,8 +599,8 @@ function getUserFeedback(req, res) {
 											}
 										}
 									});
-								} 	
-								
+								}
+
 								var information = {
 									rideID : myrides[i]._id,
 									user : user_name,

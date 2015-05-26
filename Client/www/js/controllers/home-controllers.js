@@ -131,9 +131,23 @@ angular.module('iTRides.homeControllers', [])
 
         };
 
-        $scope.removeNotification = function (index) {
-            $scope.notifications.splice(index, 1);
+        $scope.removeNotification = function (index,notification) {
 
+            $http.post(Server.url + 'api/profile/removeNotification',
+    					{
+    						'notificationType': notification.msgType,
+    						'rideID' : notification.rideID,
+    						'rideTime' : notification.rideDate
+    					})
+    					.success(function(data, status, headers, config) {
+
+                $scope.notifications.splice(index, 1);
+
+    						$ionicLoading.hide();
+    					})
+    					.error(function(data, status, headers, config) {
+    						$ionicLoading.hide();
+    					});
         };
 
         $scope.removeAllNotification = function () {
@@ -141,6 +155,14 @@ angular.module('iTRides.homeControllers', [])
             while($scope.notifications.length > 0){
                 $scope.removeNotification($scope.notifications.length - 1);
             }
+            $http.get(Server.url + 'api/profile/removeNotifications')
+            .success(function(data, status, headers, config) {
+
+              $ionicLoading.hide();
+            }).
+            error(function(data, status, headers, config) {
+              $ionicLoading.hide();
+            });
         };
 
 
