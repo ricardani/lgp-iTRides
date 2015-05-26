@@ -135,9 +135,7 @@ angular.module('iTRides.homeControllers', [])
 
             $http.post(Server.url + 'api/profile/removeNotification',
     					{
-    						'notificationType': notification.msgType,
-    						'rideID' : notification.rideID,
-    						'rideTime' : notification.rideDate
+    						'notificationID': notification._id
     					})
     					.success(function(data, status, headers, config) {
 

@@ -25,26 +25,47 @@ function sendMail(who, title, msg) {
 }
 
 function register(req, res) {
-    var hash, temp;
-    hash = sha256(req.body.password);
-    temp = req.body;
-    temp.name = req.body.firstName + " " + req.body.lastName;
-    temp.password = hash;
-    var person = new Account(temp);
-    person.save(function(error, data) {
-        if (error) {
-            res.json(error);
-        } else {
+/*
+  @criticalsoftware.com
+  @itgrow.pt*/
+    var email = req.body.email;
+    var emailDomain = email.toString().substring(email.indexOf(",") + 1);
+    console.log(emailDomain);
+
+    Account.findOne({
+      "email": req.body.email
+    }, function(err,data){
+      if(err) {
+        res.json(err);
+      }
+      else if(data === null) {
+
+        var hash, temp;
+        hash = sha256(req.body.password);
+        temp = req.body;
+        temp.name = req.body.firstName + " " + req.body.lastName;
+        temp.password = hash;
+
+        var person = new Account(temp);
+        person.save(function(error, data) {
+          if (error) {
+              res.json(error);
+          } else {
+            var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" +
+                "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
+                "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
+                "Obrigado,<br>iTRides";
+
+            sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
             res.json(data);
-        }
+          }
+        });
+      }
+      else {
+        res.json("Invalid email: already in use.");
+      }
     });
 
-    var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" +
-        "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
-        "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
-        "Obrigado,<br>iTRides";
-
-    sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
 }
 
 module.exports.reg = register;

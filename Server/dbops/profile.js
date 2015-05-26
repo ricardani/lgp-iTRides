@@ -30,6 +30,7 @@ function getNotifications(req, res) {
                         callback('error');
                     }else{
                         var notificationsData = {
+                            _id: noti_obj._id,
                             name : data.name,
                             photo : data.photo,
                             msgType : noti_obj.type,
@@ -99,17 +100,19 @@ module.exports.removeNotifications = DeleteAllNotifications;
 
 
 function DeleteNotification(req,res) {
+  console.log(req.body);
   Account.findOneAndUpdate({
     "_id": req.user.id
   },
   {$pull:{notifications: {
-    type: req.body.notificationType,
-    _ride: req.body.rideID}}},
+    "_id": req.body.notificationID}}},
   function(err,data) {
     if (err || data === null) {
+      console.log('Kaboom');
       res.json(err);
     }
     else {
+      console.log("Woohoo");
       res.json(data);
     }
   });
