@@ -87,7 +87,7 @@ function allRides(req, res) {
 
 module.exports.getallRides = allRides;
 
-
+/*
 function rideSearch(req, res) {
 
     if(req.body.ride_type == "CT" || req.body.ride_type == "TC") {
@@ -143,20 +143,47 @@ function rideSearch(req, res) {
 
 }
 
-module.exports.searchRide = rideSearch;
-/* TODO send notifications to passengers*/
+module.exports.searchRide = rideSearch;*/
+
 
 function removeRide(req, res) {
 
-    Ride.findOne({
-        "_id": req.body.rideID
-    }).remove(function(error,data) {
-            if (error) {
-                res.json(error);
-            } else
-                res.json(data);
-        }
-    );
+  Ride.findOneAndRemove({
+    "_id": req.body.rideID
+  }, function(error,ride) {
+    if (error) {
+      res.json(error);
+    } else {
+      for(var i =0; i < ride.passengers.length; i++) {
+        Account.findOne({
+          "_id": ride.passengers[i]._user
+        }, function(err,passenger) {
+          if(err) {
+            console.log("Error a encontrar o passageiro");
+          }
+          else {
+
+            var notification = {
+              _sender: ride._owner,
+              type: "Cancel",
+              _ride: req.body.rideID,
+              rideType: ride.ride_type,
+              rideTime: ride.time_start
+            }
+            passenger.notifications.push(notification);
+            passenger.save(function(error, addedNotification) {
+                if (error) {
+                    console.log("Error saving notification to passenger");
+                } else {
+                    console.log("Passenger notified");
+                }
+            });
+          }
+        });
+      }
+      res.json(ride);
+    }
+  });
 }
 
 module.exports.deleteRide = removeRide;
@@ -204,16 +231,41 @@ function requestRide(req, res) {
 
     Ride.findOne({
         "_id": req.body.rideID
-    }, function(err, data) {
+    }, function(err, ride) {
         if(err) {
             res.json(err);
         }
         else {
-            data.passengers.push({"_user":req.user.id});
-            data.save(function(error, addedPassenger) {
+            ride.passengers.push({"_user":req.user.id});
+            ride.save(function(error, addedPassenger) {
                 if (error) {
                     res.json(error);
                 } else {
+                    Account.findOne({
+                      "_id": ride._owner
+                    }, function(err,rideOwner) {
+                      if(err) {
+                        console.log("Error a encontrar o passageiro");
+                      }
+                      else {
+
+                        var notification = {
+                          _sender: req.user.id,
+                          type: "Enter",
+                          _ride: ride._id,
+                          rideType: ride.ride_type,
+                          rideTime: ride.time_start
+                        }
+                        rideOwner.notifications.push(notification);
+                        rideOwner.save(function(error, addedNotification) {
+                            if (error) {
+                                console.log("Error saving notification to ride owner");
+                            } else {
+                                console.log("Ride owner notified");
+                            }
+                        });
+                      }
+                    });
                     res.json(addedPassenger);
                 }
             });
@@ -231,12 +283,37 @@ function requestRideDeletion(req,res) {
             "_id": req.body.rideID
         },
         {$pull:{passengers: {_user: req.user.id}}},
-        function(err, data) {
+        function(err, ride) {
             if(err) {
                 res.json(err);
             }
             else {
-                res.json(data);
+                Account.findOne({
+                  "_id": ride._owner
+                }, function(err,rideOwner) {
+                  if(err) {
+                    console.log("Error a encontrar o passageiro");
+                  }
+                  else {
+
+                    var notification = {
+                      _sender: req.user.id,
+                      type: "Exit",
+                      _ride: ride._id,
+                      rideType: ride.ride_type,
+                      rideTime: ride.time_start
+                    }
+                    rideOwner.notifications.push(notification);
+                    rideOwner.save(function(error, addedNotification) {
+                        if (error) {
+                            console.log("Error saving notification to ride owner");
+                        } else {
+                            console.log("Ride owner notified");
+                        }
+                    });
+                  }
+                });
+                res.json(ride);
             }
         });
 

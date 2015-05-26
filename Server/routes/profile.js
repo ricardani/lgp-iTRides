@@ -5,6 +5,10 @@ profiles = require('../dbops/profile');
 
 router.get('/getNotifications', profiles.notifications);
 
+router.get('/removeNotifications', profiles.removeNotifications);
+
+router.post('/removeNotification', profiles.removeNotification);
+
 //Request GET that responds with the current user's profile data
 router.get('/getProfileInfo', profiles.information);
 

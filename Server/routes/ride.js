@@ -11,9 +11,9 @@ router.post('/deleteRide', rides.deleteRide);
 
 router.post('/createRideInfo', rides.createRideInfo);
 
-router.post('/requestRide', rides.requestsRide);
+router.post('/requestRide', rides.requestsRide); //TODO enviar notificação
 
-router.post('/deleteRequestedRide', rides.deleteRequestedRide);
+router.post('/deleteRequestedRide', rides.deleteRequestedRide); //TODO enviar notificação
 
 router.post('/rideFeedback', rides.rideFeedback);
 

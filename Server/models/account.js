@@ -7,10 +7,12 @@ var Notification = new Schema({
     ref:'accounts'
   },
   type: String,
-  _customRideId: {
+  _ride: {
     type: Schema.ObjectId,
-    ref:'customrides'
-  }
+    ref:'rides'
+  },
+  rideType: String,
+  rideTime: String
 });
 
 var Account = new Schema({
@@ -19,7 +21,10 @@ var Account = new Schema({
   password: String,
   contact: String,
   residency: String,
-  photo: String,
+  photo: {
+    type: String,
+    default: "img/default_profile_photo.png"
+  },
   activated: {
     type: Boolean,
     default: false
