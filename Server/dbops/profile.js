@@ -100,12 +100,12 @@ function getProfileInfo(req, res) {
                             count+=1;
                         }
                     }
-					if(count==0){
-						feedaverage=0;
-					}else{
-						feedaverage = feedbacksum/count;
-					}
-					feedaverage = feedaverage - (data.penalties * 1/5);
+                    if(count==0){
+                        feedaverage=0;
+                    }else{
+                        feedaverage = feedbacksum/count;
+                    }
+                    feedaverage = feedaverage - (data.penalties * 1/5);
 
                     var information = {
                         id : data._id,
@@ -115,7 +115,7 @@ function getProfileInfo(req, res) {
                         email: data.email,
                         permission: data.permission,
                         residency: data.residency,
-						penalties: data.penalties,
+                        penalties: data.penalties,
                         feedaverage: feedaverage
                     };
                     res.json(information);
@@ -129,96 +129,96 @@ module.exports.information = getProfileInfo;
 
 function getUserInfo(req, res) {
 
-  Account.findOne({
-      '_id': req.body.userID
-  }, function(err, requestedUser) {
-    if (err || requestedUser === null) {
-        res.json(err);
-    } else {
-      var feedaverage = 0;
-      Ride.find({
-          '_owner': req.body.userID
-      }, function(error, requestedRides) {
-        if (error || requestedRides === null) {
-            res.json(error);
+    Account.findOne({
+        '_id': req.body.userID
+    }, function(err, requestedUser) {
+        if (err || requestedUser === null) {
+            res.json(err);
         } else {
-            var myRides = [];
+            var feedaverage = 0;
+            Ride.find({
+                '_owner': req.body.userID
+            }, function(error, requestedRides) {
+                if (error || requestedRides === null) {
+                    res.json(error);
+                } else {
+                    var myRides = [];
 
-            async.each(requestedRides, function(ride, callback) {
-                var RideInfo = {
-                    id : ride._id,
-                    date : ride.time_start,
-                    feedback : ride.feedback,
-                    startLocation : '',
-                    destination : ''
-                };
+                    async.each(requestedRides, function(ride, callback) {
+                        var RideInfo = {
+                            id : ride._id,
+                            date : ride.time_start,
+                            feedback : ride.feedback,
+                            startLocation : '',
+                            destination : ''
+                        };
 
-                var wLocation = ride._workLocation;
-                var rideType = ride.ride_type;
+                        var wLocation = ride._workLocation;
+                        var rideType = ride.ride_type;
 
-                if(rideType === 'CT'){
-                    RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
-                }else if(rideType === 'TC'){
-                    RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
-                }else if(rideType === 'Ocasional'){
-                    RideInfo.startLocation = ride.startLocation.identifier;
-                    RideInfo.destination = ride.destination.identifier;
-                }
+                        if(rideType === 'CT'){
+                            RideInfo.startLocation = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                        }else if(rideType === 'TC'){
+                            RideInfo.destination = ride.homeLocation.street + ', ' + ride.homeLocation.municipality + ', ' + ride.homeLocation.district;
+                        }else if(rideType === 'Ocasional'){
+                            RideInfo.startLocation = ride.startLocation.identifier;
+                            RideInfo.destination = ride.destination.identifier;
+                        }
 
-                if (rideType != 'Ocasional') {
+                        if (rideType != 'Ocasional') {
 
-                    WorkLocation.findOne({
-                        '_id': wLocation
-                    }, function (err, data) {
-                        if (err || data === null) {
-                            callback('error');
-                            console.log(err);
-                        } else {
-                            if (rideType === 'TC') {
-                                RideInfo.startLocation = data.name;
-                            } else {
-                                RideInfo.destination = data.name;
-                            }
+                            WorkLocation.findOne({
+                                '_id': wLocation
+                            }, function (err, data) {
+                                if (err || data === null) {
+                                    callback('error');
+                                    console.log(err);
+                                } else {
+                                    if (rideType === 'TC') {
+                                        RideInfo.startLocation = data.name;
+                                    } else {
+                                        RideInfo.destination = data.name;
+                                    }
+                                    myRides.push(RideInfo);
+                                    callback();
+                                }
+                            });
+
+                        }else{
                             myRides.push(RideInfo);
                             callback();
                         }
+
+                    }, function(err){
+                        if( err ) {
+                            console.log('GetMyRides error -> ' + err);
+                        } else {
+                            var feedbacksum = 0;
+                            var count = 0;
+                            for (i = 0; i < myRides.length; i++) {
+                                for (j = 0; j < myRides[i].feedback.length; j++) {
+                                    feedbacksum+=myRides[i].feedback[j].feedback;
+                                    count+=1;
+                                }
+                            }
+                            feedaverage=feedbacksum/count;
+
+                            var information = {
+                                id : requestedUser._id,
+                                name : requestedUser.name,
+                                photo : requestedUser.photo,
+                                contact : requestedUser.contact,
+                                email: requestedUser.email,
+                                feedaverage: feedaverage,
+                                requestedUserRides: myRides
+                            };
+                            res.json(information);
+                        }
                     });
-
-                }else{
-                    myRides.push(RideInfo);
-                    callback();
-                }
-
-            }, function(err){
-                if( err ) {
-                    console.log('GetMyRides error -> ' + err);
-                } else {
-                  var feedbacksum = 0;
-                  var count = 0;
-                  for (i = 0; i < myRides.length; i++) {
-                      for (j = 0; j < myRides[i].feedback.length; j++) {
-                          feedbacksum+=myRides[i].feedback[j].feedback;
-                          count+=1;
-                      }
-                  }
-                  feedaverage=feedbacksum/count;
-
-                  var information = {
-                      id : requestedUser._id,
-                      name : requestedUser.name,
-                      photo : requestedUser.photo,
-                      contact : requestedUser.contact,
-                      email: requestedUser.email,
-                      feedaverage: feedaverage,
-                      requestedUserRides: myRides
-                  };
-                  res.json(information);
                 }
             });
         }
-      });
-    }
-  });
+    });
 }
 
 module.exports.userInfo = getUserInfo;
@@ -409,7 +409,7 @@ function updatePenalties(req, res) {
             }
         }
     );
-} 
+}
 
 module.exports.penaltiesUpdate = updatePenalties;
 
@@ -506,76 +506,101 @@ module.exports.updateImg = updateImg;
 
 
 function getUserFeedback(req, res) {
-	Account.findOne({
-        '_id': req.user.id
-    }, function(err, data) {
-        if (err || data === null) {
-            res.json(err);
+    Ride.find({
+        '_owner': req.user.id
+    }, function(error, myRides) {
+        if (error || myRides === null) {
+            res.json(error);
         } else {
-            var feedaverage = 0;
-            Ride.find({
-                '_owner': req.user.id
-            }, function(error, myrides) {
-                if (error || myrides === null) {
-                    res.json(error);
-                } else {
-					var feedbacklist=[];
-						for (i = 0; i < myrides.length; i++) {
-							for (j = 0; j < myrides[i].feedback.length; j++) {
-								var start, end;
-								if(myrides[i].ride_type=="CT"){
-									start = myrides[i].homeLocation.district;
-									end = myrides[i]._workLocation;
-								} else if(myrides[i].ride_type == "TC"){
-									end = myrides[i].homeLocation.district;
-									start = myrides[i]._workLocation;
-								} else if(myrides[i].ride_type == "Ocasional") {
-									start = myrides[i].homeLocation.district;
-									end = myrides[i].destination.address;
-								}
-								var  user_name = "NULL";
-								
-								Account.findOne({
-									'_id': myrides[i].feedback[j]._user
-								}, function(err1, data1) {
-									if (err1 || data1 === null) {
-										res.json(err1);
-									} else {
-										user_name = data1.name;
-									}
-								});
-								
-								if(myrides[i].ride_type == "CT" || myrides[i].ride_type == "TC"){
-									workLocation.findOne({
-										'_id': myrides[i]._workLocation
-									}, function(err2, data2) {
-										if (err1 || data2 === null) {
-											res.json(err2);
-										} else {
-											if (myrides[i].ride_type == "CT" ){
-												end = data2.name;
-											} else {
-												start = data2.name;
-											}
-										}
-									});
-								} 	
-								
-								var information = {
-									rideID : myrides[i]._id,
-									user : user_name,
-									startLocation : start,
-									destination: end,
-									date: myrides[i].time_start,
-									stars: myrides[i].feedback[j].feedback,
-									message: myrides[i].feedback[j].message
-								};
-								feedbacklist.push(information);
-                        }
+            var feedbackList = [];
+
+            async.each(myRides, function(ride, callback) {
+
+                if( ride.feedback.length === 0)
+                    callback();
+                else{
+                    var information = {
+                        rideID : '',
+                        user : '',
+                        startLocation : '',
+                        destination: '',
+                        date: '',
+                        stars: 0,
+                        messages: []
+                    };
+
+                    var aux = {
+                        ride_type : '',
+                        start : '',
+                        end : '',
+                        user_name : '',
+                        workLocation : ''
+                    };
+
+                    aux.ride_type = ride.ride_type;
+                    aux.workLocation = ride._workLocation;
+
+                    information.rideID = ride._id;
+                    information.date = ride.time_start;
+
+                    if(aux.ride_type=="CT"){
+                        aux.start = ride.homeLocation.district;
+                    } else if(aux.ride_type == "TC"){
+                        aux.end = ride.homeLocation.district;
+                    } else if(aux.ride_type == "Ocasional") {
+                        aux.start = ride.homeLocation.district;
+                        aux.end = ride.destination.address;
                     }
-					res.json(feedbacklist);
-                }});
+
+                    ride.feedback.forEach(function(feed) {
+                        information.stars += feed.feedback;
+                        information.messages.push(feed.message);
+                    });
+
+                    if( ride.feedback.length > 0)
+                        information.stars = information.stars / ride.feedback.length;
+
+                    if(aux.ride_type == "CT" || aux.ride_type == "TC"){
+                        WorkLocation.findOne({
+                            '_id': aux.workLocation
+                        }, function(err2, data2) {
+                            if (err2 || data2 === null) {
+                                if (aux.ride_type == "CT") {
+                                    aux.end = 'Missingno';
+                                } else {
+                                    aux.start = 'Missingno';
+                                }
+                            } else {
+                                if (aux.ride_type == "CT") {
+                                    aux.end = data2.name;
+                                } else {
+                                    aux.start = data2.name;
+                                }
+                            }
+
+                            information.startLocation = aux.start;
+                            information.destination = aux.end;
+
+                            feedbackList.push(information);
+
+                            callback();
+                        });
+                    }
+                }
+
+            }, function(err){
+
+                if( err ) {
+                    res.sendStatus(400);
+                } else {
+                    res.json(feedbackList);
+                }
+            });
+
+
         }});
+
 }
 
 module.exports.userFeedback = getUserFeedback;
+
