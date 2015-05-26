@@ -17,7 +17,7 @@ var Notification = new Schema({
 
 var Account = new Schema({
   name: String,
-  email: String,
+  email: { type: String, unique: true },
   password: String,
   contact: String,
   residency: String,

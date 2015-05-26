@@ -54,7 +54,7 @@ function register(req, res) {
                 "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
                 "Obrigado,<br>iTRides";
 
-            //sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
+            sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
             console.log("enviei e-mail");
             res.json(data);
           }
