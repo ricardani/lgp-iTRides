@@ -5,6 +5,7 @@ angular.module('iTRides.listFeedbacksControllers', [])
         $http.get(Server.url + 'api/profile/getUserFeedback').
             success(function(data, status, headers, config) {
                 $scope.feedbackList = data;
+                console.log(data);
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
@@ -24,6 +25,18 @@ angular.module('iTRides.listFeedbacksControllers', [])
 
         $scope.getNumberEmpty = function(num) {
             return new Array(Math.floor(5-num));
+        };
+
+        $scope.getNumberHalf = function(num) {
+            if(num % 1 === 0){
+                //é inteiro
+                return new Array(0);
+            }
+            else
+            {
+                //é float
+                return new Array(1);
+            }
         };
     })
 
