@@ -13,6 +13,11 @@
                 <a class="tab-item" href="#/search">
                     <i class="icon ion-search" ng-class="{ 'orange': isSearch}"></i>
                 </a>
+                
+                <a ng-if="user.permission == 'Admin'" class="tab-item" href="#/adminPage" >
+                    <i class="icon ion-gear-a" ng-class="{ 'orange': isSearch}"></i>
+                </a>
+
             </div>
         </div>
     </div>
