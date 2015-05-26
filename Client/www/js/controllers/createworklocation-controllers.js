@@ -1,6 +1,6 @@
 angular.module('iTRides.createWorkLocationControllers', [])
 
-    .controller('CreateWorkLocationCtrl', function($scope, $http, $ionicModal, $ionicLoading, $timeout, Server) {
+    .controller('CreateWorkLocationCtrl', function($scope, $http, $state, $ionicModal, $ionicLoading, $timeout, Server) {
 
         $scope.workLocation = {
             district : 'Distrito',
@@ -82,7 +82,7 @@ angular.module('iTRides.createWorkLocationControllers', [])
         /*--------------------------------------------------*/
 
         $scope.createWorkLocation = function() {
-            $http.post(Server.url + 'api/ride/createWorkLocation',
+            $http.post(Server.url + 'api/admin/createWorkLocation',
                 {
                     'name': $scope.workLocation.workLocationName,
                     'defaultLocation' : {
@@ -96,6 +96,7 @@ angular.module('iTRides.createWorkLocationControllers', [])
                 .success(function(data, status, headers, config) {
                     if(data){
                         /* TODO caso funcione */
+                        $state.go('adminPage');
                         $ionicLoading.hide();
                     }
                 }).

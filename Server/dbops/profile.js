@@ -273,7 +273,6 @@ function getNextRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log("Nao encontrou a pr�xima boleia");
             res.json(err);
         } else {
 
@@ -306,7 +305,6 @@ function getNextRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log("Nao encontrou o passageiro -> " + userID);
                         callback();
                     }else{
                         var user = {
@@ -333,7 +331,6 @@ function getNextRide(req, res) {
                             '_id': wLocation
                         }, function (err, data) {
                             if (err || data === null) {
-                                console.log("Nao encontrou o local de trabalho -> " + wLocation);
                                 res.json(err);
                             } else {
                                 if (rideType === 'TC') {

@@ -1,6 +1,6 @@
 angular.module('iTRides.editRideControllers', [])
 
-    .controller('EditRideCtrl', function($scope, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
+    .controller('EditRideCtrl', function($scope, $state, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
 
         $scope.costTypeOptions = [
             { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
@@ -120,7 +120,7 @@ angular.module('iTRides.editRideControllers', [])
                 )
                     .success(function(data, status, headers, config) {
                         if(data){
-                            /* TODO caso funcione */
+                            $state.go('profile');
                             $ionicLoading.hide();
                         }
                     }).
@@ -154,7 +154,7 @@ angular.module('iTRides.editRideControllers', [])
                 ).
                     success(function(data, status, headers, config) {
                         if(data){
-                            /* TODO caso funcione */
+                            $state.go('profile');
                             $ionicLoading.hide();
                         }
                     }).

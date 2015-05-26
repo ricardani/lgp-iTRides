@@ -72,20 +72,6 @@ angular.module('iTRides.createRideControllers', [])
             $scope.modalMunicipality = modalM;
         });
 
-        $ionicModal.fromTemplateUrl('streets.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modalS) {
-            $scope.modalStreet = modalS;
-        });
-
-        $ionicModal.fromTemplateUrl('info.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modalI) {
-            $scope.modalInfo = modalI;
-        });
-
         $ionicModal.fromTemplateUrl('workLocations.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -101,14 +87,6 @@ angular.module('iTRides.createRideControllers', [])
             $scope.modalMunicipality.show();
         };
 
-        $scope.showModalStreet = function() {
-            $scope.modalStreet.show();
-        };
-
-        $scope.showModalInfo = function() {
-            $scope.modalInfo.show();
-        };
-
         $scope.showModalWorkLocation = function() {
             $scope.modalWorkLocation.show();
         };
@@ -117,8 +95,6 @@ angular.module('iTRides.createRideControllers', [])
         $scope.$on('$destroy', function() {
             $scope.modalDistrict.remove();
             $scope.modalMunicipality.remove();
-            $scope.modalStreet.remove();
-            $scope.modalInfo.remove();
             $scope.modalWorkLocation.remove();
         });
         // Execute action on hide modal
@@ -203,8 +179,6 @@ angular.module('iTRides.createRideControllers', [])
 
             newRide.date.setHours(newRide.hour.getHours(),newRide.hour.getMinutes());
 
-            /*TODO verificar se local de trabalho e/ou localização foram especificados */
-            /*tc-> Trabalho>Casa ct-> Casa>Trabalho*/
             if(rideType == "Trabalho>Casa") {
                 $http.post(Server.url + 'api/ride/createRide',
                     {
@@ -223,17 +197,17 @@ angular.module('iTRides.createRideControllers', [])
                         }
                     }
                 )
-                    .success(function(data, status, headers, config) {
-                        if(data){
-                            /* TODO caso funcione */
-                            $state.go('home');
-							$ionicLoading.hide();
-                        }
-                    }).
-                    error(function(data, status, headers, config) {
-                        /* TODO caso dê erro */
-                        $ionicLoading.hide();
-                    });
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        /* TODO caso funcione */
+                        $state.go('profile');
+					              $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    $ionicLoading.hide();
+                });
 
             }
             else if(rideType == "Casa>Trabalho") {
@@ -254,17 +228,17 @@ angular.module('iTRides.createRideControllers', [])
                         }
                     }
                 )
-                    .success(function(data, status, headers, config) {
-                        if(data){
-                            /* TODO caso funcione */
-                            $state.go('home');
-							$ionicLoading.hide();
-                        }
-                    }).
-                    error(function(data, status, headers, config) {
-                        /* TODO caso dê erro */
-                        $ionicLoading.hide();
-                    });
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        /* TODO caso funcione */
+                        $state.go('profile');
+					              $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    $ionicLoading.hide();
+                });
             }
             else if(rideType == "Ocasional") {
                 $http.post(Server.url + 'api/ride/createRide',
@@ -284,23 +258,22 @@ angular.module('iTRides.createRideControllers', [])
                         }
                     }
                 ).
-                    success(function(data, status, headers, config) {
-                        if(data){
-                            /* TODO caso funcione */
-							$state.go('home');
-							$ionicLoading.hide();
-                        }
-                    }).
-                    error(function(data, status, headers, config) {
-                        /* TODO caso dê erro */
-                        $ionicLoading.hide();
-                    });
+                success(function(data, status, headers, config) {
+                    if(data){
+                        $state.go('profile');
+          							$ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    $ionicLoading.hide();
+                });
             }
             else {
                 /* TODO caso dê erro ao definir o tipo da boleia */
                 $ionicLoading.hide();
             }
-			
+
         };
 
         /*------------------Create Ride Info--------------------*/
@@ -331,15 +304,15 @@ angular.module('iTRides.createRideControllers', [])
                     'homeLocation' : {
                         "district": $scope.district,
                         "municipality": $scope.municipality,
-                        "street": $scope.street,
-                        "info": $scope.info
+                        "street": newRide.startStreet,
+                        "info": newRide.startLocationInfo
                     }
                 }
             )
                 .success(function(data, status, headers, config) {
                     if(data){
                         /* TODO caso funcione */
-                        console.log(data);
+                        $state.go('profile');
                         $ionicLoading.hide();
                     }
                 }).
@@ -365,13 +338,11 @@ angular.module('iTRides.createRideControllers', [])
 
         $scope.streetSelected = function(street) {
             if(street != null) {
-                $scope.modalStreet.hide();
 
                 $scope.street = street;
 
                 $scope.streetValidation = "";
             }
-            $scope.modalStreet.hide();
         }
 
         $scope.infoSelected = function(info) {
@@ -381,8 +352,6 @@ angular.module('iTRides.createRideControllers', [])
                 $scope.info = "";
 
             $scope.infoValidation = "";
-
-            $scope.modalInfo.hide();
         }
 
         $scope.districtSelected = function(district) {

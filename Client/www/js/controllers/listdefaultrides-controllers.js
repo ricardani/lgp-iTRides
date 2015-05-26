@@ -69,7 +69,7 @@ angular.module('iTRides.listDefaultRidesControllers', [])
 
         $scope.showPopup = function(rideInfo) {
             //Mostra o popup inicial
-            console.log(JSON.stringify(rideInfo));
+            var canceled = false;
             $scope.data = {};
             $scope.data.rideInfo = rideInfo;
 
@@ -80,7 +80,11 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                 title: 'Defina a data do começo da boleia',
                 scope: $scope,
                 buttons: [
-                    { text: 'Cancel' },
+                    { text: 'Cancel',
+                      onTap: function(e) {
+                        canceled = true;
+                      }
+                    },
                     {
                         text: '<b>Criar Boleia</b>',
                         type: 'button-energized',
@@ -111,7 +115,11 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                         title: 'Defina a data do começo da boleia',
                         scope: $scope,
                         buttons: [
-                            { text: 'Cancel' },
+                            { text: 'Cancel',
+                              onTap: function(e) {
+                                canceled = true;
+                              }
+                            },
                             {
                                 text: '<b>Criar boleia</b>',
                                 type: 'button-energized',
@@ -134,10 +142,12 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                         ]
                     });
                     errorPopup.then(function(res) {
+                      if(!canceled)
                         $scope.createRide($scope.data.rideInfo,$scope.data.start_date);
                     });
                 }
                 else {
+                  if(!canceled)
                     $scope.createRide($scope.data.rideInfo,$scope.data.start_date);
                 }
             });

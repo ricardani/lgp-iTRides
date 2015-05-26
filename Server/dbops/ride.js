@@ -673,7 +673,6 @@ function getRide(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log("Nao encontrou a boleia ->" + rideID);
             res.json(err);
         } else {
             var RideInfo = {
@@ -714,7 +713,6 @@ function getRide(req, res) {
                     '_id': userID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log("Nao encontrou o passageiro -> " + userID);
                         callback();
                     }else{
                         var user = {
@@ -748,7 +746,6 @@ function getRide(req, res) {
                         '_id': ownerID
                     }, function(err, data) {
                         if (err || data === null) {
-                            console.log("Nao encontrou o dono da boleia -> " + ownerID);
                             res.json(err);
                         } else {
                             RideInfo.ownerName = data.name;
@@ -760,7 +757,6 @@ function getRide(req, res) {
                                     '_id': wLocation
                                 }, function (err, data) {
                                     if (err || data === null) {
-                                        console.log("Nao encontrou o local de trabalho -> " + wLocation);
                                         res.json(err);
                                     } else {
                                         if (rideType === 'TC') {
