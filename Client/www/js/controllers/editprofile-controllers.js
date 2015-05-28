@@ -23,6 +23,20 @@ angular.module('iTRides.editProfileControllers', [])
 			});
 
 
+			updateProfileError = function() {
+				var alertPopup = $ionicPopup.alert({
+                    title: 'Editar Perfil',
+                    template: 'Ocorreu um erro ao editar o seu perfil. Por favor tente de novo.'
+                });
+			}
+
+			updateProfileSuccess = function() {
+				var alertPopup = $ionicPopup.alert({
+                    title: 'Editar Perfil',
+                    template: 'O seu perfil foi editado com sucesso!'
+                });
+			}
+
 		$scope.submitChanges = function(new_name, new_contact, new_residency,old_password, new_password, confirm_new_password) {
 
 			if(new_name == "" || new_name==undefined) {
@@ -45,12 +59,14 @@ angular.module('iTRides.editProfileControllers', [])
 						'residency' : new_residency
 					})
 					.success(function(data, status, headers, config) {
-						if(data)
+						if(data){
 							$state.go('profile');
+						}
 						$ionicLoading.hide();
+							updateProfileSuccess();
 					})
 					.error(function(data, status, headers, config) {
-						console.log("Error updating information " + status);
+						updateProfileError();
 						$ionicLoading.hide();
 					});
 			} else if (new_password == confirm_new_password) {
@@ -63,12 +79,14 @@ angular.module('iTRides.editProfileControllers', [])
 						'new_password' : new_password
 					})
 					.success(function(data, status, headers, config) {
-						if(data)
+						if(data){
 							$state.go('profile');
+						}
 						$ionicLoading.hide();
+						updateProfileSuccess();
 					})
 					.error(function(data, status, headers, config) {
-						console.log("Error updating information " + status);
+						updateProfileError();
 						$ionicLoading.hide();
 					});
 			}

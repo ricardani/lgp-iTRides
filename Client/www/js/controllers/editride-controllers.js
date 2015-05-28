@@ -1,6 +1,6 @@
 angular.module('iTRides.editRideControllers', [])
 
-    .controller('EditRideCtrl', function($scope, $state, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server) {
+    .controller('EditRideCtrl', function($scope, $state, $window, $ionicModal, $ionicLoading, $timeout, $stateParams, $http, Server, $ionicPopup) {
 
         $scope.costTypeOptions = [
             { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
@@ -93,6 +93,20 @@ angular.module('iTRides.editRideControllers', [])
                 $ionicLoading.hide();
             });
 
+            editRideSuccess = function() {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Editar Boleia',
+                    template: 'Boleia editada com sucesso!'
+                });
+            };
+
+            editRideError= function() {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Editar Boleia',
+                    template: 'Ocorreu um problema ao editar a sua boleia.'
+                });
+            };
+
         $scope.editRide = function (ride) {
 
             console.log(ride);
@@ -120,12 +134,14 @@ angular.module('iTRides.editRideControllers', [])
                 )
                     .success(function(data, status, headers, config) {
                         if(data){
+                            editRideSuccess();
                             $state.go('profile');
                             $ionicLoading.hide();
                         }
                     }).
                     error(function(data, status, headers, config) {
                         /* TODO caso dê erro */
+                        editRideError();
                         $ionicLoading.hide();
                     });
 
@@ -154,12 +170,14 @@ angular.module('iTRides.editRideControllers', [])
                 ).
                     success(function(data, status, headers, config) {
                         if(data){
+                            editRideSuccess();
                             $state.go('profile');
                             $ionicLoading.hide();
                         }
                     }).
                     error(function(data, status, headers, config) {
                         /* TODO caso dê erro */
+                        editRideEror();
                         $ionicLoading.hide();
                     });
             }

@@ -1,6 +1,6 @@
 angular.module('iTRides.createRideControllers', [])
 
-    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server, $state) {
+    .controller('CreateRideCtrl', function($scope, $window, $ionicModal, $filter, $ionicLoading, $timeout, $stateParams, $http, Server, $state, $ionicPopup) {
         //var creatRideCtrl = this; e remover $scope
         $scope.costTypeOptions = [
             { id: 'Pago pela empresa', name: 'Pago pela empresa', value: 'Pago pela empresa' },
@@ -162,8 +162,23 @@ angular.module('iTRides.createRideControllers', [])
                 noErrors=false;
             }*/
 
+
             return noErrors;
 
+        }
+
+        showPopUpSuccess = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Criar Boleia',
+                template: 'Boleia criada com sucesso!'
+            });
+        }
+
+        showPopUpError = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Criar Boleia',
+                template: 'Ocorreu um problema ao criar a sua boleia. Por favor tente de novo'
+            });
         }
 
         $scope.createRide = function (newRide) {
@@ -199,13 +214,15 @@ angular.module('iTRides.createRideControllers', [])
                 )
                 .success(function(data, status, headers, config) {
                     if(data){
+                        showPopUpSuccess();
                         /* TODO caso funcione */
                         $state.go('profile');
-					              $ionicLoading.hide();
+					   $ionicLoading.hide();
                     }
                 }).
                 error(function(data, status, headers, config) {
                     /* TODO caso dê erro */
+                    showPopUpError();
                     $ionicLoading.hide();
                 });
 
@@ -231,12 +248,14 @@ angular.module('iTRides.createRideControllers', [])
                 .success(function(data, status, headers, config) {
                     if(data){
                         /* TODO caso funcione */
+                        showPopUpSuccess();
                         $state.go('profile');
-					              $ionicLoading.hide();
+					    $ionicLoading.hide();
                     }
                 }).
                 error(function(data, status, headers, config) {
                     /* TODO caso dê erro */
+                    showPopUpError();
                     $ionicLoading.hide();
                 });
             }
@@ -260,12 +279,14 @@ angular.module('iTRides.createRideControllers', [])
                 ).
                 success(function(data, status, headers, config) {
                     if(data){
+                        showPopUpSuccess();
                         $state.go('profile');
-          							$ionicLoading.hide();
+          				$ionicLoading.hide();
                     }
                 }).
                 error(function(data, status, headers, config) {
                     /* TODO caso dê erro */
+                    showPopUpError();
                     $ionicLoading.hide();
                 });
             }
