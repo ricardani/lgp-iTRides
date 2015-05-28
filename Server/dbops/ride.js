@@ -99,7 +99,7 @@ function removeRide(req, res) {
           "_id": ride.passengers[i]._user
         }, function(err,passenger) {
           if(err) {
-            console.log("Error a encontrar o passageiro");
+
           }
           else {
 
@@ -113,9 +113,7 @@ function removeRide(req, res) {
             passenger.notifications.push(notification);
             passenger.save(function(error, addedNotification) {
                 if (error) {
-                    console.log("Error saving notification to passenger");
                 } else {
-                    console.log("Passenger notified");
                 }
             });
           }
@@ -213,9 +211,7 @@ function requestRide(req, res) {
                         rideOwner.notifications.push(notification);
                         rideOwner.save(function(error, addedNotification) {
                             if (error) {
-                                console.log("Error saving notification to ride owner");
-                            } else {
-                                console.log("Ride owner notified");
+                              res.json('notificationError');
                             }
                         });
                       }
@@ -259,9 +255,7 @@ function requestRideDeletion(req,res) {
                     rideOwner.notifications.push(notification);
                     rideOwner.save(function(error, addedNotification) {
                         if (error) {
-                            console.log("Error saving notification to ride owner");
-                        } else {
-                            console.log("Ride owner notified");
+                            console.log("notificationError");
                         }
                     });
                   }
@@ -291,25 +285,19 @@ function feedbackRide(req,res) {
             for(var i =0; i < data.passengers.length; i++) {
                 if(data.passengers[i]._user == req.user.id) {
                     userInRide = true;
-                } else {
-
-                    console.log('passenger not in ride');
                 }
             }
             for(var i =0; i < data.feedback.length; i++) {
                 if(data.feedback[i]._user == req.user.id) {
                     alreadyGaveFeedback = true;
-                    console.log('already gave feedback');
                 }
             }
             if(!alreadyGaveFeedback && userInRide) {
                 data.feedback.push({"_user":req.user.id, "feedback":req.body.feedback, "message":req.body.message});
                 data.save(function(error, addedFeedback) {
                         if (error) {
-                            console.log(error);
                             res.json(error);
                         } else {
-                            console.log('SUCCESS giving feedback')
                             res.json(addedFeedback);
                         }
                         for(var i =0; i < data.feedback.length; i++) {
@@ -379,7 +367,6 @@ function getMyRides(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         }else{
             var myRides = [];
@@ -414,7 +401,6 @@ function getMyRides(req, res) {
                     }, function (err, data) {
                         if (err || data === null) {
                             callback('error');
-                            console.log(err);
                         } else {
                             if (rideType === 'TC') {
                                 RideInfo.startLocation = data.name;
@@ -433,7 +419,7 @@ function getMyRides(req, res) {
 
             }, function(err){
                 if( err ) {
-                    console.log('GetMyRides error -> ' + err);
+                    res.json(err);
                 } else {
                     res.json(myRides);
                 }
@@ -517,7 +503,6 @@ function getMyRequestedRides(req, res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         } else {
 
@@ -550,7 +535,6 @@ function getMyRequestedRides(req, res) {
                     '_id': ownerID
                 }, function(err, data) {
                     if (err || data === null) {
-                        console.log(err);
                         callback('error');
                     } else {
                         RideInfo.ownerName = data.name;
@@ -562,7 +546,6 @@ function getMyRequestedRides(req, res) {
                                 '_id': wLocation
                             }, function (err, data) {
                                 if (err || data === null) {
-                                    console.log(err);
                                     callback('error');
                                 } else {
                                     if (rideType === 'TC') {
@@ -583,7 +566,7 @@ function getMyRequestedRides(req, res) {
 
             }, function(err){
                 if( err ) {
-                    console.log('Get My Requested Rides error -> ' + err);
+                    res.json(err);
                 } else {
                     res.json(myRequestedRides);
                 }
@@ -736,7 +719,6 @@ function getMyDefaultRides(req, res) {
         '_owner': req.user.id
     }, function(err,data) {
         if(err) {
-            console.log("Error GetMyDefaultRides -> " + err);
             res.json(err);
         }
         else {
@@ -762,7 +744,6 @@ function getMyDefaultRides(req, res) {
             }, function(err){
                 // if any of the file processing produced an error, err would equal that error
                 if( err ) {
-                    console.log("Error GetMyDefaultRides -> " + err);
                     res.json(err);
                 } else {
                     res.json(allRides);
@@ -791,7 +772,6 @@ function getRideForDay(req,res) {
         ]
     }, function(err, data) {
         if (err || data === null) {
-            console.log(err);
             res.json(err);
         }else{
             var myRides = [];
@@ -831,7 +811,6 @@ function getRideForDay(req,res) {
                     }, function (err, data) {
                         if (err || data === null) {
                             callback('error');
-                            console.log(err);
                         } else {
                             RideInfo.workLocation = data.name;
                             myRides.push(RideInfo);
@@ -846,7 +825,7 @@ function getRideForDay(req,res) {
 
             }, function(err){
                 if( err ) {
-                    console.log('GetMyRides error -> ' + err);
+                    res.json(err);
                 } else {
                     res.json(myRides);
                 }
@@ -899,7 +878,6 @@ function getMyPastRides(req, res) {
                 for (var i = 0; i < ride.feedback.length; i++) {
                     if(ride.feedback[i]._user == req.user.id) {
                         alreadyGaveFeedback = true;
-                        console.log("already gave feedback");
                     }
 
                 }
@@ -917,7 +895,6 @@ function getMyPastRides(req, res) {
                     '_id': ownerID
                 }, function(err, data) {
                     if (err || data === null) {
-                        //  console.log(err);
                         callback('error');
                     } else {
                         RideInfo.ownerName = data.name;
@@ -927,7 +904,6 @@ function getMyPastRides(req, res) {
                                 '_id': wLocation
                             }, function (err, data) {
                                 if (err || data === null) {
-                                    //   console.log(err);
                                     callback('error');
                                 } else {
                                     if (rideType === 'TC') {
@@ -950,7 +926,7 @@ function getMyPastRides(req, res) {
 
             }, function(err){
                 if( err ) {
-                    //   console.log('Get My Past Rides error -> ' + err);
+                    res.json(err);
                 } else {
                     res.json(myPastRides);
                 }

@@ -212,7 +212,6 @@ function getUserInfo(req, res) {
                             }, function (err, data) {
                                 if (err || data === null) {
                                     callback('error');
-                                    console.log(err);
                                 } else {
                                     if (rideType === 'TC') {
                                         RideInfo.startLocation = data.name;
@@ -231,7 +230,7 @@ function getUserInfo(req, res) {
 
                     }, function(err){
                         if( err ) {
-                            console.log('GetMyRides error -> ' + err);
+                            res.json(err);
                         } else {
                             var feedbacksum = 0;
                             var count = 0;
@@ -502,8 +501,6 @@ function updateProfilePassword(req, res) {
             }
         }
     );
-
-    console.log('password changed');
 }
 
 module.exports.profileUpdatePassword = updateProfilePassword;

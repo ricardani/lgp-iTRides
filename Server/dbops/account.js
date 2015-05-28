@@ -55,7 +55,6 @@ function register(req, res) {
                 "Obrigado,<br>iTRides";
 
             sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
-            console.log("enviei e-mail");
             res.json(data);
           }
         });

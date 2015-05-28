@@ -73,7 +73,7 @@ module.exports.deleteWorkLocations = WorkLocationDeletion;
 
 
 function banAccount(req, res) {
-  
+
     Account.findOneAndUpdate({
         "_id": req.body.userID
     },
@@ -112,7 +112,6 @@ module.exports.promoteUser = promUser;
 function getAccounts(req, res) {
     Account.find({}, function(err,data) {
         if (err || data === null) {
-            console.log('Can`t find accounts');
             res.json(err);
         } else {
             res.json(data);
