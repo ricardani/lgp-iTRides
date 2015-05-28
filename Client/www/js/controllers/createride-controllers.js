@@ -13,14 +13,17 @@ angular.module('iTRides.createRideControllers', [])
         $scope.createNew = $stateParams.createNew;
 
         if($scope.createNew == 'createNow') {
+          $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
         }
         else if($scope.createNew == 'createInfo') {
+          $scope.collection = ["Casa>Trabalho", "Trabalho>Casa"];
         }
         else{
+          
         }
 
         $scope.selectedRideType = 0;
-        $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
+
         $scope.district = 'Distrito';
         $scope.districtValidation = "";
         $scope.municipality = 'Concelho';
@@ -153,6 +156,68 @@ angular.module('iTRides.createRideControllers', [])
                 $scope.errorString += " Municipio<br>";
             }
 
+            if(rideType == 'Ocasional') {
+              if($scope.occasional.startAddress == "") {
+                noErrors=false;
+                $scope.errorString += " Morada do local de partida<br>";
+              }
+              if($scope.occasional.startIdentifier == "") {
+                noErrors=false;
+                $scope.errorString += " Identificar do local de partida<br>";
+              }
+              if($scope.occasional.destinationAddress == "") {
+                noErrors=false;
+                $scope.errorString += " Morada do destino<br>";
+              }
+              if($scope.occasional.destinationIdentifier == "") {
+                noErrors=false;
+                $scope.errorString += " Identificar do destino<br>";
+              }
+            }
+
+            return noErrors;
+
+        }
+
+        $scope.checkRideInfoForm = function(newRide, rideType) {
+
+            var noErrors = true;
+
+            if(newRide.seats == null) {
+                noErrors=false;
+                $scope.errorString += " Lugares<br>";
+            }
+            if(newRide.hour == null) {
+                noErrors=false;
+                $scope.errorString += " Hora<br>";
+            }
+            if(newRide.typeCost == null && rideType == 'Ocasional') {
+                noErrors=false;
+                $scope.errorString += " Tipo de custo<br>";
+            }
+            if(newRide.cost == null) {
+                noErrors=false;
+                $scope.errorString += " Custo<br>";
+            }
+            if(newRide.rideInfoName == null) {
+                noErrors=false;
+                $scope.errorString += " Nome da boleia<br>";
+            }
+            if($scope.workLocation == 'Local de trabalho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+                $scope.workLocationValidation = "error";
+                noErrors=false;
+                $scope.errorString += " Local de trabalho<br>";
+            }
+            if($scope.district == 'Distrito' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+                $scope.districtValidation = "error";
+                noErrors=false;
+                $scope.errorString += " Distrito<br>";
+            }
+            if($scope.municipality == 'Concelho' && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+                $scope.municipalityValidation = "error";
+                noErrors=false;
+                $scope.errorString += " Municipio<br>";
+            }
 
             return noErrors;
 
@@ -172,9 +237,22 @@ angular.module('iTRides.createRideControllers', [])
             });
         }
 
+        showRideInfoPopUpSuccess = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Criar Boleia',
+                template: 'Boleia criada com sucesso!'
+            });
+        }
+
+        showRideInfoPopUpError = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Criar Boleia',
+                template: 'Ocorreu um problema ao criar a sua boleia. Por favor tente de novo'
+            });
+        }
+
         $scope.createRide = function (newRide) {
 
-            //TODO handle the error catched by this if
             if(newRide == null)
                 var newRide={};
 
@@ -214,13 +292,11 @@ angular.module('iTRides.createRideControllers', [])
                   .success(function(data, status, headers, config) {
                       if(data){
                           showPopUpSuccess();
-                          /* TODO caso funcione */
                           $state.go('profile');
-  					   $ionicLoading.hide();
+  					              $ionicLoading.hide();
                       }
                   }).
                   error(function(data, status, headers, config) {
-                      /* TODO caso dê erro */
                       showPopUpError();
                       $ionicLoading.hide();
                   });
@@ -246,14 +322,12 @@ angular.module('iTRides.createRideControllers', [])
                   )
                   .success(function(data, status, headers, config) {
                       if(data){
-                          /* TODO caso funcione */
                           showPopUpSuccess();
                           $state.go('profile');
-  					    $ionicLoading.hide();
+  					              $ionicLoading.hide();
                       }
                   }).
                   error(function(data, status, headers, config) {
-                      /* TODO caso dê erro */
                       showPopUpError();
                       $ionicLoading.hide();
                   });
@@ -301,7 +375,22 @@ angular.module('iTRides.createRideControllers', [])
 
         $scope.createRideInfo = function (newRide) {
 
-            var rideType = $scope.collection[$scope.selectedRideType];
+          if(newRide == null)
+              var newRide={};
+
+          var rideType = $scope.collection[$scope.selectedRideType];
+
+          if(!$scope.checkRideInfoForm(newRide, rideType)) {
+
+              $ionicPopup.alert({
+                  title: 'Erro a criar boleia',
+                  template: $scope.errorString
+              });
+
+              $scope.errorString = "Campos não preenchidos:<br>";
+          }
+          else {
+
             var ride_type;
             if(rideType == 'Casa>Trabalho')
                 ride_type = 'CT';
@@ -330,17 +419,19 @@ angular.module('iTRides.createRideControllers', [])
                     }
                 }
             )
-                .success(function(data, status, headers, config) {
-                    if(data){
-                        /* TODO caso funcione */
-                        $state.go('profile');
-                        $ionicLoading.hide();
-                    }
-                }).
-                error(function(data, status, headers, config) {
-                    /* TODO caso dê erro */
+            .success(function(data, status, headers, config) {
+                if(data){
+                    showRideInfoPopUpSuccess();
+                    $state.go('profile');
                     $ionicLoading.hide();
-                });
+                }
+            }).
+            error(function(data, status, headers, config) {
+                showRideInfoPopUpError();
+                $ionicLoading.hide();
+            });
+
+          }
 
         };
         /*------------------------------------------------------*/
