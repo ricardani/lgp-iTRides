@@ -9,6 +9,8 @@ router.post('/getRides', rides.getallRides);
 
 router.post('/deleteRide', rides.deleteRide);
 
+router.post('/deleteDefaultRide', rides.deleteDefaultRide);
+
 router.post('/createRideInfo', rides.createRideInfo);
 
 router.post('/requestRide', rides.requestsRide);

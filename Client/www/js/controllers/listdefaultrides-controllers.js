@@ -27,7 +27,6 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                 }
             )
                 .success(function(data, status, headers, config) {
-
                     var time_start = new Date(start_date).setHours(new Date(rideInfo.date).getHours(),new Date(rideInfo.date).getMinutes());
                     $http.post(Server.url + 'api/ride/createRide',
                         {
@@ -41,21 +40,21 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                             'homeLocation' : rideInfo.homeLocation
                         }
                     )
-                        .success(function(data, status, headers, config) {
-                            if(data){
-                                /* TODO caso funcione */
-                                $ionicLoading.hide();
-                            }
-                        }).
-                        error(function(data, status, headers, config) {
-                            /* TODO caso dê erro */
+                    .success(function(data, status, headers, config) {
+                        if(data){
+                            console.log(JSON.stringify(data));
                             $ionicLoading.hide();
-                        });
+                        }
+                    }).
+                    error(function(data, status, headers, config) {
+                        console.log("ERRO2: " + rideInfo);
+                        $ionicLoading.hide();
+                    });
 
                     $ionicLoading.hide();
                 }).
                 error(function(data, status, headers, config) {
-                    /* TODO caso dê erro */
+                    console.log('ERRO: ' + rideInfo);
                     $ionicLoading.hide();
                 });
         };
@@ -69,88 +68,102 @@ angular.module('iTRides.listDefaultRidesControllers', [])
 
         $scope.showPopup = function(rideInfo) {
             //Mostra o popup inicial
+
+            var wantToDelete = false;
+            var wantToCreate = false;
+
             var canceled = false;
             $scope.data = {};
             $scope.data.rideInfo = rideInfo;
 
             // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template:
-                    "<input type='text' placeholder='dd/mm/yyyy' ng-model='data.start_date'>",
-                title: 'Defina a data do começo da boleia',
-                scope: $scope,
-                buttons: [
-                    { text: 'Cancel',
+
+            var choosePopup = $ionicPopup.show({
+              template:
+                  "Deseja eliminar esta boleia pré-definida ou criar uma nova boleia",
+              title: 'Boleia pré-definida',
+              scope: $scope,
+              buttons: [
+                  { text: 'Eliminar',
+                    type: 'button-energized',
+                    onTap: function(e) {
+                      wantToDelete = true;
+                    }
+                  },
+                  {
+                      text: '<b>Criar Boleia</b>',
+                      type: 'button-energized',
                       onTap: function(e) {
-                        canceled = true;
+                        wantToCreate = true;
                       }
-                    },
-                    {
-                        text: '<b>Criar Boleia</b>',
-                        type: 'button-energized',
-                        onTap: function(e) {
-                            if(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/.test($scope.data.start_date.toString())) {
-                                if($scope.checkIfInTheFuture(new Date($scope.data.start_date)))
-                                    return $scope.data.start_date;
-                                else {
-                                    $scope.data.start_date = '';
-                                    e.preventDefault();
-                                }
-                            }
-                            else {
-                                $scope.data.start_date = 'wrongFormat';
+                  }
+              ]
+            });
+            choosePopup.then(function(res) {
+              if(wantToCreate) {
+                var myPopup = $ionicPopup.show({
+                    template:
+                        "<input type='date' ng-model='data.start_date'>",
+                    title: 'Defina a data do começo da boleia',
+                    scope: $scope,
+                    buttons: [
+                        { text: 'Cancel',
+                          onTap: function(e) {
+                            canceled = true;
+                          }
+                        },
+                        {
+                            text: '<b>Criar Boleia</b>',
+                            type: 'button-energized',
+                            onTap: function(e) {
+                              if($scope.checkIfInTheFuture(new Date($scope.data.start_date)))
+                                  return $scope.data.start_date;
+                              else {
+                                  $scope.data.start_date = '';
+                                  e.preventDefault();
+                              }
                             }
                         }
-                    }
-                ]
-            });
-            myPopup.then(function(res) {
+                    ]
+                });
+                myPopup.then(function(res) {
 
-                // Caso o input do utilzador esteja num formato incorrecto
-                if($scope.data.start_date === 'wrongFormat') {
-                    $scope.data.start_date = '';
-                    var errorPopup = $ionicPopup.show({
-                        template:
-                            "<input type='text' placeholder='dd/mm/yyyy' ng-model='data.start_date'><span style='color: red'>Formato da data incorreto </span>",
-                        title: 'Defina a data do começo da boleia',
-                        scope: $scope,
-                        buttons: [
-                            { text: 'Cancel',
-                              onTap: function(e) {
-                                canceled = true;
-                              }
-                            },
-                            {
-                                text: '<b>Criar boleia</b>',
-                                type: 'button-energized',
-                                onTap: function(e) {
-                                    $scope.data.dateFormat = 'empty';
-                                    if(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/(199\d|[2-9]\d{3})$/.test($scope.data.start_date.toString())) {
-                                        if($scope.checkIfInTheFuture(new Date($scope.data.start_date)))
-                                            return $scope.data.start_date;
-                                        else {
-                                            $scope.data.start_date = '';
-                                            e.preventDefault();
-                                        }
-                                    }
-                                    else {
-                                        $scope.data.start_date = '';
-                                        e.preventDefault();
-                                    }
-                                }
-                            }
-                        ]
+                  if(!canceled) {
+                    var alertPopup = $ionicPopup.alert({
+                      title: 'Boleia pré-definida',
+                      template: 'Boleia pré-definida foi criada com sucesso!'
                     });
-                    errorPopup.then(function(res) {
-                      if(!canceled)
-                        $scope.createRide($scope.data.rideInfo,$scope.data.start_date);
-                    });
-                }
-                else {
-                  if(!canceled)
                     $scope.createRide($scope.data.rideInfo,$scope.data.start_date);
-                }
-            });
+                  }
+                });
+              }
+              else if(wantToDelete) {
+                $http.post(Server.url + 'api/ride/deleteDefaultRide',
+                {
+                  'rideID': rideInfo._id
+                })
+                .success(function(data, status, headers, config) {
+                    if(data){
+                      var alertPopup = $ionicPopup.alert({
+                        title: 'Boleia pré-definida',
+                        template: 'Boleia pré-definida foi eliminada com sucesso!'
+                      });
+                      $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Boleia pré-definida',
+                    template: 'Ocorreu um erro ao eliminar a boleia pré-definida'
+                  });
+                  $ionicLoading.hide();
+                });
+              }
+              else {
+
+              }
+            })
+
         };
 
     });

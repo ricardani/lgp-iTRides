@@ -15,7 +15,9 @@
                             <i ng-if="defaultRide.type == 'TC'" class="ion-android-arrow-back orange" style="font-size:200%; float:left;"> </i>
                             <i ng-if="!defaultRide.type " class="ion-android-car orange" style="font-size:200%; float:left;"> </i>
                             <h2 style="margin-left: 40px"> {{defaultRide.name}} </h2>
-                            <p style="margin-left: 40px"> {{defaultRide.date | date : 'HH:mm' }} </p>
+                            <p style="margin-left: 40px"> Parte às {{defaultRide.date | date : 'HH:mm' }} </p>
+                            <p style="margin-left: 40px"> {{defaultRide.seats}} Lugar(es)</p>
+                            <p style="margin-left: 40px"> {{defaultRide.cost}} €/Pessoa </p>
                         </a>
                     </div>
                 </ion-item>

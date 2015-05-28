@@ -54,14 +54,19 @@ module.exports.deleteWorkLocations = WorkLocationDeletion;
 
 
 function banAccount(req, res) {
-    Account.findOne({
+  
+    Account.findOneAndUpdate({
         "_id": req.body.userID
-    }).remove(function(error, data) {
-        if (error) {
-            res.json(error);
-        } else {
-            res.json(data);
-        }
+    },
+    {
+      'activated': false
+    }, function(error,user) {
+      if(error || user === null) {
+        res.json(error);
+      }
+      else {
+        res.json(user);
+      }
     });
 }
 
