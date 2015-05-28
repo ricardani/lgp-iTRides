@@ -1,13 +1,33 @@
 var WorkLocation = require('../models/workLocation');
 var Account = require('../models/account');
+var async = require('async');
 
 function getWorkLocations(req, res) {
     WorkLocation.find({}, function(err, data) {
         if (err || data === null) {
-            console.log('Can`t find workLocations');
             res.json(err);
         } else {
-            res.json(data);
+            var allInfo = [];
+
+            async.each(data, function(work, callback) {
+
+                var info = {
+                    id : work._id,
+                    name : work.name,
+                    defaultLocation : work.defaultLocation
+                };
+
+                allInfo.push(info);
+
+                callback();
+
+            }, function(err){
+                if( err ) {
+                    res.sendStatus(400);
+                } else {
+                    res.json(allInfo);
+                }
+            });
         }});
 }
 
@@ -16,7 +36,6 @@ module.exports.workLocations = getWorkLocations;
 
 function WorkLocationCreation(req, res) {
 
-    //TODO Verifica se existe um local de trabalho com o nome pedido contando o numero de locais de trabalho com esse nome
     WorkLocation.count({
         "name": req.body.name
     }, function(err,count) {
@@ -40,7 +59,7 @@ module.exports.createWorkLocations = WorkLocationCreation;
 
 function WorkLocationDeletion(req, res) {
     WorkLocation.findOne({
-        "name": req.body.workLocationName
+        "_id": req.body.workLocationID
     }).remove(function(error, data) {
         if (error) {
             res.json(error);

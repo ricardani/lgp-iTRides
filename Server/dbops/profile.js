@@ -660,7 +660,8 @@ function getAllUsers(req, res) {
                         photo : user.photo,
                         contact : user.contact,
                         residency : user.residency,
-                        email: user.email
+                        email: user.email,
+                        permission: user.permission
                     };
 
                     allInfo.push(info);

@@ -2,7 +2,7 @@
     <ion-content>
         <br><br>
 
-        <div ng-if= "notifications.length === 0 && myNextRide.id === null && myNextRequest.id === null && pastRides.length === 0" >
+        <div ng-if= "notifications.length === 0 && myNextRide.id === undefined && myNextRequest.id === undefined && pastRides.length === 0" >
 
             <div class="card">
                 <div class="item item-text-wrap">
@@ -17,9 +17,7 @@
                     Notificações
                     <span class="badge badge-assertive orange">0</span>
                 </div>
-            </div>
 
-            <ion-list>
                 <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
                     <img ng-src="img/default_profile_photo.png">
                     <h2>Notificações de minhas boleias</h2>
@@ -29,8 +27,7 @@
                         <i class="icon ion-trash-b" style="color:white"> </i>
                     </ion-option-button>
                 </ion-item>
-            </ion-list>
-
+            </div>
 
             <div class="list card">
                 <div class="item item-divider">
@@ -66,7 +63,7 @@
         </div>
 
 
-        <div ng-if= "!(notifications.length === 0 && myNextRide.id === null && myNextRequest.id === null && pastRides.length === 0)" class="">
+       <div ng-if= "!(notifications.length === 0 && myNextRide.id === undefined && myNextRequest.id === undefined && pastRides.length === 0)">
             <div class="list card" ng-if="notifications.length > 0">
                 <div class="item item-divider">
                     <i class="icon ion-email-unread orange"></i>
@@ -225,7 +222,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> 
 
 
         <br><br>

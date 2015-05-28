@@ -61,15 +61,7 @@ angular.module('iTRides.createWorkLocationControllers', [])
         $scope.showModalInfo = function() {
             $scope.modalInfo.show();
         };
-
-        $scope.showModalWorkLocation = function() {
-            $scope.modalWorkLocation.show();
-        };
-
-        //Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function() {
-            $scope.modalWorkLocation.remove();
-        });
+        
         // Execute action on hide modal
         $scope.$on('modal.hidden', function() {
             // Execute action
@@ -104,20 +96,20 @@ angular.module('iTRides.createWorkLocationControllers', [])
                     /* TODO caso dê erro */
                     $ionicLoading.hide();
                 });
-        }
+        };
 
 
         $scope.streetSelected = function(street) {
             $scope.workLocation.street = street;
 
             $scope.modalStreet.hide();
-        }
+        };
 
         $scope.infoSelected = function(info) {
             $scope.workLocation.info = info;
 
             $scope.modalInfo.hide();
-        }
+        };
 
         $scope.districtSelected = function(district) {
 

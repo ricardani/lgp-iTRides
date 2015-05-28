@@ -2,10 +2,9 @@ angular.module('iTRides.banUsersControllers', [])
 
     .controller('BanUsersCtrl', function($scope, $window, $state, $http, Server, $ionicLoading) {
 
-        $http.post(Server.url + 'api/admin/getUsers').
+        $http.get(Server.url + 'api/profile/getAllUsers').
             success(function(data, status, headers, config) {
                 $scope.users = data;
-                $scope.usersTemp = data;
                 $ionicLoading.hide();
             }).
             error(function(data, status, headers, config) {
@@ -20,10 +19,8 @@ angular.module('iTRides.banUsersControllers', [])
 
 
         $scope.removeUser = function (index) {
-            console.log(JSON.stringify($scope.users));
-
             $http.post(Server.url + 'api/admin/banUser', {
-                "userID": $scope.users[index]._id
+                "userID": $scope.users[index].id
             }).
                 success(function(data, status, headers, config) {
                     $scope.users.splice(index, 1);
@@ -38,7 +35,7 @@ angular.module('iTRides.banUsersControllers', [])
 
         $scope.promoteUser = function(index) {
             $http.post(Server.url + 'api/admin/promoteUser', {
-                "userID": $scope.users[index]._id
+                "userID": $scope.users[index].id
             }).
                 success(function(data, status, headers, config) {
                     $scope.users.splice(index, 1);

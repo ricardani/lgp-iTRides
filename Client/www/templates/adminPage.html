@@ -3,32 +3,43 @@
         <br><br>
 
         <div ng-if="user.permission == 'Admin'">
-        
+
             <div class="list card" >
                 <div class="item item-divider">
-                            <span style="font-weight: bold"> Pagina de Administração </span>
+                    <span style="font-weight: bold"> Pagina de Administração </span>
+                </div>
+
+
+                <div class="list card">
+                    <a class="item item-icon-left assertive" href="#/banUsers">
+                        <i class="icon ion-person-stalker orange" style="font-size:150%"></i>
+                        <a1 class="orange"> Gerir utilizadores </a1>
+                    </a>
+                </div>
+                <div class="list card">
+                    <a class="item item-icon-left assertive" href="#/createWorkLocation">
+                        <i class="icon ion-briefcase orange" style="font-size:150%"></i>
+                        <a1 class="orange"> Criar locais de trabalho </a1>
+                    </a>
+                </div>
+                <div class="list card">
+                    <a class="item item-icon-left assertive" href="#/listWorkLocation">
+                        <i class="icon ion-trash-b orange" style="font-size:150%"></i>
+                        <a1 class="orange"> Remover locais de trabalho </a1>
+                    </a>
                 </div>
             </div>
 
             <div class="list card">
-                <a class="item item-icon-left assertive" href="#/banUsers">
-                    <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
-                    <a1 class="orange"> Gerir utilizadores </a1>
-                </a>
-                <a class="item item-icon-left assertive" href="#/createWorkLocation">
-                    <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
-                    <a1 class="orange"> Criar locais de trabalho </a1>
-                </a>
-                <a class="item item-icon-left assertive" href="#/listWorkLocation">
-                    <i class="icon ion-android-arrow-forward orange" style="font-size:150%"></i>
-                    <a1 class="orange"> Remover locais de trabalho </a1>
+                <a class="item item-icon-left assertive" href="#/profile">
+                    <i class="icon ion-android-arrow-dropleft-circle orange" style="font-size:150%"></i>
+                    <a1 class="orange"> Regressar </a1>
                 </a>
             </div>
-        
         </div>
 
         <div ng-if="user.permission == 'User'">
-        
+
             <div class="list card" >
                 <div class="item item-divider">
                     <span style="font-weight: bold"> Acesso negado </span>

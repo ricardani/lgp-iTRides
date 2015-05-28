@@ -70,7 +70,6 @@ function rideCreation(req, res) {
     }
 }
 
-
 module.exports.createRide = rideCreation;
 
 function allRides(req, res) {
@@ -201,7 +200,6 @@ function requestRide(req, res) {
                       "_id": ride._owner
                     }, function(err,rideOwner) {
                       if(err) {
-                        console.log("Error a encontrar o passageiro");
                       }
                       else {
 
@@ -211,7 +209,7 @@ function requestRide(req, res) {
                           _ride: ride._id,
                           rideType: ride.ride_type,
                           rideTime: ride.time_start
-                        }
+                        };
                         rideOwner.notifications.push(notification);
                         rideOwner.save(function(error, addedNotification) {
                             if (error) {
@@ -248,7 +246,6 @@ function requestRideDeletion(req,res) {
                   "_id": ride._owner
                 }, function(err,rideOwner) {
                   if(err) {
-                    console.log("Error a encontrar o passageiro");
                   }
                   else {
 
@@ -258,7 +255,7 @@ function requestRideDeletion(req,res) {
                       _ride: ride._id,
                       rideType: ride.ride_type,
                       rideTime: ride.time_start
-                    }
+                    };
                     rideOwner.notifications.push(notification);
                     rideOwner.save(function(error, addedNotification) {
                         if (error) {
@@ -279,9 +276,6 @@ module.exports.deleteRequestedRide = requestRideDeletion;
 
 
 function feedbackRide(req,res) {
-
-    console.log(req);
-    console.log('--------------');
 
     var alreadyGaveFeedback = false;
     var userInRide = false;
@@ -903,7 +897,6 @@ function getMyPastRides(req, res) {
 
 
                 for (var i = 0; i < ride.feedback.length; i++) {
-                    console.log('----------------------------------');
                     if(ride.feedback[i]._user == req.user.id) {
                         alreadyGaveFeedback = true;
                         console.log("already gave feedback");
