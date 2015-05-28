@@ -70,7 +70,6 @@ function rideCreation(req, res) {
     }
 }
 
-
 module.exports.createRide = rideCreation;
 
 function allRides(req, res) {
@@ -86,65 +85,6 @@ function allRides(req, res) {
 }
 
 module.exports.getallRides = allRides;
-
-/*
-function rideSearch(req, res) {
-
-    if(req.body.ride_type == "CT" || req.body.ride_type == "TC") {
-        WorkLocation.findOne({
-            "name": req.body.rideName
-        })
-            .populate('_id')
-            .exec(function(err, WorkLocation) {
-
-                HomeAndWorkRide.find(
-                    {
-                        "homeLocation" : { "district": req.body.district,
-                            "municipality" : req.body.municipality } ,
-                        "time_start" : req.body.time_start,
-                        "_workLocation" : WorkLocation._id
-                    } ,
-
-                    function(error, rides) {
-                        if (error) {
-                            res.json(error);
-                        }
-                        else {
-                            res.json(rides);
-                        }
-                    }
-                );
-            }
-        );
-    }
-    else if(req.body.ride_type == "Ocasional") {
-
-        OcasionalRide.find(
-            {
-                "startLocation" : { "address": req.body.startAddress,
-                    "identifier" : req.body.startIndentifier } ,
-                "destinationLocation" : { "address": req.body.destinationAddress,
-                    "identifier" : req.body.destinationIndentifier } ,
-                "time_start" : req.body.time_start
-            } ,
-
-            function(error, rides) {
-                if (error) {
-                    res.json(error);
-                }
-                else {
-                    res.json(rides);
-                }
-            }
-        );
-
-    }
-    else res.json("Wrong ride type");
-
-}
-
-module.exports.searchRide = rideSearch;*/
-
 
 function removeRide(req, res) {
 
@@ -245,7 +185,6 @@ function requestRide(req, res) {
                       "_id": ride._owner
                     }, function(err,rideOwner) {
                       if(err) {
-                        console.log("Error a encontrar o passageiro");
                       }
                       else {
 
@@ -255,7 +194,7 @@ function requestRide(req, res) {
                           _ride: ride._id,
                           rideType: ride.ride_type,
                           rideTime: ride.time_start
-                        }
+                        };
                         rideOwner.notifications.push(notification);
                         rideOwner.save(function(error, addedNotification) {
                             if (error) {
@@ -292,7 +231,6 @@ function requestRideDeletion(req,res) {
                   "_id": ride._owner
                 }, function(err,rideOwner) {
                   if(err) {
-                    console.log("Error a encontrar o passageiro");
                   }
                   else {
 
@@ -302,7 +240,7 @@ function requestRideDeletion(req,res) {
                       _ride: ride._id,
                       rideType: ride.ride_type,
                       rideTime: ride.time_start
-                    }
+                    };
                     rideOwner.notifications.push(notification);
                     rideOwner.save(function(error, addedNotification) {
                         if (error) {
@@ -323,9 +261,6 @@ module.exports.deleteRequestedRide = requestRideDeletion;
 
 
 function feedbackRide(req,res) {
-
-    console.log(req);
-    console.log('--------------');
 
     var alreadyGaveFeedback = false;
     var userInRide = false;
@@ -947,7 +882,6 @@ function getMyPastRides(req, res) {
 
 
                 for (var i = 0; i < ride.feedback.length; i++) {
-                    console.log('----------------------------------');
                     if(ride.feedback[i]._user == req.user.id) {
                         alreadyGaveFeedback = true;
                         console.log("already gave feedback");
