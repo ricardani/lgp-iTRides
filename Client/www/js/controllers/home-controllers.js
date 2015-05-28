@@ -172,6 +172,4 @@ angular.module('iTRides.homeControllers', [])
 
 
 
-    })
-
-;
+    });
