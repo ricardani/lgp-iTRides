@@ -18,7 +18,6 @@ angular.module('iTRides.createRideControllers', [])
         }
         else{
         }
-            ;//TODO enviar para uma pagina com erro 500
 
         $scope.selectedRideType = 0;
         $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];

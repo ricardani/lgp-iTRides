@@ -7,7 +7,7 @@
                 <a ng-repeat="type in collection"
                    ng-class="{ 'button-searchType-selected': $index == selectedRideType, 'button-searchType-inactive': $index != selectedRideType }"
                    ng-click="itemClicked($index)"
-                   class="button button-searchType-selected">
+                   class="button button-searchType-selected" style="font-size: 12px">
                     {{type}}
                 </a>
             </div>
@@ -19,23 +19,23 @@
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
+                    <div class="button button-ride-search text-center" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
                         <a ng-class="districtValidation">{{district}}</a>
-                    </button>
-                    <button class="button button-ride-search" ng-if="district != 'Distrito'" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()">
+                    </div>
+                    <div class="button button-ride-search text-center" ng-if="district != 'Distrito'" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
-                    </button>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.startStreet" required></input>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.startLocationInfo" ></input>
+                    </div>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.startStreet" required/>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.startLocationInfo"/>
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 1">
                     <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                    <div class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
                         <a ng-class="workLocationValidation">{{workLocation}}</a>
-                    </button>
+                    </div>
 
                 </div>
 
@@ -44,8 +44,8 @@
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.startAddress" required></input>
-                    <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.startIdentifier" required></input>
+                    <input class="button button-ride-search" placeholder="Morada" ng-model="occasional.startAddress" required/>
+                    <input class="button button-ride-search" placeholder="Identificador" ng-model="occasional.startIdentifier" required/>
                 </div>
             </div>
             <div class="row">
@@ -54,9 +54,9 @@
                         <i class="icon ion-ios-location"></i>
                         Destino
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                    <div class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
                         <a ng-class="workLocationValidation">{{workLocation}}</a>
-                    </button>
+                    </div>
                 </div>
 
                 <div class="card col search-ride" ng-if= "selectedRideType === 1">
@@ -64,14 +64,14 @@
                         <i class="icon ion-ios-location"></i>
                         Destino
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
+                    <div class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
                         <a ng-class="districtValidation">{{district}}</a>
-                    </button>
-                    <button class="button button-ride-search" ng-if="district != 'Distrito'" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()">
+                    </div>
+                    <div class="button button-ride-search" ng-if="district != 'Distrito'" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
-                    </button>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.destinationStreet" required></input>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.destinationLocationInfo" ></input>
+                    </div>
+                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.destinationStreet" required/>
+                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.destinationLocationInfo"/>
                 </div>
 
                 <div class="card col search-ride" ng-if= "selectedRideType === 2">
@@ -142,14 +142,26 @@
             </div>
             <br>
 
-            <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRide(newRide)" ng-if= "createNew === 'createNow'">
-            <input class="button button-large submit-search" type="submit" value="Criar Boleia" ng-click="createRideInfo(newRide)" ng-if= "createNew === 'createInfo'">
-       
-			<a class="item item-icon-left assertive" href="#/home" style="background-color:#fff">
-				<i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
-				<a1 class="orange"> Cancelar </a1>
-			</a>
-		</form>
+            <div class="card" ng-if= "createNew === 'createNow'">
+                <a class="item item-icon-left assertive" ng-click="createRide(newRide)">
+                    <i class="icon ion-android-car rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Criar Boleia</a1>
+                </a>
+            </div>
+            <div class="card" ng-if= "createNew === 'createInfo'">
+                <a class="item item-icon-left assertive" ng-click="createRideInfo(newRide)">
+                    <i class="icon ion-android-car rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Criar Boleia Pré-Definida </a1>
+                </a>
+            </div>
+            <div class="card">
+                <a class="item item-icon-left assertive" href="#/profile" style="background-color:#fff">
+                    <i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Cancelar </a1>
+                </a>
+            </div>
+
+        </form>
 
 
         <br><br>
