@@ -143,13 +143,14 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                   'rideID': rideInfo._id
                 })
                 .success(function(data, status, headers, config) {
-                    if(data){
-                      var alertPopup = $ionicPopup.alert({
-                        title: 'Boleia pré-definida',
-                        template: 'Boleia pré-definida foi eliminada com sucesso!'
-                      });
-                      $ionicLoading.hide();
-                    }
+                  if(data){
+                    var alertPopup = $ionicPopup.alert({
+                      title: 'Boleia pré-definida',
+                      template: 'Boleia pré-definida foi eliminada com sucesso!'
+                    });
+                    $state.go('profile');
+                    $ionicLoading.hide();
+                  }
                 }).
                 error(function(data, status, headers, config) {
                   var alertPopup = $ionicPopup.alert({

@@ -18,13 +18,18 @@ angular.module('iTRides.banUsersControllers', [])
             });
 
 
-        $scope.removeUser = function (index) {
+        $scope.removeUser = function (userID) {
             $http.post(Server.url + 'api/admin/banUser', {
-                "userID": $scope.users[index].id
+                "userID": userID
             }).
                 success(function(data, status, headers, config) {
-                    $scope.users.splice(index, 1);
-                    $ionicLoading.hide();
+                  for(var i=0; i < $scope.users.length; i++) {
+                    if($scope.users[i].id === userID)
+                      break;
+                  }
+                  if(i != $scope.users.length)
+                    $scope.users.splice(i, 1);
+                  $ionicLoading.hide();
                 }).
                 error(function(data, status, headers, config) {
                     console.log(JSON.stringify(data));
@@ -33,13 +38,18 @@ angular.module('iTRides.banUsersControllers', [])
         };
 
 
-        $scope.promoteUser = function(index) {
+        $scope.promoteUser = function(userID) {
             $http.post(Server.url + 'api/admin/promoteUser', {
-                "userID": $scope.users[index].id
+                "userID": userID
             }).
                 success(function(data, status, headers, config) {
-                    $scope.users.splice(index, 1);
-                    $ionicLoading.hide();
+                  for(var i=0; i < $scope.users.length; i++) {
+                    if($scope.users[i].id === userID)
+                      break;
+                  }
+                  if(i != $scope.users.length)
+                    $scope.users.splice(i, 1);
+                  $ionicLoading.hide();
                 }).
                 error(function(data, status, headers, config) {
                     console.log(JSON.stringify(data));

@@ -17,10 +17,10 @@
                     <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{user.name}}</h2>
                     <p>{{user.email}}</p>
-                    <ion-option-button class="button-balanced item-icon-left" ng-click="promoteUser($index)" ng-if="user.permission === 'User'">
+                    <ion-option-button class="button-balanced item-icon-left" ng-click="promoteUser(user.id)" ng-if="user.permission === 'User'">
                         <i class="icon ion-android-arrow-up" style="color:white"> </i>
                     </ion-option-button>
-                    <ion-option-button class="button-assertive item-icon-left" ng-click="removeUser($index)">
+                    <ion-option-button class="button-assertive item-icon-left" ng-click="removeUser(user.id)">
                         <i class="icon ion-trash-b" style="color:white"> </i>
                     </ion-option-button>
                 </ion-item>
