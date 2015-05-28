@@ -25,24 +25,24 @@
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
+                    <div class="button button-ride-search" ng-model="newRide.startDistrict" ng-click="showModalDistrict()">
                         {{district}}
-                    </button>
-                    <button class="button button-ride-search" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()"
+                    </div>
+                    <div class="button button-ride-search" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()"
                             ng-disabled="!hasDistrict">
                         {{municipality}}
-                    </button>
+                    </div>
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 0">
                     <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
                         <i class="icon ion-ios-location"></i>
                         Destino
                     </div>
-                    <button class="button button-ride-search" ng-disabled="true">
-                    </button>
-                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                    <div class="button button-ride-search" ng-disabled="true">
+                    </div>
+                    <div class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
                         {{workLocation}}
-                    </button>
+                    </div>
                 </div>
 
 
@@ -51,11 +51,11 @@
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    <button class="button button-ride-search" ng-disabled="true">
-                    </button>
-                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
+                    <div class="button button-ride-search" ng-disabled="true">
+                    </div>
+                    <div class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalWorkLocation()">
                         {{workLocation}}
-                    </button>
+                    </div>
 
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 1">
@@ -63,13 +63,13 @@
                         <i class="icon ion-ios-location"></i>
                         Destino
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
+                    <div class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalDistrict()">
                         {{district}}
-                    </button>
-                    <button class="button button-ride-search" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()"
+                    </div>
+                    <div class="button button-ride-search" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()"
                             ng-disabled="!hasDistrict">
                         {{municipality}}
-                    </button>
+                    </div>
                 </div>
 
 
@@ -78,10 +78,9 @@
                         <i class="icon ion-home"></i>
                         Partida
                     </div>
-                    </button>
-                    <button class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalStartOcasional()">
+                    <div class="button button-ride-search" ng-model="newRide.locationName" ng-click="showModalStartOcasional()">
                         {{ocasionalStart}}
-                    </button>
+                    </div>
 
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 2">
@@ -89,9 +88,9 @@
                         <i class="icon ion-ios-location"></i>
                         Destino
                     </div>
-                    <button class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalEndOcasional()">
+                    <div class="button button-ride-search" ng-model="newRide.destinationDistrict" ng-click="showModalEndOcasional()">
                         {{ocasionalEnd}}
-                    </button>
+                    </div>
                 </div>
             </div>
 

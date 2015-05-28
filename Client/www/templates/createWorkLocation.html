@@ -9,18 +9,18 @@
                         <i class="icon ion-home"></i>
                         Local de trabalho
                     </div>
-                    <button class="button button-ride-search" ng-model="workLocation.district" ng-click="showModalDistrict()">
+                    <div class="button button-ride-search" ng-model="workLocation.district" ng-click="showModalDistrict()">
                         {{workLocation.district}}
-                    </button>
-                    <button class="button button-ride-search" ng-model="workLocation.municipality" ng-click="showModalMunicipality()">
+                    </div>
+                    <div class="button button-ride-search" ng-model="workLocation.municipality" ng-click="showModalMunicipality()" ng-if="workLocation.district != 'Distrito'">
                         {{workLocation.municipality}}
-                    </button>
-                    <button class="button button-ride-search" ng-model="workLocation.street" ng-click="showModalStreet()">
+                    </div>
+                    <div class="button button-ride-search" ng-model="workLocation.street" ng-click="showModalStreet()" ng-if="workLocation.district != 'Distrito'">
                         {{workLocation.street}}
-                    </button>
-                    <button class="button button-ride-search" ng-model="workLocation.info" ng-click="showModalInfo()">
+                    </div>
+                    <div class="button button-ride-search" ng-model="workLocation.info" ng-click="showModalInfo()" ng-if="workLocation.district != 'Distrito'">
                         {{workLocation.info}}
-                    </button>
+                    </div>
                 </div>
             </div>
 
