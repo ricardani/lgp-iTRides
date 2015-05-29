@@ -5,6 +5,10 @@ angular.module('iTRides.homeControllers', [])
 
         $http.get(Server.url + 'api/profile/getNotifications').
             success(function(data, status, headers, config) {
+                for(var i=0; i < data.length; i++) {
+                  if(data[i].msgType == 'Cancel')
+                    data[i].rideDate = new Date(data[i].rideDate);
+                }
                 $scope.notifications = data;
                 $ionicLoading.hide();
             }).

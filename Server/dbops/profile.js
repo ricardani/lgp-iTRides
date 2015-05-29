@@ -36,7 +36,7 @@ function getNotifications(req, res) {
                             msgType : noti_obj.type,
                             message : noti_obj.message,
                             rideID : '',
-                            rideDate : ''
+                            rideDate : noti_obj.rideTime
                         };
 
                         if(notificationsData.msgType !== 'Cancel'){
