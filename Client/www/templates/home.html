@@ -132,7 +132,7 @@
                     <div class="item item-avatar"  ng-repeat="p in myNextRide.passengers | orderBy:'date'">
                         <img ng-src="{{p.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                         <h2>{{p.name}}</h2>
-                        <p ng-if="$index === 0" style = "color: red">
+                        <p ng-if="$index === 0">
                             Riding shotgun
                         </p>
                     </div>
@@ -222,7 +222,7 @@
                 </div>
 
             </div>
-        </div> 
+        </div>
 
 
         <br><br>

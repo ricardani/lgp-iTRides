@@ -6,7 +6,7 @@
                 Detalhes da Boleia
             </div>
 
-            <a class="item item-avatar item-text-wrap" href="#/userInfo/{{user.id}}">
+            <a class="item item-avatar item-text-wrap" href="#/userInfo/{{ride._owner}}">
                 <img ng-src="{{ride.ownerPhoto}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                 <h2>Boleia de {{ride.ownerName}}</h2>
                 <span class="item-note" style="float:left">{{ride.date | date : 'dd/MM/yy HH:mm' }}</span>

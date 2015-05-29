@@ -681,6 +681,7 @@ function getRide(req, res) {
                         if (err || data === null) {
                             res.json(err);
                         } else {
+                            RideInfo.ownerID = ownerID;
                             RideInfo.ownerName = data.name;
                             RideInfo.ownerPhoto = data.photo;
 
