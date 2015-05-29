@@ -72,21 +72,21 @@
                 </div>
 
                 <ion-list>
-                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap" href="#/rideDetails/{{notification.rideID}}/home">
+                    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="notification in notifications | limitTo:3" type="item-text-wrap">
                         <img ng-src="{{notification.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                         <h2>{{notification.name}}</h2>
                         <div ng-switch on="notification.msgType" class=" item-text-wrap">
                             <p ng-switch-when="Enter">
                                 <i class="ion-checkmark" style="color:green"> </i>
-                                Aderiu à sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                                Aderiu à sua Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
                             </p>
                             <p ng-switch-when="Exit">
                                 <i class="ion-information-circled" style="color:blue"> </i>
-                                Desistiu da sua Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                                Desistiu da sua Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
                             </p>
                             <p ng-switch-when="Cancel">
                                 <i class="ion-close" style="color:red"> </i>
-                                Cancelou a Boleia - {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                                Cancelou a Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm'}}
                             </p>
                         </div>
 
