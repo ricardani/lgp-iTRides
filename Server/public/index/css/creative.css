@@ -36,8 +36,8 @@ a:focus {
     color: #eb3812;
 }
 
-.download-iphone{
-	background-image:url(../img/download-iphone.png);
+.desktop-version{
+	background-image:url(../img/desktop-version.png);
 	background-size:cover;
 	height:75px;
 	width:250px;
