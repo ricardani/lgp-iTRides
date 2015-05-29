@@ -17,10 +17,7 @@ function sendMail(who, title, msg) {
             html: msg
         }
     }, function(error, response) {
-        if (error)
-          console.log(JSON.stringify(error));
-        else
-          console.log(response);
+        
     });
 }
 
@@ -49,7 +46,7 @@ function register(req, res) {
           if (error) {
               res.json(error);
           } else {
-            var message = "Caro/a Utilizador(a) <br><br> Obrigado por se registar na aplicação iTRides.<br>" +
+            var message = "Olá " + temp.name + "<br><br> Obrigado por se registar na aplicação iTRides.<br>" +
                 "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
                 "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
                 "Obrigado,<br>iTRides";
@@ -133,14 +130,6 @@ module.exports.checkLogin = login;
 
 function resetPassword(req, res) {
 
-    var message = 'Caro/a Utilizador(a) <br><br> ' +
-        'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
-        'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
-        'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' +
-        'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' +
-        'Atenciosamente,<br>' + 'iTRides';
-
-
     Account.findOneAndUpdate(
         {
           email: req.body.email,
@@ -153,6 +142,12 @@ function resetPassword(req, res) {
             if(err || data === null) {
                 res.json(err);
             } else {
+                var message = 'Olá ' + data.name + '<br><br> ' +
+                    'Foi requisitada, por parte da sua conta, uma alteração da palavra passe.<br><br>' +
+                    'A sua nova palavra passe é: ' + req.body.password + '<br><br>' +
+                    'Aconselhamos, para sua segurança, que a mude o mais brevemente possivel.<br>' +
+                    'Pode-o fazer na opção "Alterar dados da conta" no separador "Perfil"<br><br>' +
+                    'Atenciosamente,<br>' + 'iTRides';
                 sendMail(req.body.email,'iTRides: Nova Password Gerada', message);
                 res.json(data);
             }

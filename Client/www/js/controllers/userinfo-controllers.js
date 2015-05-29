@@ -46,15 +46,24 @@ angular.module('iTRides.userInfoControllers', [])
     }
 
     $scope.getNumberComplete = function(num) {
-        return new Array(Math.floor(num));
+			if(num < 0)
+				return new Array(Math.floor(0));
+			else
+      	return new Array(Math.floor(num));
     };
 
     $scope.getNumberEmpty = function(num) {
+			if(num < 0)
+				return new Array(Math.floor(5));
+			else
         return new Array(Math.floor(5-num));
     };
 
     $scope.getNumberHalf = function(num) {
-        if(num % 1 === 0){
+				if(num < 0) {
+					return new Array(0);
+				}
+        else if(num % 1 === 0){
             //é inteiro
             return new Array(0);
         }

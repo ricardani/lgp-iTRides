@@ -17,7 +17,7 @@
                     <img ng-src="{{user.photo}}" src="" onError="this.onerror=null;this.src='img/default_profile_photo.png';">
                     <h2>{{user.name}}</h2>
                     <div ng-if="user.contact && user.residency">
-                        <p>{{user.contact}} | {{user.residency}}</p>
+                        <p>{{user.contact}}  <a1 class="orange">|</a1> {{user.residency}}</p>
                     </div>
 
                     <div ng-if="user.contact && !user.residency">
