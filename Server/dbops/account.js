@@ -41,7 +41,7 @@ function register(req, res) {
         var hash, temp;
         hash = sha256(req.body.password);
         temp = req.body;
-        temp.name = req.body.firstName + " " + req.body.lastName;
+        temp.name = req.body.name;
         temp.password = hash;
 
         var person = new Account(temp);

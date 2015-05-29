@@ -11,8 +11,7 @@ angular.module('iTRides.signupControllers', [])
           //if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
             if(newUser.password == newUser.confirmPassword) {
 
-                $http.post(Server.url + 'user/register', {'firstName' : newUser.firstName,
-                    'lastName' : newUser.lastName,
+                $http.post(Server.url + 'user/register', {'name' : newUser.name,
                     'email': newUser.email,
                     'password': newUser.password}).
                     success(function(data, status, headers, config) {
@@ -20,7 +19,7 @@ angular.module('iTRides.signupControllers', [])
                       if(data === "WD") {
                         $ionicPopup.alert({
                             title: 'Registar',
-                            template: 'Dominio do email inválido.\nSó é aceite @itgrow.pt ou criticalsoftware.com'
+                            template: 'Dominio do email inválido.\nSó é aceite @itgrow.pt ou @criticalsoftware.com'
                         });
                       }
                       else if(data === "AU") {

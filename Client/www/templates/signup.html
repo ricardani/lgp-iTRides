@@ -3,11 +3,10 @@
         <div>
             <div class="icon"></div>
             <form>
-                <input class="first_name" type="text" name="first_name" placeholder="First Name" ng-model="newUser.firstName">
-                <input class="last_name" type="text" name="last_name" placeholder="Last Name" ng-model="newUser.lastName">
+                <input class="first_name" type="text" name="first_name" placeholder="Nome" ng-model="newUser.name">
                 <input class="email" type="email" name="email" placeholder="Email" ng-model="newUser.email">
                 <input class="password" type="password" name="password" placeholder="Password" ng-model="newUser.password">
-                <input class="confirm_password" type="password" name="confirm_password" placeholder="Confirm Password" ng-model="newUser.confirmPassword">
+                <input class="confirm_password" type="password" name="confirm_password" placeholder="Confirmar Password" ng-model="newUser.confirmPassword">
                 <input class="submitButton" type="submit" value="Registar" ng-click="signup(newUser)">
                 <br>
                 <button class="loginButton" ui-sref="login"> Voltar </button>
