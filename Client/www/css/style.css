@@ -169,8 +169,8 @@
 }
 
 .loginBody .icon, .signup_body .icon, .resetPasswordBody .icon{
-	width:123px;
-	height:43px;
+	width:250px;
+	height:87px;
 	margin-left:auto;
 	margin-right:auto;
 	background-image:url(../img/iTGrow.png);

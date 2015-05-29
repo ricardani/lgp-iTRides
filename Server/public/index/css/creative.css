@@ -36,8 +36,8 @@ a:focus {
     color: #eb3812;
 }
 
-.download-iphone{
-	background-image:url(../img/download-iphone.png);
+.desktop-version{
+	background-image:url(../img/desktop-version.png);
 	background-size:cover;
 	height:75px;
 	width:250px;
@@ -495,4 +495,15 @@ body {
 #main_logo {
     margin-top: 25%;
     width: 35%;
+}
+
+
+#portfolio > div.container-fluid > div > div:nth-child(2) > a > img {
+    width: 650px;
+    height: 242px;
+}
+
+#nau_logo {
+    width: 150px;
+    border-radius: 100%;
 }
