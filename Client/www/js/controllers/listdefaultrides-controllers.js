@@ -107,7 +107,7 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                     title: 'Defina a data do começo da boleia',
                     scope: $scope,
                     buttons: [
-                        { text: 'Cancel',
+                        { text: 'Cancelar',
                           onTap: function(e) {
                             canceled = true;
                           }

@@ -29,12 +29,10 @@ angular.module('iTRides.listFeedbacksControllers', [])
 
         $scope.getNumberHalf = function(num) {
             if(num % 1 === 0){
-                //é inteiro
                 return new Array(0);
             }
             else
             {
-                //é float
                 return new Array(1);
             }
         };
