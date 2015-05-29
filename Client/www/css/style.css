@@ -17,13 +17,14 @@
 	overflow: hidden
 }
 
+
 .popup-buttons .button:first-child{
 	background-color: rgb(243,121,38);
 	border-color: rgb(243,121,38);
 	color: #fff;
 }
 
-button.button:nth-child(2) {
+.popup-buttons .button:nth-child(2) {
 	background-color: rgb(243,121,38);
 	border-color: rgb(243,121,38);
 	color: #fff;
