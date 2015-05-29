@@ -22,7 +22,7 @@
                         <span ng-repeat="i in getNumberEmpty(feedback.stars) track by $index"><i class="icon ion-android-star-outline"></i> </span>
                         </span>
 
-                    <div class="item item-text-wrap item-icon-left" ng-repeat="msg in feedback.messages" style="padding-top: 5px; padding-bottom: 5px">
+                    <div class="item item-text-wrap item-icon-left" ng-repeat="msg in feedback.messages track by $index" style="padding-top: 5px; padding-bottom: 5px">
                         <i class="icon ion-chatbox orange" style="font-size: 20px"></i>
                         <p>{{msg}}</p>
 

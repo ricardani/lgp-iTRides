@@ -25,8 +25,8 @@
                     <div class="button button-ride-search text-center" ng-if="district != 'Distrito'" ng-model="newRide.startMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
                     </div>
-                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.startStreet" required/>
-                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.startLocationInfo"/>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.street" required/>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.locationInfo"/>
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 1">
                     <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
@@ -70,8 +70,8 @@
                     <div class="button button-ride-search" ng-if="district != 'Distrito'" ng-model="newRide.destinationMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
                     </div>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.destinationStreet" required/>
-                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.destinationLocationInfo"/>
+                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="newRide.street" required/>
+                    <input class="button button-ride-search" ng-if="district != 'Distrito'" placeholder="Info" ng-model="newRide.locationInfo"/>
                 </div>
 
                 <div class="card col search-ride" ng-if= "selectedRideType === 2">

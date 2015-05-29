@@ -19,7 +19,7 @@ angular.module('iTRides.createRideControllers', [])
           $scope.collection = ["Casa>Trabalho", "Trabalho>Casa"];
         }
         else{
-          
+
         }
 
         $scope.selectedRideType = 0;
@@ -155,6 +155,10 @@ angular.module('iTRides.createRideControllers', [])
                 noErrors=false;
                 $scope.errorString += " Municipio<br>";
             }
+            if(newRide.street == null && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+                noErrors=false;
+                $scope.errorString += " Rua<br>";
+            }
 
             if(rideType == 'Ocasional') {
               if($scope.occasional.startAddress == "") {
@@ -217,6 +221,10 @@ angular.module('iTRides.createRideControllers', [])
                 $scope.municipalityValidation = "error";
                 noErrors=false;
                 $scope.errorString += " Municipio<br>";
+            }
+            if(newRide.street == null && (rideType == 'Trabalho>Casa' || rideType == 'Casa>Trabalho')) {
+                noErrors=false;
+                $scope.errorString += " Rua<br>";
             }
 
             return noErrors;
@@ -315,8 +323,8 @@ angular.module('iTRides.createRideControllers', [])
                           'homeLocation' : {
                               "district": $scope.district,
                               "municipality": $scope.municipality,
-                              "street": newRide.startStreet,
-                              "info": newRide.startLocationInfo
+                              "street": newRide.street,
+                              "info": newRide.locationInfo
                           }
                       }
                   )
@@ -414,8 +422,8 @@ angular.module('iTRides.createRideControllers', [])
                     'homeLocation' : {
                         "district": $scope.district,
                         "municipality": $scope.municipality,
-                        "street": newRide.startStreet,
-                        "info": newRide.startLocationInfo
+                        "street": newRide.street,
+                        "info": newRide.locationInfo
                     }
                 }
             )

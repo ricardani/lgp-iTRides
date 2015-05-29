@@ -240,7 +240,12 @@ function getUserInfo(req, res) {
                                     count+=1;
                                 }
                             }
-                            feedaverage=feedbacksum/count;
+                            if(count==0){
+                                feedaverage=0;
+                            }else{
+                                feedaverage = feedbacksum/count;
+                            }
+                            feedaverage = feedaverage - (requestedUser.penalties * 1/5);
 
                             var information = {
                                 id : requestedUser._id,
