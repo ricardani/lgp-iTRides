@@ -48,64 +48,15 @@
 
 /* create ride form */
 
-#seats {
-	padding-left:10px;
+#seats, #cost, #time, #infoName, #date {
+	border:1px solid #DDD;
+	border-radius:3px;
 	width:100%;
-	border: none;
-	border: solid 2px #c9c9c9;
+	padding:7px;
 	transition: border 0.3s;
 }
-#seats:focus,
-#seats.focus {
-	border: solid 2px #969696;
-}
-
-#infoName{
-	padding: 10px;
-	width:100%;
-	border: none;
-	border: solid 2px #c9c9c9;
-	transition: border 0.3s;
-}
-#infoName:focus,
-#infoName.focus {
-	border: solid 2px #969696;
-}
-
-#date {
-	padding: 10px;
-	width:100%;
-	border: none;
-	border: solid 2px #c9c9c9;
-	transition: border 0.3s;
-}
-#date:focus,
-#date.focus {
-	border: solid 2px #969696;
-}
-
-#cost {
-	padding-left:10px;
-	width:100%;
-	border: none;
-	border: solid 2px #c9c9c9;
-	transition: border 0.3s;
-}
-#cost:focus,
-#cost.focus {
-	border: solid 2px #969696;
-}
-
-#time {
-	padding: 10px;
-	width:100%;
-	border: none;
-	border: solid 2px #c9c9c9;
-	transition: border 0.3s;
-}
-#time:focus,
-#time.focus {
-	border: solid 2px #969696;
+#seats:focus, #seats.focus, #cost:focus, #cost.focus, #time:focus, #time.focus, #infoName:focus, #infoName.focus, #date:focus, #date.focus{
+	border:1px solid rgb(243,121,38);
 }
 
 #typeCost{
@@ -377,6 +328,7 @@ p.change_profile_photo input[type="file"]:hover {
 	border-radius:3px;
 	width:100%;
 	padding:7px;
+	transition: border 0.3s;
 }
 
 .edit_profile p input[type="text"]:focus, .edit_profile p input[type="password"]:focus, .focusClass:focus{
@@ -532,3 +484,5 @@ body, div{
 	padding-bottom:20%;
 	font-size: 115%;
 }
+
+/* ---------------------------- CreateRide ------------------------*/
