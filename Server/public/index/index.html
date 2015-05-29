@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>iTRides</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -32,6 +32,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="shortcut icon" href="img/icon.ico">
+
 </head>
 
 <body id="page-top">
@@ -46,23 +48,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a href="#page-top"><img src="img/itgrow_logo.png" class="navbar-brand page-scroll"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="#about">Sobre</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#services">Services</a>
+                        <a class="page-scroll" href="#services">Objetivos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                        <a class="page-scroll" href="#portfolio">Funcionalidades</a>
+                    </li>
+					<li>
+                        <a class="page-scroll" href="#download">Download</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
+                        <a class="page-scroll" href="#contact">Contactos</a>
                     </li>
                 </ul>
             </div>
@@ -74,35 +79,35 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>Your Favorite Source of Free Bootstrap Themes</h1>
-                <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+                <img id="main_logo" src="img/itrides_logo.png">
+                <p>Uma plataforma de car-sharing da iTGrow</p>
+
+                <a href="#about" class="page-scroll"><img src="img/seta.png" width="70px"></a>
             </div>
         </div>
     </header>
 
     <section class="bg-primary" id="about">
+		<div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Conheça a Nossa Aplicação</h2>
+                    <hr class="light">
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">We've got what you need!</h2>
-                    <hr class="light">
-                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+                
+                    <p class="text-faded">iTRides é uma aplicação de partilha de boleias exclusiva para os contribuidores das empresas iTGrow e Critical Software.
+                    </p>
                 </div>
             </div>
             <br><br>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-1 text-center">
-                    <h2 class="section-heading">Promotional Video</h2>
-                    <hr class="light">
-                    <iframe src="https://www.youtube.com/embed/W7qWa52k-nE" width="400" height="315" frameborder="0" allowfullscreen></iframe>
-                </div>
-
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Development</h2>
-                    <hr class="light">
-                    <iframe src="https://www.youtube.com/embed/W7qWa52k-nE" width="400" height="315" frameborder="0" allowfullscreen></iframe>
+                <div class="text-center">
+                    <iframe src="https://www.youtube.com/embed/W7qWa52k-nE" width="700" height="315" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -112,39 +117,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">At Your Service</h2>
+                    <h2 class="section-heading">Objetivos</h2>
                     <hr class="primary">
                 </div>
             </div>
         </div>
-        <div class="container">
+		<div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
+                <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
-                        <h3>Sturdy Templates</h3>
-                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+                        <i class="fa fa-5x fa-globe wow bounceIn text-primary"></i>
+                        <h3>Consciência Ambiental</h3>
+                        <p class="text-muted">Ajuda a conservar o meio ambiente, diminuindo o número de carros em circulação.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
+                <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Ready to Ship</h3>
-                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
+                        <i class="fa fa-5x fa-eur wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Redução de Custos</h3>
+                        <p class="text-muted">Se és condutor, divide as tuas despesas partilhando os teus lugares vagos.<br>Se és passageiro, viaja de forma mais económica.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 text-center">
+                <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Up to Date</h3>
-                        <p class="text-muted">We update dependencies to keep things fresh.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3>Made with Love</h3>
-                        <p class="text-muted">You have to make your websites with love these days!</p>
+                        <i class="fa fa-5x fa-users wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Integração</h3>
+                        <p class="text-muted">Uma maneira fácil de conheceres melhor os teus colegas de trabalho.</p>
                     </div>
                 </div>
             </div>
@@ -152,6 +150,15 @@
     </section>
 
     <section class="no-padding" id="portfolio">
+		<br><br><br><br>
+		<div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Funcionalidades</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
             <div class="row no-gutter">
                 <div class="col-lg-4 col-sm-6">
@@ -160,10 +167,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Category
+                                    Boleias Pré-definidas
                                 </div>
                                 <div class="project-name">
-                                    Project Name
+                                    Para viagens diárias entre o trabalho e a sua casa
                                 </div>
                             </div>
                         </div>
@@ -175,10 +182,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Category
+                                    Boleias Ocasionais
                                 </div>
                                 <div class="project-name">
-                                    Project Name
+                                    Para deslocações esporádicas para fora da cidade
                                 </div>
                             </div>
                         </div>
@@ -190,10 +197,10 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Category
+                                    Interface simples e fluida
                                 </div>
                                 <div class="project-name">
-                                    Project Name
+                                    Para uma facil utilização
                                 </div>
                             </div>
                         </div>
@@ -205,10 +212,9 @@
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
-                                    Category
+                                    Sistema de Pontuação
                                 </div>
                                 <div class="project-name">
-                                    Project Name
                                 </div>
                             </div>
                         </div>
@@ -248,30 +254,53 @@
         </div>
     </section>
 
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Free Download at Start Bootstrap!</h2>
-                <a href="#" class="btn btn-default btn-xl wow tada">Download Now!</a>
+	<section class="bg-primary" id="download">
+		<div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Faz Download da Plataforma</h2>
+                    <hr class="light">
+                </div>
             </div>
-        </div>
-    </aside>
+        </div><br><br>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-center">
+					<img src="img/devices.png" class="img-responsive" alt="">
+				</div>
+				<div class="col-lg-6 text-center">
+					<h3 style="margin-top:0px;">Se és funcionário da iTGrow ou da Critical Software não percas a oportunidade de a experimentar!</h3>
+					<p class="text-faded">
+						Ajuda o ambiente, poupa nas tuas viagens e integra-te facilmente com os teus colegas de trabalho. Aproveita a nossa aplicação, disponível para iOS e Android.
+					</p><br><br>
+					<div class="row">
+						<div class="col-lg-6 text-center">
+							<a href="#" class="download-iphone"></a>
+						</div>
+						<div class="col-lg-6 text-center">
+							<a href="#" class="download-android"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
     <section id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Get In Touch!</h2>
+                    <h2 class="section-heading">Contacte-nos!</h2>
                     <hr class="primary">
-                    <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                    <p>Se tiver alguma dúvida em relação à aplicação, nao hesite em contactar-nos</p>
                 </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
-                    <p>123-456-6789</p>
+                <div class="col-lg-4 col-lg-offset-2 text-centerr">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:your-email@your-domain.com">nau-lgp@gmail.com</a></p>
                 </div>
                 <div class="col-lg-4 text-center">
                     <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
+                    <p><a href="mailto:your-email@your-domain.com">itrides@gmail.com</a></p>
                 </div>
             </div>
         </div>
