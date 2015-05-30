@@ -1,6 +1,6 @@
 angular.module('iTRides.listDefaultRidesControllers', [])
 
-    .controller('ListDefaultRidesCtrl', function($scope, $window, $state, $http, Server, $ionicLoading, $ionicPopup) {
+    .controller('ListDefaultRidesCtrl', function($scope, $window, $state, $location, $http, Server, $ionicLoading, $ionicPopup) {
 
         $http.get(Server.url + 'api/ride/getMyDefaultRides').
             success(function(data, status, headers, config) {
@@ -70,6 +70,7 @@ angular.module('iTRides.listDefaultRidesControllers', [])
             //Mostra o popup inicial
 
             var wantToDelete = false;
+            var wantToEdit = false;
             var wantToCreate = false;
 
             var canceled = false;
@@ -80,18 +81,27 @@ angular.module('iTRides.listDefaultRidesControllers', [])
 
             var choosePopup = $ionicPopup.show({
               template:
-                  "Deseja eliminar esta boleia pré-definida ou criar uma nova boleia",
+                  "O que deseja fazer com esta boleia pré-definida?",
               title: 'Boleia pré-definida',
               scope: $scope,
               buttons: [
+                  { text: 'Cancelar',
+                    type: 'button-energized'
+                  },
                   { text: 'Eliminar',
                     type: 'button-energized',
                     onTap: function(e) {
                       wantToDelete = true;
                     }
                   },
+                  { text: 'Editar Boleia',
+                    type: 'button-energized',
+                    onTap: function(e) {
+                      wantToEdit = true;
+                    }
+                  },
                   {
-                      text: '<b>Criar Boleia</b>',
+                      text: 'Criar Boleia',
                       type: 'button-energized',
                       onTap: function(e) {
                         wantToCreate = true;
@@ -159,6 +169,9 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                   });
                   $ionicLoading.hide();
                 });
+              }
+              else if(wantToEdit){
+                $location.path('editRide/' + rideInfo._id +'/rideInfo');
               }
               else {
 

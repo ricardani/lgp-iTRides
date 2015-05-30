@@ -80,6 +80,10 @@
                                 <i class="ion-checkmark" style="color:green"> </i>
                                 Aderiu à sua Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
                             </p>
+                            <p ng-switch-when="Edit">
+                              <i class="ion-information-circled" style="color:blue"> </i>
+                              Editou a Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
+                            </p>
                             <p ng-switch-when="Exit">
                                 <i class="ion-information-circled" style="color:blue"> </i>
                                 Desistiu da sua Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm' }}
@@ -89,7 +93,6 @@
                                 Cancelou a Boleia <br> {{notification.rideDate | date : 'dd/MM/yy HH:mm'}}
                             </p>
                         </div>
-
                         <ion-option-button class="button-assertive" ng-click="removeNotification($index,notification)">
                             <i class="icon ion-trash-b" style="color:white"> </i>
                         </ion-option-button>

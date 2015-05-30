@@ -150,7 +150,6 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
                     'content': {
                         templateUrl: 'templates/createRide.html',
                         controller: 'CreateRideCtrl'
-                        //controller: 'CreateRideCtrl as creatRideCtrl'
                     },
                     'footer': {
                         templateUrl: 'templates/footer.html',
@@ -160,7 +159,7 @@ angular.module('iTRides', ['ionic', 'ngCordova', 'ngFileUpload', 'ui.unique', 'i
             })
 
             .state('editRide', {
-                url: "/editRide/:rideID",
+                url: "/editRide/:rideID/:editType",
                 views: {
                     'header': {
                         templateUrl: 'templates/header.html',

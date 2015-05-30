@@ -26,15 +26,11 @@
                     <button class="button button-ride-search" ng-model="ride.startDistrict" ng-click="showModalDistrict()">
                         <a ng-class="districtValidation">{{district}}</a>
                     </button>
-                    <button class="button button-ride-search" ng-model="ride.startMunicipality" ng-click="showModalMunicipality()">
+                    <button class="button button-ride-search" ng-if="district != 'Distrito'" ng-model="ride.startMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
                     </button>
-                    <button class="button button-ride-search" ng-model="ride.startStreet" ng-click="showModalStreet()">
-                        <a ng-class="streetValidation">{{street}}</a>
-                    </button>
-                    <button class="button button-ride-search" ng-model="ride.startLocationInfo" ng-click="showModalInfo()">
-                        <a ng-class="infoValidation">{{info}}</a>
-                    </button>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="ride.street" required/>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Info" ng-model="ride.locationInfo"/>
                 </div>
                 <div class="card col search-ride" ng-if= "selectedRideType === 1">
                     <div class="item item-text-wrap item-icon-left" style="background-color: #DDD">
@@ -82,12 +78,8 @@
                     <button class="button button-ride-search" ng-model="ride.destinationMunicipality" ng-click="showModalMunicipality()">
                         <a ng-class="municipalityValidation">{{municipality}}</a>
                     </button>
-                    <button class="button button-ride-search" ng-model="ride.destinationStreet" ng-click="showModalStreet()">
-                        <a ng-class="streetValidation">{{street}}</a>
-                    </button>
-                    <button class="button button-ride-search" ng-model="ride.destinationLocationInfo" ng-click="showModalInfo()">
-                        <a ng-class="infoValidation">{{info}}</a>
-                    </button>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Rua" ng-model="ride.street" required/>
+                    <input class="button button-ride-search text-center" ng-if="district != 'Distrito'" placeholder="Info" ng-model="ride.locationInfo"/>
                 </div>
 
                 <div class="card col search-ride" ng-if= "selectedRideType === 2">
@@ -113,9 +105,9 @@
                 </label>
 
                 <label ng-if="selectedRideType == 2">
-              <span class="input-label">
-      		      Tipo de custo
-      		    </span>
+                    <span class="input-label">
+            		      Tipo de custo
+            		    </span>
                     <select id="typeCost" ng-model="ride.type_cost" required
                             ng-options='option.value as option.name for option in costTypeOptions'>
                     </select>
@@ -124,40 +116,57 @@
                 <label>
                     <span class="input-label">Custo</span>
                     <input type= "number" id="cost" name="cost" placeholder="{{ride.cost}}" ng-model="ride.cost" required>
-              <span style="color:red" ng-show="editRideForm.cost.$dirty">
-                <span ng-show="editRideForm.cost.$error.number">Não colocou um número válido</span>
-                <span ng-show="editRideForm.cost.$error.required">O custo de cada passageiro tem que ser especificado</span>
-              </span>
+                    <span style="color:red" ng-show="editRideForm.cost.$dirty">
+                      <span ng-show="editRideForm.cost.$error.number">Não colocou um número válido</span>
+                      <span ng-show="editRideForm.cost.$error.required">O custo de cada passageiro tem que ser especificado</span>
+                    </span>
                 </label>
 
-                <label>
+                <label ng-if= "editType === 'ride'">
                     <span class="input-label">Data</span>
                     <input type="date" id="date" name="date" placeholder="yyyy-mm-dd" ng-model="ride.date" required>
-              <span style="color:red" ng-show="editRideForm.date.$dirty">
-                <span ng-show="editRideForm.date.$error.date">Não colocou uma data válida</span>
-                <span ng-show="editRideForm.date.$error.required">A data do começo da boleia tem que ser especificada</span>
-              </span>
+                    <span style="color:red" ng-show="editRideForm.date.$dirty">
+                      <span ng-show="editRideForm.date.$error.date">Não colocou uma data válida</span>
+                      <span ng-show="editRideForm.date.$error.required">A data do começo da boleia tem que ser especificada</span>
+                    </span>
                 </label>
 
                 <label>
                     <span class="input-label">Hora</span>
                     <input type="time" id="time" name="time" placeholder="hrs:mins" ng-model="ride.hour" required>
-              <span style="color:red" ng-show="editRideForm.time.$dirty">
-                <span ng-show="editRideForm.time.$error.time">Não colocou um tempo válido</span>
-                <span ng-show="editRideForm.time.$error.required">O tempo de partida tem que ser especificado</span>
-              </span>
+                    <span style="color:red" ng-show="editRideForm.time.$dirty">
+                      <span ng-show="editRideForm.time.$error.time">Não colocou um tempo válido</span>
+                      <span ng-show="editRideForm.time.$error.required">O tempo de partida tem que ser especificado</span>
+                    </span>
                 </label>
 
-                <!--<label ng-if= "createNew === 'createInfo'">
-                      <span class="input-label">Nome da boleia pré-definida</span>
-                      <input type="text" id="infoName" name="infoName" ng-model="ride.rideInfoName" required>
-                  <span style="color:red" ng-show="editRideForm.infoName.$dirty">
-                    <span ng-show="editRideForm.infoName.$error.required">O nome desta boleia pré-definida tem que ser especificada</span>
-                  </span>
-                    </label> -->
+                <label ng-if= "editType === 'rideInfo'">
+                    <span class="input-label">Nome da boleia</span>
+                    <input type="text" id="infoName" name="infoName" ng-model="ride.rideInfoName" required>
+                    <span style="color:red" ng-show="createRideForm.infoName.$dirty">
+                      <span ng-show="editRideForm.infoName.$error.required">O nome desta boleia pré-definida tem que ser especificada</span>
+                    </span>
+                </label>
             </div>
             <br>
-            <input class="button button-large submit-search" type="submit" value="Editar Boleia" ng-click="editRide(ride)" >
+            <div class="card" ng-if= "editType === 'ride'">
+                <a class="item item-icon-left assertive" ng-click="editRide(ride)">
+                    <i class="icon ion-android-car rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Editar Boleia</a1>
+                </a>
+            </div>
+            <div class="card" ng-if= "editType === 'rideInfo'">
+                <a class="item item-icon-left assertive" ng-click="editRideInfo(ride)">
+                    <i class="icon ion-android-car rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Editar Boleia Pré-definida</a1>
+                </a>
+            </div>
+            <div class="card">
+                <a class="item item-icon-left assertive" href="#/profile" style="background-color:#fff">
+                    <i class="icon ion-close rgb(243,121,38)" style="font-size:150%;color:rgb(243,121,38);"></i>
+                    <a1 class="orange"> Cancelar </a1>
+                </a>
+            </div>
         </form>
         <br><br>
         <br><br>
@@ -201,34 +210,6 @@
                     </a>
 
                 </div>
-
-            </ion-content>
-        </ion-modal-view>
-    </script>
-
-    <script id="streets.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar>
-                <h1 class="title">Identifique a rua</h1>
-            </ion-header-bar>
-            <ion-content>
-
-                <input class="button button-ride-search" placeholder="Rua" ng-model="ride.street">
-                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="streetSelected(ride.street)">
-
-            </ion-content>
-        </ion-modal-view>
-    </script>
-
-    <script id="info.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar>
-                <h1 class="title">Coloque alguma informação adicional para ajudar a descobrir o local</h1>
-            </ion-header-bar>
-            <ion-content>
-
-                <input class="button button-ride-search" placeholder="Info" ng-model="ride.info">
-                <input class="button button-ride-search" value="Submeter pedido" type="submit" ng-click="infoSelected(ride.info)">
 
             </ion-content>
         </ion-modal-view>

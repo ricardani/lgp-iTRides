@@ -25,11 +25,15 @@ router.post('/getWorkLocation', rides.oneWorkLocation);
 
 router.get('/getRideToEdit', rides.rideToEdit);
 
+router.get('/getRideInfoToEdit', rides.rideInfoToEdit);
+
 router.get('/getRide', rides.oneRide);
 
 router.get('/getMyRides', rides.myRides);
 
 router.post('/editRide', rides.editRide);
+
+router.post('/editRideInfo', rides.editRideInfo);
 
 router.get('/getMyRequestedRides', rides.myRequestedRides);
 

@@ -449,12 +449,37 @@ function rideEdit(req, res) {
                     "street": req.body.homeLocation.street,
                     "info": req.body.homeLocation.info
                 }
-            }, function(error, data) {
+            }, function(error, ride) {
                 if(error) {
                     res.json(error);
                 }
                 else {
-                    res.json(data);
+                  for(var i =0; i < ride.passengers.length; i++) {
+                    Account.findOne({
+                      "_id": ride.passengers[i]._user
+                    }, function(err,passenger) {
+                      if(err) {
+
+                      }
+                      else {
+
+                        var notification = {
+                          _sender: ride._owner,
+                          type: "Edit",
+                          _ride: req.body.rideID,
+                          rideType: ride.ride_type,
+                          rideTime: ride.time_start
+                        }
+                        passenger.notifications.push(notification);
+                        passenger.save(function(error, addedNotification) {
+                            if (error) {
+                            } else {
+                            }
+                        });
+                      }
+                    });
+                  }
+                  res.json(ride);
                 }
             });
     }
@@ -480,13 +505,96 @@ function rideEdit(req, res) {
                     res.json(error);
                 }
                 else {
-                    res.json(data);
+                  for(var i =0; i < ride.passengers.length; i++) {
+                    Account.findOne({
+                      "_id": ride.passengers[i]._user
+                    }, function(err,passenger) {
+                      if(err) {
+
+                      }
+                      else {
+
+                        var notification = {
+                          _sender: ride._owner,
+                          type: "Edit",
+                          _ride: req.body.rideID,
+                          rideType: ride.ride_type,
+                          rideTime: ride.time_start
+                        }
+                        passenger.notifications.push(notification);
+                        passenger.save(function(error, addedNotification) {
+                            if (error) {
+                            } else {
+                            }
+                        });
+                      }
+                    });
+                  }
+                  res.json(ride);
                 }
             });
     }
 }
 
 module.exports.editRide = rideEdit;
+
+
+function rideInfoEdit(req, res) {
+
+    if(req.body.ride_type == 'CT' || req.body.ride_type == 'TC') {
+        RideInfo.findOneAndUpdate( {'_id': req.body.rideInfoID},
+            {
+                'seats': req.body.seats,
+                'time_start': req.body.time_start,
+                'ride_type': req.body.ride_type,
+                'cost': req.body.cost,
+                'name': req.body.rideInfoName,
+                'locationName': req.body.locationName,
+                'homeLocation' : {
+                    "district": req.body.homeLocation.district,
+                    "municipality": req.body.homeLocation.municipality,
+                    "street": req.body.homeLocation.street,
+                    "info": req.body.homeLocation.info
+                }
+            }, function(error, data) {
+                if(error) {
+                    res.json(error);
+                }
+                else {
+                    res.json(data);
+                }
+            });
+    }
+    else if(req.body.ride_type == 'Ocasional') {
+
+        RideInfo.findOneAndUpdate( {'_id': req.body.rideID},
+            {
+                'seats': req.body.seats,
+                'time_start': req.body.time_start,
+                'ride_type': req.body.ride_type,
+                'type_cost': req.body.type_cost,
+                'cost': req.body.cost,
+                'name': req.body.rideInfoName,
+                'startLocation' : {
+                    "address": req.body.startLocation.address,
+                    "identifier": req.body.startLocation.identifier
+                },
+                'destination' : {
+                    "address": req.body.destination.address,
+                    "identifier": req.body.destination.identifier
+                }
+            }, function(error, data) {
+                if(error) {
+                    res.json(error);
+                }
+                else {
+                    res.json(data);
+                }
+            });
+    }
+}
+
+module.exports.editRideInfo = rideInfoEdit;
 
 
 function getMyRequestedRides(req, res) {
@@ -593,6 +701,23 @@ function getRideToEdit(req, res) {
 }
 
 module.exports.rideToEdit = getRideToEdit;
+
+
+function getRideInfoToEdit(req, res) {
+    RideInfo.findOne({
+        "_id": req.query.rideInfoID
+    }, function(error,data) {
+        if(error) {
+            res.json(error);
+        }
+        else {
+            res.json(data);
+        }
+    });
+}
+
+module.exports.rideInfoToEdit = getRideInfoToEdit;
+
 
 function getRide(req, res) {
 

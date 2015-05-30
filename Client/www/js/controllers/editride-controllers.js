@@ -8,6 +8,8 @@ angular.module('iTRides.editRideControllers', [])
         ];
         $scope.ride = {};
 
+        $scope.editType = $stateParams.editType;
+
         $scope.selectedRideType = 0;
         $scope.collection = ["Casa>Trabalho", "Trabalho>Casa", "Ocasional"];
         $scope.district = 'Distrito';
@@ -15,10 +17,6 @@ angular.module('iTRides.editRideControllers', [])
         $scope.changeDistrict = false;
         $scope.municipality = 'Concelho';
         $scope.municipalityValidation = "";
-        $scope.street = 'Rua';
-        $scope.streetValidation = "";
-        $scope.info = 'Info';
-        $scope.infoValidation = "";
 
         $scope.districts = ["Aveiro","Beja","Braga","Bragança","Castelo Branco",
             "Coimbra","Évora","Faro","Guarda","Leiria","Lisboa",
@@ -35,84 +33,144 @@ angular.module('iTRides.editRideControllers', [])
         /*Occasional Ride variable */
         $scope.occasional= {"startAddress": "", "startIdentifier": "", "destinationAddress": "", "destinationIdentifier": ""};
 
+        if($scope.editType === 'ride') {
+          $http.get(Server.url + "api/ride/getRideToEdit", {
+              params: {rideID : $stateParams.rideID}
+          })
+          .success(function(data, status, headers, config) {
+              if(data == null) {
+                  console.log('Não exite boleia com esse id');
+              }
+              else {
+                  $scope.ride = data;
+                  var startDate = new Date(data.time_start);
 
-        $http.get(Server.url + "api/ride/getRideToEdit", {
-            params: {rideID : $stateParams.rideID}
-        }).
-            success(function(data, status, headers, config) {
-                if(data == null) {
-                    console.log('Não exite boleia com esse id');
-                }
-                else {
-                    $scope.ride = data;
-                    console.log($scope.ride);
-                    var startDate = new Date(data.time_start);
+                  $scope.ride.date = startDate;
+                  $scope.ride.hour = startDate;
 
-                    $scope.ride.date = startDate;
-                    $scope.ride.hour = startDate;
-                    console.log($scope.ride);
+                  if($scope.ride.ride_type == 'CT' || $scope.ride.ride_type == 'TC') {
+                      if($scope.ride.ride_type == 'CT')
+                          $scope.selectedRideType = 0;
+                      else if($scope.ride.ride_type == 'TC')
+                          $scope.selectedRideType = 1;
 
-                    if($scope.ride.ride_type == 'CT' || $scope.ride.ride_type == 'TC') {
-                        if($scope.ride.ride_type == 'CT')
-                            $scope.selectedRideType = 0;
-                        else if($scope.ride.ride_type == 'TC')
-                            $scope.selectedRideType = 1;
+                      $scope.districtSelected($scope.ride.homeLocation.district);
+                      $scope.changeDistrict= true;
+                      $scope.municipality = $scope.ride.homeLocation.municipality;
+                      $scope.ride.street = $scope.ride.homeLocation.street;
+                      $scope.ride.locationInfo = $scope.ride.homeLocation.info;
 
-                        $scope.districtSelected($scope.ride.homeLocation.district);
-                        $scope.changeDistrict= true;
-                        $scope.municipality = $scope.ride.homeLocation.municipality;
-                        $scope.street = $scope.ride.homeLocation.street;
-                        $scope.info = $scope.ride.homeLocation.info;
+                      $http.post(Server.url + "api/ride/getWorkLocation", {
+                          '_workLocation': $scope.ride._workLocation
+                      })
+                          .success(function(data, status, headers, config) {
+                              $scope.workLocation = data.name;
+                          })
+                          .error(function(data, status, headers, config) {
+                              $ionicLoading.hide();
+                          });
 
-                        $http.post(Server.url + "api/ride/getWorkLocation", {
-                            '_workLocation': $scope.ride._workLocation
-                        })
-                            .success(function(data, status, headers, config) {
-                                $scope.workLocation = data.name;
-                            })
-                            .error(function(data, status, headers, config) {
-                                $ionicLoading.hide();
-                            });
+                  }
+                  else if($scope.ride.ride_type == 'Ocasional') {
+                      $scope.selectedRideType = 2;
 
-                    }
-                    else if($scope.ride.ride_type == 'Ocasional') {
-                        $scope.selectedRideType = 2;
+                      $scope.occasional = {"startAddress": $scope.ride.startLocation.address, "startIdentifier": $scope.ride.startLocation.identifier, "destinationAddress": $scope.ride.destination.address, "destinationIdentifier": $scope.ride.destination.identifier};
 
-                        $scope.occasional = {"startAddress": $scope.ride.startLocation.address, "startIdentifier": $scope.ride.startLocation.identifier, "destinationAddress": $scope.ride.destination.address, "destinationIdentifier": $scope.ride.destination.identifier};
+                  }
+                  else {
+                      console.log('Wrong ride_type');
+                  }
 
-                    }
-                    else {
-                        console.log('Wrong ride_type');
-                    }
+              }
 
-                }
+              $ionicLoading.hide();
+          }).
+          error(function(data, status, headers, config) {
+              $ionicLoading.hide();
+          });
+        }
+        else if($scope.editType === 'rideInfo') {
+          $http.get(Server.url + "api/ride/getRideInfoToEdit", {
+              params: {rideInfoID : $stateParams.rideID}
+          })
+          .success(function(data, status, headers, config) {
+              if(data == null) {
+                  console.log('Não exite boleia pré-definida com esse id');
+              }
+              else {
+                $scope.ride = data;
+                var startDate = new Date(data.time_start);
 
-                $ionicLoading.hide();
-            }).
-            error(function(data, status, headers, config) {
-                $ionicLoading.hide();
+                $scope.ride.hour = startDate;
+                $scope.ride.rideInfoName = data.name;
+
+                  if($scope.ride.ride_type == 'CT' || $scope.ride.ride_type == 'TC') {
+                      if($scope.ride.ride_type == 'CT')
+                          $scope.selectedRideType = 0;
+                      else if($scope.ride.ride_type == 'TC')
+                          $scope.selectedRideType = 1;
+
+                      $scope.districtSelected($scope.ride.homeLocation.district);
+                      $scope.changeDistrict= true;
+                      $scope.municipality = $scope.ride.homeLocation.municipality;
+                      $scope.ride.street = $scope.ride.homeLocation.street;
+                      $scope.ride.locationInfo = $scope.ride.homeLocation.info;
+
+                      $http.post(Server.url + "api/ride/getWorkLocation", {
+                          '_workLocation': $scope.ride._workLocation
+                      })
+                          .success(function(data, status, headers, config) {
+                              $scope.workLocation = data.name;
+                          })
+                          .error(function(data, status, headers, config) {
+                              $ionicLoading.hide();
+                          });
+
+                  }
+                  else if($scope.ride.ride_type == 'Ocasional') {
+                      $scope.selectedRideType = 2;
+
+                      $scope.occasional = {"startAddress": $scope.ride.startLocation.address, "startIdentifier": $scope.ride.startLocation.identifier, "destinationAddress": $scope.ride.destination.address, "destinationIdentifier": $scope.ride.destination.identifier};
+
+                  }
+                  else {
+                      console.log('Wrong ride_type');
+                  }
+
+              }
+
+              $ionicLoading.hide();
+          }).
+          error(function(data, status, headers, config) {
+              $ionicLoading.hide();
+          });
+        }
+        else {
+          $state.go('profile');
+        }
+
+        editRideSuccess = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Editar Boleia',
+                template: 'Boleia editada com sucesso!'
             });
+        };
 
-            editRideSuccess = function() {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Editar Boleia',
-                    template: 'Boleia editada com sucesso!'
-                });
-            };
-
-            editRideError= function() {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'Editar Boleia',
-                    template: 'Ocorreu um problema ao editar a sua boleia.'
-                });
-            };
+        editRideError= function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Editar Boleia',
+                template: 'Ocorreu um problema ao editar a sua boleia.'
+            });
+        };
 
         $scope.editRide = function (ride) {
 
-            console.log(ride);
-
-
             ride.date.setHours(ride.hour.getHours(), ride.hour.getMinutes());
+
+            if($scope.selectedRideType == 0)
+                ride.ride_type = 'CT';
+            else if($scope.selectedRideType == 1)
+                ride.ride_type = 'TC';
 
             if(ride.ride_type == "CT" || ride.ride_type == "TC") {
                 $http.post(Server.url + 'api/ride/editRide',
@@ -121,34 +179,31 @@ angular.module('iTRides.editRideControllers', [])
                         'seats': ride.seats,
                         'time_start': ride.date,
                         'ride_type': ride.ride_type,
-                        'type_cost': ride.type_cost,
                         'cost': ride.cost,
                         'locationName': $scope.workLocation,
                         'homeLocation' : {
                             "district": $scope.district,
                             "municipality": $scope.municipality,
-                            "street": $scope.street,
-                            "info": $scope.info
+                            "street": ride.street,
+                            "info": ride.locationInfo
                         }
                     }
                 )
-                    .success(function(data, status, headers, config) {
-                        if(data){
-                            editRideSuccess();
-                            $state.go('profile');
-                            $ionicLoading.hide();
-                        }
-                    }).
-                    error(function(data, status, headers, config) {
-                        /* TODO caso dê erro */
-                        editRideError();
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        editRideSuccess();
+                        $state.go('profile');
                         $ionicLoading.hide();
-                    });
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    editRideError();
+                    $ionicLoading.hide();
+                });
 
             }
             else if(ride.ride_type == "Ocasional") {
-
-                console.log($scope.occasional);
 
                 $http.post(Server.url + 'api/ride/editRide',
                     {
@@ -158,6 +213,80 @@ angular.module('iTRides.editRideControllers', [])
                         'ride_type': ride.ride_type,
                         'type_cost': ride.type_cost,
                         'cost': ride.cost,
+                        'startLocation' : {
+                            "address": $scope.occasional.startAddress,
+                            "identifier": $scope.occasional.startIdentifier
+                        },
+                        'destination' : {
+                            "address": $scope.occasional.destinationAddress,
+                            "identifier": $scope.occasional.destinationIdentifier
+                        }
+                    }
+                )
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        editRideSuccess();
+                        $state.go('profile');
+                        $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    editRideError();
+                    $ionicLoading.hide();
+                });
+            }
+        };
+
+        $scope.editRideInfo = function (rideInfo) {
+
+            if($scope.selectedRideType == 0)
+              rideInfo.ride_type = 'CT';
+            else if($scope.selectedRideType == 1)
+              rideInfo.ride_type = 'TC';
+
+            if(rideInfo.ride_type == "CT" || rideInfo.ride_type == "TC") {
+                $http.post(Server.url + 'api/ride/editRideInfo',
+                    {
+                        'rideInfoID': rideInfo._id,
+                        'seats': rideInfo.seats,
+                        'time_start': rideInfo.hour,
+                        'ride_type': rideInfo.ride_type,
+                        'cost': rideInfo.cost,
+                        'rideInfoName': rideInfo.rideInfoName,
+                        'locationName': $scope.workLocation,
+                        'homeLocation' : {
+                            "district": $scope.district,
+                            "municipality": $scope.municipality,
+                            "street": rideInfo.street,
+                            "info": rideInfo.locationInfo
+                        }
+                    }
+                )
+                .success(function(data, status, headers, config) {
+                    if(data){
+                        editRideSuccess();
+                        $state.go('profile');
+                        $ionicLoading.hide();
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    /* TODO caso dê erro */
+                    editRideError();
+                    $ionicLoading.hide();
+                });
+
+            }
+            else if(rideInfo.ride_type == "Ocasional") {
+
+                $http.post(Server.url + 'api/ride/editRideInfo',
+                    {
+                        'rideID': rideInfo._id,
+                        'seats': rideInfo.seats,
+                        'time_start': rideInfo.date,
+                        'ride_type': rideInfo.ride_type,
+                        'type_cost': rideInfo.type_cost,
+                        'cost': rideInfo.cost,
                         'startLocation' : {
                             "address": $scope.occasional.startAddress,
                             "identifier": $scope.occasional.startIdentifier
@@ -177,7 +306,7 @@ angular.module('iTRides.editRideControllers', [])
                     }).
                     error(function(data, status, headers, config) {
                         /* TODO caso dê erro */
-                        editRideEror();
+                        editRideError();
                         $ionicLoading.hide();
                     });
             }
@@ -199,20 +328,6 @@ angular.module('iTRides.editRideControllers', [])
             $scope.modalMunicipality = modalM;
         });
 
-        $ionicModal.fromTemplateUrl('streets.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modalS) {
-            $scope.modalStreet = modalS;
-        });
-
-        $ionicModal.fromTemplateUrl('info.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modalI) {
-            $scope.modalInfo = modalI;
-        });
-
         $ionicModal.fromTemplateUrl('workLocations.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -229,14 +344,6 @@ angular.module('iTRides.editRideControllers', [])
                 $scope.modalMunicipality.show();
         };
 
-        $scope.showModalStreet = function() {
-            $scope.modalStreet.show();
-        };
-
-        $scope.showModalInfo = function() {
-            $scope.modalInfo.show();
-        };
-
         $scope.showModalWorkLocation = function() {
             $scope.modalWorkLocation.show();
         };
@@ -245,8 +352,6 @@ angular.module('iTRides.editRideControllers', [])
         $scope.$on('$destroy', function() {
             $scope.modalDistrict.remove();
             $scope.modalMunicipality.remove();
-            $scope.modalStreet.remove();
-            $scope.modalInfo.remove();
             $scope.modalWorkLocation.remove();
         });
         // Execute action on hide modal
@@ -262,7 +367,6 @@ angular.module('iTRides.editRideControllers', [])
 
         $scope.itemClicked = function ($index) {
             $scope.selectedRideType = $index;
-            console.log($scope.selectedRideType);
         };
 
         $scope.workLocationSelected = function(workLocation) {
@@ -276,28 +380,6 @@ angular.module('iTRides.editRideControllers', [])
             $scope.modalWorkLocation.hide();
 
         };
-
-        $scope.streetSelected = function(street) {
-            if(street != null) {
-                $scope.modalStreet.hide();
-
-                $scope.street = street;
-
-                $scope.streetValidation = "";
-            }
-            $scope.modalStreet.hide();
-        }
-
-        $scope.infoSelected = function(info) {
-            if(info != null)
-                $scope.info = info;
-            else
-                $scope.info = "";
-
-            $scope.infoValidation = "";
-
-            $scope.modalInfo.hide();
-        }
 
         $scope.districtSelected = function(district) {
 

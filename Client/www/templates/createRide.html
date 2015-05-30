@@ -117,27 +117,27 @@
                 <label ng-if= "createNew === 'createNow'">
                     <span class="input-label">Data</span>
                     <input type="date" id="date" name="date" placeholder="AAAA-MM-DD" ng-model="newRide.date" required>
-              <span style="color:red" ng-show="createRideForm.date.$dirty">
-                <span ng-show="createRideForm.date.$error.date">Não colocou uma data válida</span>
-                <span ng-show="createRideForm.date.$error.required">A data do começo da boleia tem que ser especificada</span>
-              </span>
+                    <span style="color:red" ng-show="createRideForm.date.$dirty">
+                      <span ng-show="createRideForm.date.$error.date">Não colocou uma data válida</span>
+                      <span ng-show="createRideForm.date.$error.required">A data do começo da boleia tem que ser especificada</span>
+                    </span>
                 </label>
 
                 <label>
                     <span class="input-label">Hora</span>
                     <input type="time" id="time" name="time" placeholder="HH:MM" ng-model="newRide.hour" required>
-              <span style="color:red" ng-show="createRideForm.time.$dirty">
-                <span ng-show="createRideForm.time.$error.time">Não colocou um tempo válido</span>
-                <span ng-show="createRideForm.time.$error.required">O tempo de partida tem que ser especificado</span>
-              </span>
+                    <span style="color:red" ng-show="createRideForm.time.$dirty">
+                      <span ng-show="createRideForm.time.$error.time">Não colocou um tempo válido</span>
+                      <span ng-show="createRideForm.time.$error.required">O tempo de partida tem que ser especificado</span>
+                    </span>
                 </label>
 
                 <label ng-if= "createNew === 'createInfo'">
                     <span class="input-label">Nome da boleia</span>
                     <input type="text" id="infoName" name="infoName" ng-model="newRide.rideInfoName" required>
-              <span style="color:red" ng-show="createRideForm.infoName.$dirty">
-                <span ng-show="createRideForm.infoName.$error.required">O nome desta boleia pré-definida tem que ser especificada</span>
-              </span>
+                    <span style="color:red" ng-show="createRideForm.infoName.$dirty">
+                      <span ng-show="createRideForm.infoName.$error.required">O nome desta boleia pré-definida tem que ser especificada</span>
+                    </span>
                 </label>
             </div>
             <br>
