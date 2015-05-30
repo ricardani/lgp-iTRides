@@ -17,7 +17,7 @@ function sendMail(who, title, msg) {
             html: msg
         }
     }, function(error, response) {
-        
+
     });
 }
 
