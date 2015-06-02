@@ -507,3 +507,7 @@ body {
     width: 150px;
     border-radius: 100%;
 }
+
+#portfolio img {
+    margin: 1px solid black;
+}
