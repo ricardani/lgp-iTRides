@@ -23,49 +23,49 @@ function sendMail(who, title, msg) {
 
 function register(req, res) {
 
-  var email = req.body.email.toString();
-  var emailDomain = email.substring(email.indexOf("@") + 1);
-  //if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
+    var email = req.body.email.toString();
+    var emailDomain = email.substring(email.indexOf("@") + 1);
+    if(emailDomain === "itgrow.pt" || emailDomain === "criticalsoftware.com") {
 
-    Account.findOne({
-      "email": req.body.email
-    }, function(err,data){
-      if(err) {
-        res.json(err);
-      }
-      else if(data === null) {
+        Account.findOne({
+            "email": req.body.email
+        }, function(err,data){
+            if(err) {
+                res.json(err);
+            }
+            else if(data === null) {
 
-        var hash, temp;
-        hash = sha256(req.body.password);
-        temp = req.body;
-        temp.name = req.body.name;
-        temp.password = hash;
+                var hash, temp;
+                hash = sha256(req.body.password);
+                temp = req.body;
+                temp.name = req.body.name;
+                temp.password = hash;
 
-        var person = new Account(temp);
-        person.save(function(error, data) {
-          if (error) {
-              res.json(error);
-          } else {
-            var message = "Olá " + temp.name + "<br><br> Obrigado por se registar na aplicação iTRides.<br>" +
-                "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
-                "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
-                "Obrigado,<br>iTRides";
+                var person = new Account(temp);
+                person.save(function(error, data) {
+                    if (error) {
+                        res.json(error);
+                    } else {
+                        var message = "Olá " + temp.name + "<br><br> Obrigado por se registar na aplicação iTRides.<br>" +
+                            "Para poder usufruir de todos os nossos serviços, basta confirmar a sua inscrição, carregando na hiperligação abaixo.<br><br>" +
+                            "<a href=\"https://itrides.herokuapp.com/user/confirmAccount?code=" + sha256(req.body.email + req.body.name) + "&email=" + req.body.email +"\">Siga esta ligação para ativar a sua conta.</a><br><br> " +
+                            "Obrigado,<br>iTRides";
 
-            sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
-            res.json(data);
-          }
+                        sendMail(req.body.email, "iTRides: Confirmação de Conta", message);
+                        res.json(data);
+                    }
+                });
+            }
+            else {
+                console.log("Invalid email: already in use.");
+                res.json("AU");
+            }
         });
-      }
-      else {
-        console.log("Invalid email: already in use.");
-        res.json("AU");
-      }
-    });
-/*  }
-  else {
-    console.log("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
-    res.json("WD");
-  }*/
+    }
+    else {
+        console.log("Invalid email: must be from iTGrow(@itgrow.pt) or Critical Software(@criticalsoftware.com) domain.");
+        res.json("WD");
+    }
 }
 
 module.exports.reg = register;
@@ -132,8 +132,8 @@ function resetPassword(req, res) {
 
     Account.findOneAndUpdate(
         {
-          email: req.body.email,
-          activated: true
+            email: req.body.email,
+            activated: true
         },
         {
             'password' : sha256(req.body.password)
