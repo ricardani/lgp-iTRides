@@ -69,8 +69,6 @@ angular.module('iTRides.listDefaultRidesControllers', [])
         $scope.showPopup = function(rideInfo) {
             //Mostra o popup inicial
 
-            var wantToDelete = false;
-            var wantToEdit = false;
             var wantToCreate = false;
 
             var canceled = false;
@@ -81,24 +79,12 @@ angular.module('iTRides.listDefaultRidesControllers', [])
 
             var choosePopup = $ionicPopup.show({
               template:
-                  "O que deseja fazer com esta boleia pré-definida?",
+                  "Deseja criar uma boleia com esta informação?",
               title: 'Boleia pré-definida',
               scope: $scope,
               buttons: [
                   { text: 'Cancelar',
                     type: 'button-energized'
-                  },
-                  { text: 'Eliminar',
-                    type: 'button-energized',
-                    onTap: function(e) {
-                      wantToDelete = true;
-                    }
-                  },
-                  { text: 'Editar Boleia',
-                    type: 'button-energized',
-                    onTap: function(e) {
-                      wantToEdit = true;
-                    }
                   },
                   {
                       text: 'Criar Boleia',
@@ -147,37 +133,109 @@ angular.module('iTRides.listDefaultRidesControllers', [])
                   }
                 });
               }
-              else if(wantToDelete) {
-                $http.post(Server.url + 'api/ride/deleteDefaultRide',
-                {
-                  'rideID': rideInfo._id
-                })
-                .success(function(data, status, headers, config) {
-                  if(data){
-                    var alertPopup = $ionicPopup.alert({
-                      title: 'Boleia pré-definida',
-                      template: 'Boleia pré-definida foi eliminada com sucesso!'
-                    });
-                    $state.go('profile');
-                    $ionicLoading.hide();
-                  }
-                }).
-                error(function(data, status, headers, config) {
-                  var alertPopup = $ionicPopup.alert({
-                    title: 'Boleia pré-definida',
-                    template: 'Ocorreu um erro ao eliminar a boleia pré-definida'
-                  });
-                  $ionicLoading.hide();
-                });
-              }
-              else if(wantToEdit){
-                $location.path('editRide/' + rideInfo._id +'/rideInfo');
-              }
               else {
 
               }
-            })
+            });
 
+        }
+
+        $scope.showPopupEdit = function(rideInfo) {
+
+          console.log(rideInfo);
+
+          var wantToEdit = false;
+
+          var canceled = false;
+          $scope.data = {};
+          $scope.data.rideInfo = rideInfo;
+
+          // An elaborate, custom popup
+
+          var choosePopup = $ionicPopup.show({
+            template:
+                "Deseja editar esta boleia pré-definida?",
+            title: 'Editar Boleia pré-definida',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancelar',
+                  type: 'button-energized'
+                },
+                { text: 'Editar Boleia',
+                  type: 'button-energized',
+                  onTap: function(e) {
+                    wantToEdit = true;
+                  }
+                }
+            ]
+          });
+          choosePopup.then(function(res) {
+            if(wantToEdit){
+              $location.path('editRide/' + rideInfo._id +'/rideInfo');
+            }
+            else {
+
+            }
+          });
+        }
+
+        $scope.showPopupEliminate = function(rideInfo) {
+
+          console.log(rideInfo);
+
+          var wantToDelete = false;
+
+          var canceled = false;
+          $scope.data = {};
+          $scope.data.rideInfo = rideInfo;
+
+          // An elaborate, custom popup
+
+          var choosePopup = $ionicPopup.show({
+            template:
+                "Deseja eliminar esta boleia pré-definida?",
+            title: 'Eliminar Boleia pré-definida',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancelar',
+                  type: 'button-energized'
+                },
+                { text: 'Eliminar',
+                  type: 'button-energized',
+                  onTap: function(e) {
+                    wantToDelete = true;
+                  }
+                }
+            ]
+          });
+          choosePopup.then(function(res) {
+            if(wantToDelete) {
+              $http.post(Server.url + 'api/ride/deleteDefaultRide',
+              {
+                'rideID': rideInfo._id
+              })
+              .success(function(data, status, headers, config) {
+                if(data){
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Boleia pré-definida',
+                    template: 'Boleia pré-definida foi eliminada com sucesso!'
+                  });
+                  $state.go('profile');
+                  $ionicLoading.hide();
+                }
+              }).
+              error(function(data, status, headers, config) {
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Boleia pré-definida',
+                  template: 'Ocorreu um erro ao eliminar a boleia pré-definida'
+                });
+                $ionicLoading.hide();
+              });
+            }
+            else {
+
+            }
+          });
         };
 
     });
