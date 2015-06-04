@@ -101,13 +101,13 @@
       		      Tipo de custo
       		    </span>
                     <select id="typeCost" ng-init="newRide.typeCost='Pago pela empresa'" ng-model="newRide.typeCost" required
-                            ng-options='option.value as option.name for option in costTypeOptions'>
+                            ng-options='option.value as option.name for option in costTypeOptions' ng-change="changeTypeCost(newRide.typeCost)">
                     </select>
                 </label>
 
                 <label>
                     <span class="input-label">Custo</span>
-                    <input type= "number" id="cost" name="cost" ng-model="newRide.cost" required>
+                    <input type= "number" id="cost" name="cost" ng-model="newRide.cost" required ng-disabled="freeRide">
               <span style="color:red" ng-show="createRideForm.cost.$dirty">
                 <span ng-show="createRideForm.cost.$error.number">Não colocou um número válido</span>
                 <span ng-show="createRideForm.cost.$error.required">O custo de cada passageiro tem que ser especificado</span>
